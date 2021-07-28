@@ -119,7 +119,7 @@ class _AlbumSliderState extends State<AlbumSlider> {
               child: PinchZoom(
                 image: widget.slideImageProvider.getImage(index),
                 zoomedBackgroundColor: Colors.black.withOpacity(0.5),
-                resetDuration: const Duration(milliseconds: 100),
+                resetDuration: const Duration(milliseconds: 1000),
                 maxScale: 2.5,
                 onZoomStart: () {},
                 onZoomEnd: () {},

@@ -29,8 +29,8 @@ abstract class AbstractMediumPlatform {
           initialPage: initialPage);
     }));
   }
-/*
 
+/*
   void showPhotosFromUrls(BuildContext context, List<String?> urls, int initialPage) {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return AlbumSlider(title: "Photos",
@@ -38,8 +38,8 @@ abstract class AbstractMediumPlatform {
           initialPage: initialPage);
     }));
   }
-
 */
+
   Future<void> showVideo(BuildContext context, MemberMediumModel memberMediumModel) async {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return VideoView(

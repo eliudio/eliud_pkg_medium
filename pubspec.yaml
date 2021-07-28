@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  percent_indicator: 3.0.1
   camera: 0.8.1
   image_picker_gallery_camera: 0.2.2
   file_picker: 3.0.2+2
