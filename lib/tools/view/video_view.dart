@@ -59,20 +59,11 @@ class _VideoViewState extends State<VideoView> {
             FutureBuilder(
                 future: future,
                 builder: (context, snapshot) {
-                  return new Center(
-                    child: videoPlayerController!.value.isInitialized
-                        ? AspectRatio(
-                            aspectRatio:
-                                videoPlayerController!.value.aspectRatio,
-                            child: Theme(
-                                data: Theme.of(context).copyWith(
-                                  dialogBackgroundColor: Colors.white,
-                                ),
-                                child: Chewie(
+                  return videoPlayerController!.value.isInitialized
+                        ?  SizedBox(height: MediaQuery.of(context).size.height * .8, child: Chewie(
                                   controller: chewieController!,
-                                )),
-                          )
-                        : new Center(child: CircularProgressIndicator()),
+                          ))
+                        : new Center(child: CircularProgressIndicator(),
                   );
                 })
           ]),
