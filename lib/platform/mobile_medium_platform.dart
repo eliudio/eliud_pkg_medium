@@ -1,6 +1,5 @@
 import 'dart:io';
-import 'dart:typed_data';
-
+import 'package:eliud_core/tools/random.dart';
 import 'package:eliud_core/tools/storage/basename_helper.dart';
 import 'package:eliud_core/tools/storage/member_medium_helper.dart';
 import 'package:eliud_core/tools/storage/upload_info.dart';
@@ -11,7 +10,6 @@ import 'package:image_picker_gallery_camera/image_picker_gallery_camera.dart';
 import 'image_crop.dart';
 import 'medium_platform.dart';
 import 'mobile/eliud_camera.dart';
-import 'package:flutter/services.dart' show rootBundle;
 
 class MobileMediumPlatform extends AbstractMediumPlatform {
   @override
@@ -41,20 +39,21 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
     );
 
     if (_image != null) {
-      var baseName = BaseNameHelper.baseName(_image.path);
-      var thumbnailBaseName = BaseNameHelper.thumbnailBaseName(_image.path);
+      var memberMediumDocumentID = newRandomKey();
+      var baseName = BaseNameHelper.baseName(memberMediumDocumentID, _image.path);
+      var thumbnailBaseName = BaseNameHelper.thumbnailBaseName(memberMediumDocumentID, _image.path);
       var bytes = await _image.readAsBytes();
       if ((allowCrop != null) && (allowCrop)) {
         ImageCropWidget.open(context, (croppedImage) {
           if (croppedImage == null) {
             feedbackFunction(null);
           } else {
-            processPhoto(appId, baseName, thumbnailBaseName, ownerId,
+            processPhoto(memberMediumDocumentID, appId, baseName, thumbnailBaseName, ownerId,
                 croppedImage, readAccess, feedbackFunction, feedbackProgress);
           }
         }, bytes);
       } else {
-        processPhoto(appId, baseName, thumbnailBaseName, ownerId, bytes,
+        processPhoto(memberMediumDocumentID, appId, baseName, thumbnailBaseName, ownerId, bytes,
             readAccess, feedbackFunction, feedbackProgress);
       }
     } else {
@@ -70,13 +69,15 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
       List<String> readAccess,
       MemberMediumAvailable feedbackFunction,
       FeedbackProgress? feedbackProgress) {
+    var memberMediumDocumentID = newRandomKey();
     EliudCamera.openVideoRecorder(context, (video) async {
       var memberMediumModel =
-          await MemberMediumHelper.createThumbnailUploadVideoFile(
+          await MemberMediumHelper.createThumbnailUploadVideoFile(memberMediumDocumentID,
               appId, video.path, ownerId, readAccess,
               feedbackProgress: feedbackProgress);
       feedbackFunction(memberMediumModel);
     }, (message) {
+      print('Error during takeVideo ' + message.toString());
       feedbackFunction(null);
     });
   }
@@ -93,34 +94,40 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
       MemberMediumAvailable feedbackFunction,
       FeedbackProgress? feedbackProgress,
       {bool? allowCrop}) async {
-    if (feedbackProgress != null) feedbackProgress(-1);
-    var _result = await FilePicker.platform
-        .pickFiles(type: FileType.image, allowMultiple: false);
-    if (_result == null) {
-      if (feedbackProgress != null) feedbackFunction(null);
-      return;
-    }
-    var path = _result.paths[0];
-    if (path == null) {
-      if (feedbackProgress != null) feedbackFunction(null);
-      return;
-    }
+    try {
+      var memberMediumDocumentID = newRandomKey();
+      if (feedbackProgress != null) feedbackProgress(-1);
+      var _result = await FilePicker.platform
+          .pickFiles(type: FileType.image, allowMultiple: false);
+      if (_result == null) {
+        if (feedbackProgress != null) feedbackFunction(null);
+        return;
+      }
+      var path = _result.paths[0];
+      if (path == null) {
+        if (feedbackProgress != null) feedbackFunction(null);
+        return;
+      }
 
-    var baseName = BaseNameHelper.baseName(path);
-    var thumbnailBaseName = BaseNameHelper.thumbnailBaseName(path);
-    var bytes = await File(path).readAsBytes();
-    if ((allowCrop != null) && (allowCrop)) {
-      ImageCropWidget.open(context, (croppedImage) {
-        if (croppedImage == null) {
-          feedbackFunction(null);
-        } else {
-          processPhoto(appId, baseName, thumbnailBaseName, ownerId,
-              croppedImage, readAccess, feedbackFunction, feedbackProgress);
-        }
-      }, bytes);
-    } else {
-      processPhoto(appId, baseName, thumbnailBaseName, ownerId, bytes,
-          readAccess, feedbackFunction, feedbackProgress);
+      var baseName = BaseNameHelper.baseName(memberMediumDocumentID, path);
+      var thumbnailBaseName = BaseNameHelper.thumbnailBaseName(memberMediumDocumentID, path);
+      var bytes = await File(path).readAsBytes();
+      if ((allowCrop != null) && (allowCrop)) {
+        ImageCropWidget.open(context, (croppedImage) {
+          if (croppedImage == null) {
+            feedbackFunction(null);
+          } else {
+            processPhoto(memberMediumDocumentID, appId, baseName, thumbnailBaseName, ownerId,
+                croppedImage, readAccess, feedbackFunction, feedbackProgress);
+          }
+        }, bytes);
+      } else {
+        processPhoto(memberMediumDocumentID, appId, baseName, thumbnailBaseName, ownerId, bytes,
+            readAccess, feedbackFunction, feedbackProgress);
+      }
+    } catch (error) {
+      print('Error trying to uploadPhoto: ' + error.toString());
+      feedbackFunction(null);
     }
   }
 
@@ -132,22 +139,29 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
       List<String> readAccess,
       MemberMediumAvailable feedbackFunction,
       FeedbackProgress? feedbackProgress) async {
-    var result = await FilePicker.platform
-        .pickFiles(type: FileType.video, allowMultiple: false);
-    if (result == null) {
+    try {
+      var memberMediumDocumentID = newRandomKey();
+      var result = await FilePicker.platform
+          .pickFiles(type: FileType.video, allowMultiple: false);
+      if (result == null) {
+        feedbackFunction(null);
+        return;
+      }
+      var aFile = result.files[0];
+      var path = aFile.path;
+      if (path == null) {
+        feedbackFunction(null);
+        return;
+      }
+      var memberMediumModel =
+      await MemberMediumHelper.createThumbnailUploadVideoFile(
+          memberMediumDocumentID,
+          appId, path, ownerId, readAccess,
+          feedbackProgress: feedbackProgress);
+      feedbackFunction(memberMediumModel);
+    } catch (error) {
+      print('Error trying to uploadVideo: ' + error.toString());
       feedbackFunction(null);
-      return;
     }
-    var aFile = result.files[0];
-    var path = aFile.path;
-    if (path == null) {
-      feedbackFunction(null);
-      return;
-    }
-    var memberMediumModel =
-        await MemberMediumHelper.createThumbnailUploadVideoFile(
-            appId, path, ownerId, readAccess,
-            feedbackProgress: feedbackProgress);
-    feedbackFunction(memberMediumModel);
   }
 }

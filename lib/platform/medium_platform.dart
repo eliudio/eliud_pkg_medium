@@ -2,6 +2,7 @@
 
 import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/tools/etc.dart';
+import 'package:eliud_core/tools/random.dart';
 import 'package:eliud_core/tools/storage/member_medium_helper.dart';
 import 'package:eliud_core/tools/storage/upload_info.dart';
 import 'package:eliud_pkg_medium/slider/carousel_slider.dart';
@@ -29,16 +30,6 @@ abstract class AbstractMediumPlatform {
           initialPage: initialPage);
     }));
   }
-
-/*
-  void showPhotosFromUrls(BuildContext context, List<String?> urls, int initialPage) {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return AlbumSlider(title: "Photos",
-          slideImageProvider: UrlSlideImageProvider(ListHelper.getStringList(urls)),
-          initialPage: initialPage);
-    }));
-  }
-*/
 
   Future<void> showVideo(BuildContext context, MemberMediumModel memberMediumModel) async {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -70,6 +61,7 @@ abstract class AbstractMediumPlatform {
   bool hasCamera();
 
   Future<void> processPhoto(
+      String memberMediumDocumentID,
       String appId,
       String baseName,
       String thumbnailBaseName,
@@ -81,11 +73,12 @@ abstract class AbstractMediumPlatform {
       ) async {
     try {
       var memberMediumModel =
-      await MemberMediumHelper.createThumbnailUploadPhotoData(
+      await MemberMediumHelper.createThumbnailUploadPhotoData(memberMediumDocumentID,
           appId, bytes, baseName, thumbnailBaseName, ownerId, readAccess,
           feedbackProgress: feedbackProgress);
       feedbackFunction(memberMediumModel);
-    } catch (_) {
+    } catch (error) {
+      print('Error trying to processPhoto: ' + error.toString());
       feedbackFunction(null);
     }
   }
