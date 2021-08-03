@@ -19,35 +19,43 @@ class VideoView extends StatefulWidget {
 }
 
 class _VideoViewState extends State<VideoView> {
-  VideoPlayerController? videoPlayerController;
+  late VideoPlayerController videoPlayerController;
   ChewieController? chewieController;
-  Future<void>? future;
-
-  Future<void> initVideoPlayer() async {
-    await videoPlayerController!.initialize();
-    setState(() {
-      print(videoPlayerController!.value.aspectRatio);
-      chewieController = ChewieController(
-        videoPlayerController: videoPlayerController!,
-        aspectRatio: videoPlayerController!.value.aspectRatio,
-        autoPlay: true,
-        looping: false,
-        allowFullScreen: false,
-        fullScreenByDefault: false,
-        showControls: true,
-      );
-    });
-  }
 
   @override
   void initState() {
     super.initState();
+    initializePlayer();
+  }
+
+  @override
+  void dispose() {
+    videoPlayerController.dispose();
+    chewieController?.dispose();
+    super.dispose();
+  }
+
+  Future<void> initializePlayer() async {
     if (widget.sourceType == SourceType.File) {
       videoPlayerController = VideoPlayerController.file(File(widget.source));
     } else {
       videoPlayerController = VideoPlayerController.network(widget.source);
     }
-    future = initVideoPlayer();
+    await videoPlayerController.initialize();
+    _createChewieController();
+    setState(() {});
+  }
+
+  void _createChewieController() {
+    chewieController = ChewieController(
+      videoPlayerController: videoPlayerController,
+      aspectRatio: videoPlayerController.value.aspectRatio,
+      autoPlay: true,
+      looping: false,
+      allowFullScreen: false,
+      fullScreenByDefault: false,
+      showControls: true,
+    );
   }
 
   @override
@@ -56,16 +64,16 @@ class _VideoViewState extends State<VideoView> {
         backgroundColor: Colors.black,
         body: Stack(children: [
           Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            FutureBuilder(
-                future: future,
-                builder: (context, snapshot) {
-                  return videoPlayerController!.value.isInitialized
-                        ?  Chewie(
-                                  controller: chewieController!,
-                          )
-                        : new Center(child: CircularProgressIndicator(),
-                  );
-                })
+            videoPlayerController != null &&
+                    videoPlayerController.value.isInitialized
+                ? SizedBox(
+                    height: MediaQuery.of(context).size.height * .8,
+                    child: Chewie(
+                      controller: chewieController!,
+                    ))
+                : new Center(
+                    child: CircularProgressIndicator(),
+                  )
           ]),
           Align(
               alignment: Alignment.topRight,
@@ -79,12 +87,5 @@ class _VideoViewState extends State<VideoView> {
 /*          ], mainAxisAlignment: MainAxisAlignment.start)),]*/
               )
         ]));
-  }
-
-  @override
-  void dispose() {
-    videoPlayerController!.dispose();
-    chewieController!.dispose();
-    super.dispose();
   }
 }

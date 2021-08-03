@@ -29,7 +29,14 @@ class WebMediumPlatform extends AbstractMediumPlatform {
     }
     var aFile = _result.files[0];
     var baseName = aFile.name;
-    var thumbnailBaseName = aFile.extension!;
+//    var thumbnailBaseName = aFile.extension!;
+    if (baseName == null) {
+      print("basename is null");
+    } else {
+      print("basename is " + baseName);
+    }
+    var thumbnailBaseName = baseName + '.thumbnail.png';
+    print("thumbnailBaseName: " + thumbnailBaseName);
     var bytes = aFile.bytes;
     if (bytes == null) {
       feedbackFunction(null);
