@@ -92,6 +92,7 @@ class WebMediumPlatform extends AbstractMediumPlatform {
       }
 
       var baseName = memberMediumDocumentID + '.' + name;
+      print('uploadVideo.baseName: ' + baseName);
       var thumbnailBaseName = BaseNameHelper.thumbnailBaseName(memberMediumDocumentID, name);
 
       var memberMediumModel = await MemberMediumHelper.createThumbnailUploadVideoData(memberMediumDocumentID, appId, bytes, baseName, thumbnailBaseName, ownerId, readAccess, feedbackProgress: feedbackProgress);
