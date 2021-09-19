@@ -1,6 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:crop_your_image/crop_your_image.dart';
+import 'package:eliud_core/style/frontend/has_button.dart';
+import 'package:eliud_core/style/frontend/has_dialog.dart';
+import 'package:eliud_core/style/frontend/has_dialog_widget.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,11 +32,7 @@ class ImageCropWidget extends StatefulWidget {
     CroppedImage croppedImage,
     Uint8List image,
   ) {
-    StyleRegistry.registry()
-        .styleWithContext(context)
-        .frontEndStyle()
-        .dialogStyle()
-        .openWidgetDialog(context,
+    openWidgetDialog(context,
             child: ImageCropWidget(
               croppedImage: croppedImage,
               image: image,
@@ -61,26 +60,14 @@ class ImageCropState extends State<ImageCropWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return StyleRegistry.registry()
-        .styleWithContext(context)
-        .frontEndStyle()
-        .dialogWidgetStyle()
-        .flexibleDialog(context,
+    return flexibleDialog(context,
             title: 'Crop image',
             buttons: [
               Spacer(),
-              StyleRegistry.registry()
-                  .styleWithContext(context)
-                  .frontEndStyle()
-                  .buttonStyle()
-                  .dialogButton(context, onPressed: () {
+              dialogButton(context, onPressed: () {
                 Navigator.pop(context);
               }, label: 'Cancel'),
-              StyleRegistry.registry()
-                  .styleWithContext(context)
-                  .frontEndStyle()
-                  .buttonStyle()
-                  .dialogButton(context, onPressed: () {
+              dialogButton(context, onPressed: () {
                 _cropController.crop();
                 Navigator.pop(context);
               }, label: 'Crop'),

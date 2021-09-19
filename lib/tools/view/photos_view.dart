@@ -1,3 +1,4 @@
+import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -23,8 +24,8 @@ class PhotoView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (maxCrossAxisExtent == null) StyleRegistry.registry().styleWithContext(context).frontEndStyle().textStyle().text(context, 'maxCrossAxisExtent is null');
-    if (tiles == null) return StyleRegistry.registry().styleWithContext(context).frontEndStyle().textStyle().text(context, 'tiles is null');
+    if (maxCrossAxisExtent == null) text(context, 'maxCrossAxisExtent is null');
+    if (tiles == null) return text(context, 'tiles is null');
     return StaggeredGridView.extentBuilder(
       primary: false,
       maxCrossAxisExtent: maxCrossAxisExtent!,
@@ -46,7 +47,7 @@ class PhotoView extends StatelessWidget {
 
   Widget _getChild(BuildContext context, int i) {
     var widget = i >= widgets!.length ? null : widgets![i];
-    if (widget == null) return StyleRegistry.registry().styleWithContext(context).frontEndStyle().textStyle().text(context, 'No child');
+    if (widget == null) return text(context, 'No child');
     return widget;
   }
 }

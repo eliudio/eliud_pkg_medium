@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -210,7 +211,7 @@ class _EliudCameraState extends State<EliudCamera>
     final CameraController? cameraController = controller;
 
     if (cameraController == null || !cameraController.value.isInitialized) {
-      return StyleRegistry.registry().styleWithContext(context).frontEndStyle().textStyle().h5(context,
+      return h5(context,
         'Tap a camera',
       );
     } else {
@@ -540,7 +541,7 @@ class _EliudCameraState extends State<EliudCamera>
             onPressed: onVideoRecordButtonPressed);
       }
     } else {
-      return StyleRegistry.registry().styleWithContext(context).frontEndStyle().textStyle().text(context, 'Select camera');
+      return text(context, 'Select camera');
     }
   }
 
@@ -565,7 +566,7 @@ class _EliudCameraState extends State<EliudCamera>
     };
 
     if (widget.cameras.isEmpty) {
-      return StyleRegistry.registry().styleWithContext(context).frontEndStyle().textStyle().text(context, 'No camera found');
+      return text(context, 'No camera found');
     } else {
       for (CameraDescription cameraDescription in widget.cameras) {
         toggles.add(Theme(
@@ -598,7 +599,7 @@ class _EliudCameraState extends State<EliudCamera>
 
   void showInSnackBar(String message) {
     // ignore: deprecated_member_use
-    _scaffoldKey.currentState?.showSnackBar(SnackBar(content: StyleRegistry.registry().styleWithContext(context).frontEndStyle().textStyle().text(context, message)));
+    _scaffoldKey.currentState?.showSnackBar(SnackBar(content: text(context, message)));
   }
 
   void onViewFinderTap(TapDownDetails details, BoxConstraints constraints) {

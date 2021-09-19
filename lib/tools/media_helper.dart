@@ -1,4 +1,5 @@
 import 'package:eliud_core/model/member_medium_model.dart';
+import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/storage/fb_storage_image.dart';
 import 'package:eliud_core/tools/storage/medium_base.dart';
@@ -67,9 +68,7 @@ class MediaHelper {
           radius: 60.0,
           lineWidth: 5.0,
           percent: progressExtra,
-          center: StyleRegistry.registry().styleWithContext(context)
-              .frontEndStyle().textStyle()
-              .text(context, '100%'),
+          center: text(context, '100%'),
         )
         ));
       } else {
@@ -95,10 +94,10 @@ class MediaHelper {
       List<PopupMenuItem<int>> menuItems = [];
       if (viewAction != null) {
         menuItems.add(new PopupMenuItem<int>(
-            child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().textStyle().text(context, 'View'), value: POPUP_MENU_VIEW));
+            child: text(context, 'View'), value: POPUP_MENU_VIEW));
       }
       menuItems.add(new PopupMenuItem<int>(
-          child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().textStyle().text(context, 'Delete'), value: POPUP_MENU_DELETE_VALUE));
+          child: text(context, 'Delete'), value: POPUP_MENU_DELETE_VALUE));
 
       return PopupMenuButton(
           color: Colors.red,

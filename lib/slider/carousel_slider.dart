@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:eliud_core/model/member_medium_model.dart';
+import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/storage/fb_storage_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -108,11 +109,7 @@ class _AlbumSliderState extends State<AlbumSlider> {
       slideBuilder: (index) {
         return Stack(
           children: <Widget>[
-            StyleRegistry.registry()
-                .styleWithContext(context)
-                .frontEndStyle()
-                .progressIndicatorStyle()
-                .progressIndicator(context),
+            progressIndicator(context),
             Center(
                 child: Container(
               height: MediaQuery.of(context).size.height - height,
