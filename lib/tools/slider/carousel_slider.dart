@@ -114,8 +114,8 @@ class _AlbumSliderState extends State<AlbumSlider> {
                 child: Container(
               height: MediaQuery.of(context).size.height - height,
               child: PinchZoom(
-                image: widget.slideImageProvider.getImage(index),
-                zoomedBackgroundColor: Colors.black.withOpacity(0.5),
+                child: widget.slideImageProvider.getImage(index),
+                //zoomedBackgroundColor: Colors.black.withOpacity(0.5),
                 resetDuration: const Duration(milliseconds: 100),
                 maxScale: 2.5,
                 onZoomStart: () {},

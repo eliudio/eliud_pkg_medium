@@ -5,7 +5,7 @@ import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/random.dart';
 import 'package:eliud_core/tools/storage/member_medium_helper.dart';
 import 'package:eliud_core/tools/storage/upload_info.dart';
-import 'package:eliud_pkg_medium/slider/carousel_slider.dart';
+import 'package:eliud_pkg_medium/tools/slider/carousel_slider.dart';
 import 'package:eliud_pkg_medium/tools/view/video_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
