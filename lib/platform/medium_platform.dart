@@ -3,12 +3,13 @@
 import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/random.dart';
-import 'package:eliud_core/tools/storage/member_medium_helper.dart';
 import 'package:eliud_core/tools/storage/upload_info.dart';
 import 'package:eliud_pkg_medium/tools/slider/carousel_slider.dart';
 import 'package:eliud_pkg_medium/tools/view/video_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'access_rights.dart';
 
 /*
  * I asssume we want a member storage section on firebase storage. A bucket / directory.
@@ -17,7 +18,7 @@ import 'package:flutter/material.dart';
  * I assume these photos are stored in /appId/memberId/...
  * I assume we might want to have a ui to allow to organise photos in a user image repository
  */
-typedef void MemberMediumAvailable(MemberMediumModel? memberMediumModel);
+typedef void MediumAvailable(dynamic? mediumModel);
 
 abstract class AbstractMediumPlatform {
   static AbstractMediumPlatform? platform;
@@ -42,21 +43,21 @@ abstract class AbstractMediumPlatform {
    * Allows the user to take a photo
    * When photo is selected feedbackFunction is triggered
    */
-  void takePhoto(BuildContext context, String appId, String ownerId, List<String> readAccess, MemberMediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress, {bool? allowCrop});
+  void takePhoto(BuildContext context, String appId, String ownerId,       AccessRights accessRights, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress, {bool? allowCrop});
 
   /*
    * Allows the user to take a photo
    * When photo is selected feedbackFunction is triggered
    */
-  void takeVideo(BuildContext context, String appId, String ownerId, List<String> readAccess, MemberMediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress);
+  void takeVideo(BuildContext context, String appId, String ownerId, AccessRights accessRights, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress);
 
-  void uploadPhoto(BuildContext context, String appId, String ownerId, List<String> readAccess, MemberMediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress, {bool? allowCrop});
+  void uploadPhoto(BuildContext context, String appId, String ownerId, AccessRights accessRights, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress, {bool? allowCrop});
 
   /*
    * Allows the user to select a photo from library
    * When photo is selected feedbackFunction is triggered
    */
-  void uploadVideo(BuildContext context, String appId, String ownerId, List<String> readAccess, MemberMediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress);
+  void uploadVideo(BuildContext context, String appId, String ownerId, AccessRights accessRights, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress);
 
   bool hasCamera();
 
@@ -67,16 +68,15 @@ abstract class AbstractMediumPlatform {
       String thumbnailBaseName,
       String ownerId,
       Uint8List bytes,
-      List<String> readAccess,
-      MemberMediumAvailable feedbackFunction,
+      AccessRights accessRights,
+      MediumAvailable feedbackFunction,
       FeedbackProgress? feedbackProgress,
       ) async {
     try {
-      var memberMediumModel =
-      await MemberMediumHelper.createThumbnailUploadPhotoData(memberMediumDocumentID,
-          appId, bytes, baseName, thumbnailBaseName, ownerId, readAccess,
+      var mediumModel =  await accessRights.getMediumHelper(appId, ownerId).createThumbnailUploadPhotoData(memberMediumDocumentID,
+          bytes, baseName, thumbnailBaseName,
           feedbackProgress: feedbackProgress);
-      feedbackFunction(memberMediumModel);
+      feedbackFunction(mediumModel);
     } catch (error) {
       print('Error trying to processPhoto: ' + error.toString());
       feedbackFunction(null);

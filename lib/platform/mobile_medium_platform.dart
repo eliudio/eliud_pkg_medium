@@ -7,6 +7,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker_gallery_camera/image_picker_gallery_camera.dart';
+import 'access_rights.dart';
 import 'image_crop.dart';
 import 'medium_platform.dart';
 import 'mobile/eliud_camera.dart';
@@ -17,8 +18,8 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
       BuildContext context,
       String appId,
       String ownerId,
-      List<String> readAccess,
-      MemberMediumAvailable feedbackFunction,
+      AccessRights accessRights,
+      MediumAvailable feedbackFunction,
       FeedbackProgress? feedbackProgress,
       {bool? allowCrop}) async {
     if (feedbackProgress != null) feedbackProgress(-1);
@@ -49,12 +50,12 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
             feedbackFunction(null);
           } else {
             processPhoto(memberMediumDocumentID, appId, baseName, thumbnailBaseName, ownerId,
-                croppedImage, readAccess, feedbackFunction, feedbackProgress);
+                croppedImage, accessRights, feedbackFunction, feedbackProgress);
           }
         }, bytes);
       } else {
         processPhoto(memberMediumDocumentID, appId, baseName, thumbnailBaseName, ownerId, bytes,
-            readAccess, feedbackFunction, feedbackProgress);
+            accessRights, feedbackFunction, feedbackProgress);
       }
     } else {
       feedbackFunction(null);
@@ -66,15 +67,13 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
       BuildContext context,
       String appId,
       String ownerId,
-      List<String> readAccess,
-      MemberMediumAvailable feedbackFunction,
+      AccessRights accessRights,
+      MediumAvailable feedbackFunction,
       FeedbackProgress? feedbackProgress) {
     var memberMediumDocumentID = newRandomKey();
     EliudCamera.openVideoRecorder(context, (video) async {
-      var memberMediumModel =
-          await MemberMediumHelper.createThumbnailUploadVideoFile(memberMediumDocumentID,
-              appId, video.path, ownerId, readAccess,
-              feedbackProgress: feedbackProgress);
+      var memberMediumModel = accessRights.getMediumHelper(appId, ownerId).createThumbnailUploadVideoFile(memberMediumDocumentID,
+              video.path, feedbackProgress: feedbackProgress);
       feedbackFunction(memberMediumModel);
     }, (message) {
       print('Error during takeVideo ' + message.toString());
@@ -90,8 +89,8 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
       BuildContext context,
       String appId,
       String ownerId,
-      List<String> readAccess,
-      MemberMediumAvailable feedbackFunction,
+      AccessRights accessRights,
+      MediumAvailable feedbackFunction,
       FeedbackProgress? feedbackProgress,
       {bool? allowCrop}) async {
     try {
@@ -118,12 +117,12 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
             feedbackFunction(null);
           } else {
             processPhoto(memberMediumDocumentID, appId, baseName, thumbnailBaseName, ownerId,
-                croppedImage, readAccess, feedbackFunction, feedbackProgress);
+                croppedImage, accessRights, feedbackFunction, feedbackProgress);
           }
         }, bytes);
       } else {
         processPhoto(memberMediumDocumentID, appId, baseName, thumbnailBaseName, ownerId, bytes,
-            readAccess, feedbackFunction, feedbackProgress);
+            accessRights, feedbackFunction, feedbackProgress);
       }
     } catch (error) {
       print('Error trying to uploadPhoto: ' + error.toString());
@@ -136,8 +135,8 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
       BuildContext context,
       String appId,
       String ownerId,
-      List<String> readAccess,
-      MemberMediumAvailable feedbackFunction,
+      AccessRights accessRights,
+      MediumAvailable feedbackFunction,
       FeedbackProgress? feedbackProgress) async {
     try {
       var memberMediumDocumentID = newRandomKey();
@@ -153,11 +152,9 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
         feedbackFunction(null);
         return;
       }
-      var memberMediumModel =
-      await MemberMediumHelper.createThumbnailUploadVideoFile(
+      var memberMediumModel = accessRights.getMediumHelper(appId, ownerId).createThumbnailUploadVideoFile(
           memberMediumDocumentID,
-          appId, path, ownerId, readAccess,
-          feedbackProgress: feedbackProgress);
+          path, feedbackProgress: feedbackProgress);
       feedbackFunction(memberMediumModel);
     } catch (error) {
       print('Error trying to uploadVideo: ' + error.toString());

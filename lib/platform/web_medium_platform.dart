@@ -1,26 +1,26 @@
 import 'package:eliud_core/tools/random.dart';
 import 'package:eliud_core/tools/storage/basename_helper.dart';
-import 'package:eliud_core/tools/storage/medium_data.dart';
 import 'package:eliud_core/tools/storage/member_medium_helper.dart';
 import 'package:eliud_core/tools/storage/upload_info.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'access_rights.dart';
 import 'image_crop.dart';
 import 'medium_platform.dart';
 
 class WebMediumPlatform extends AbstractMediumPlatform {
   @override
-  void takePhoto(BuildContext context, String appId, String ownerId, List<String> readAccess, MemberMediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress, {bool? allowCrop}) {}
+  void takePhoto(BuildContext context, String appId, String ownerId, AccessRights accessRights, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress, {bool? allowCrop}) {}
 
   @override
-  void takeVideo(BuildContext context, String appId, String ownerId, List<String> readAccess, MemberMediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress) {}
+  void takeVideo(BuildContext context, String appId, String ownerId, AccessRights accessRights, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress) {}
 
   @override
   bool hasCamera() => false;
 
-  Future<void> uploadPhoto(BuildContext context, String appId, String ownerId, List<String> readAccess, MemberMediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress, {bool? allowCrop}) async {
+  Future<void> uploadPhoto(BuildContext context, String appId, String ownerId,AccessRights accessRights, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress, {bool? allowCrop}) async {
     try {
       var memberMediumDocumentID = newRandomKey();
       if (feedbackProgress != null) feedbackProgress(-1);
@@ -56,14 +56,14 @@ class WebMediumPlatform extends AbstractMediumPlatform {
                 thumbnailBaseName,
                 ownerId,
                 croppedImage,
-                readAccess,
+                accessRights,
                 feedbackFunction,
                 feedbackProgress);
           }
         }, bytes);
       } else {
         processPhoto(memberMediumDocumentID, appId, baseName, thumbnailBaseName, ownerId, bytes,
-            readAccess, feedbackFunction, feedbackProgress);
+            accessRights, feedbackFunction, feedbackProgress);
       }
     } catch (error) {
       print('Error trying to uploadPhoto: ' + error.toString());
@@ -71,7 +71,7 @@ class WebMediumPlatform extends AbstractMediumPlatform {
     }
   }
 
-  Future<void> uploadVideo(BuildContext context, String appId, String ownerId, List<String> readAccess, MemberMediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress) async {
+  Future<void> uploadVideo(BuildContext context, String appId, String ownerId, AccessRights accessRights, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress) async {
     try {
       var memberMediumDocumentID = newRandomKey();
       var result = await FilePicker.platform.pickFiles(type: FileType.video, allowMultiple: false);
@@ -95,7 +95,7 @@ class WebMediumPlatform extends AbstractMediumPlatform {
       print('uploadVideo.baseName: ' + baseName);
       var thumbnailBaseName = BaseNameHelper.thumbnailBaseName(memberMediumDocumentID, name);
 
-      var memberMediumModel = await MemberMediumHelper.createThumbnailUploadVideoData(memberMediumDocumentID, appId, bytes, baseName, thumbnailBaseName, ownerId, readAccess, feedbackProgress: feedbackProgress);
+      var memberMediumModel = await accessRights.getMediumHelper(appId, ownerId).createThumbnailUploadVideoData(memberMediumDocumentID, bytes, baseName, thumbnailBaseName, feedbackProgress: feedbackProgress);
       feedbackFunction(memberMediumModel);
     } catch (error) {
       print('Error trying to uploadVideo: ' + error.toString());

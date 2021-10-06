@@ -1,6 +1,7 @@
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/storage/upload_info.dart';
+import 'package:eliud_pkg_medium/platform/access_rights.dart';
 import 'package:eliud_pkg_medium/platform/medium_platform.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +11,9 @@ class MediaButtons {
     String appId,
     String ownerId,
     List<String>? readAccess, {
-    MemberMediumAvailable? photoFeedbackFunction,
+    MediumAvailable? photoFeedbackFunction,
     FeedbackProgress? photoFeedbackProgress,
-    MemberMediumAvailable? videoFeedbackFunction,
+    MediumAvailable? videoFeedbackFunction,
     FeedbackProgress? videoFeedbackProgress,
     Widget? icon,
     bool? allowCrop,
@@ -56,7 +57,7 @@ class MediaButtons {
                   context,
                   appId,
                   ownerId,
-                  readAccess,
+                  MemberMediumAccessRights(readAccess),
                   photoFeedbackFunction,
                   photoFeedbackProgress,
                   allowCrop: allowCrop);
@@ -66,7 +67,7 @@ class MediaButtons {
                   context,
                   appId,
                   ownerId,
-                  readAccess,
+                  MemberMediumAccessRights(readAccess),
                   photoFeedbackFunction,
                   photoFeedbackProgress,
                   allowCrop: allowCrop);
@@ -78,7 +79,7 @@ class MediaButtons {
                   context,
                   appId,
                   ownerId,
-                  readAccess,
+                  MemberMediumAccessRights(readAccess),
                   videoFeedbackFunction,
                   videoFeedbackProgress);
             }
@@ -87,7 +88,7 @@ class MediaButtons {
                   context,
                   appId,
                   ownerId,
-                  readAccess,
+                  MemberMediumAccessRights(readAccess),
                   videoFeedbackFunction,
                   videoFeedbackProgress);
             }
