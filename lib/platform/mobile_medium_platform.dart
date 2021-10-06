@@ -72,7 +72,7 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
       FeedbackProgress? feedbackProgress) {
     var memberMediumDocumentID = newRandomKey();
     EliudCamera.openVideoRecorder(context, (video) async {
-      var memberMediumModel = accessRights.getMediumHelper(appId, ownerId).createThumbnailUploadVideoFile(memberMediumDocumentID,
+      var memberMediumModel = await accessRights.getMediumHelper(appId, ownerId).createThumbnailUploadVideoFile(memberMediumDocumentID,
               video.path, feedbackProgress: feedbackProgress);
       feedbackFunction(memberMediumModel);
     }, (message) {
@@ -152,7 +152,7 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
         feedbackFunction(null);
         return;
       }
-      var memberMediumModel = accessRights.getMediumHelper(appId, ownerId).createThumbnailUploadVideoFile(
+      var memberMediumModel = await accessRights.getMediumHelper(appId, ownerId).createThumbnailUploadVideoFile(
           memberMediumDocumentID,
           path, feedbackProgress: feedbackProgress);
       feedbackFunction(memberMediumModel);
