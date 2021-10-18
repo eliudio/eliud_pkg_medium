@@ -41,21 +41,31 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
 
     if (_image != null) {
       var memberMediumDocumentID = newRandomKey();
-      var baseName = BaseNameHelper.baseName(memberMediumDocumentID, _image.path);
-      var thumbnailBaseName = BaseNameHelper.thumbnailBaseName(memberMediumDocumentID, _image.path);
+      var baseName =
+          BaseNameHelper.baseName(memberMediumDocumentID, _image.path);
+      var thumbnailBaseName =
+          BaseNameHelper.thumbnailBaseName(memberMediumDocumentID, _image.path);
       var bytes = await _image.readAsBytes();
       if ((allowCrop != null) && (allowCrop)) {
         ImageCropWidget.open(context, (croppedImage) {
           if (croppedImage == null) {
             feedbackFunction(null);
           } else {
-            processPhoto(memberMediumDocumentID, appId, baseName, thumbnailBaseName, ownerId,
-                croppedImage, accessRights, feedbackFunction, feedbackProgress);
+            processPhoto(
+                memberMediumDocumentID,
+                appId,
+                baseName,
+                thumbnailBaseName,
+                ownerId,
+                croppedImage,
+                accessRights,
+                feedbackFunction,
+                feedbackProgress);
           }
         }, bytes);
       } else {
-        processPhoto(memberMediumDocumentID, appId, baseName, thumbnailBaseName, ownerId, bytes,
-            accessRights, feedbackFunction, feedbackProgress);
+        processPhoto(memberMediumDocumentID, appId, baseName, thumbnailBaseName,
+            ownerId, bytes, accessRights, feedbackFunction, feedbackProgress);
       }
     } else {
       feedbackFunction(null);
@@ -72,8 +82,10 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
       FeedbackProgress? feedbackProgress) {
     var memberMediumDocumentID = newRandomKey();
     EliudCamera.openVideoRecorder(context, (video) async {
-      var memberMediumModel = await accessRights.getMediumHelper(appId, ownerId).createThumbnailUploadVideoFile(memberMediumDocumentID,
-              video.path, feedbackProgress: feedbackProgress);
+      var memberMediumModel = await accessRights
+          .getMediumHelper(appId, ownerId)
+          .createThumbnailUploadVideoFile(memberMediumDocumentID, video.path,
+              feedbackProgress: feedbackProgress);
       feedbackFunction(memberMediumModel);
     }, (message) {
       print('Error during takeVideo ' + message.toString());
@@ -109,20 +121,29 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
       }
 
       var baseName = BaseNameHelper.baseName(memberMediumDocumentID, path);
-      var thumbnailBaseName = BaseNameHelper.thumbnailBaseName(memberMediumDocumentID, path);
+      var thumbnailBaseName =
+          BaseNameHelper.thumbnailBaseName(memberMediumDocumentID, path);
       var bytes = await File(path).readAsBytes();
       if ((allowCrop != null) && (allowCrop)) {
         ImageCropWidget.open(context, (croppedImage) {
           if (croppedImage == null) {
             feedbackFunction(null);
           } else {
-            processPhoto(memberMediumDocumentID, appId, baseName, thumbnailBaseName, ownerId,
-                croppedImage, accessRights, feedbackFunction, feedbackProgress);
+            processPhoto(
+                memberMediumDocumentID,
+                appId,
+                baseName,
+                thumbnailBaseName,
+                ownerId,
+                croppedImage,
+                accessRights,
+                feedbackFunction,
+                feedbackProgress);
           }
         }, bytes);
       } else {
-        processPhoto(memberMediumDocumentID, appId, baseName, thumbnailBaseName, ownerId, bytes,
-            accessRights, feedbackFunction, feedbackProgress);
+        processPhoto(memberMediumDocumentID, appId, baseName, thumbnailBaseName,
+            ownerId, bytes, accessRights, feedbackFunction, feedbackProgress);
       }
     } catch (error) {
       print('Error trying to uploadPhoto: ' + error.toString());
@@ -152,9 +173,10 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
         feedbackFunction(null);
         return;
       }
-      var memberMediumModel = await accessRights.getMediumHelper(appId, ownerId).createThumbnailUploadVideoFile(
-          memberMediumDocumentID,
-          path, feedbackProgress: feedbackProgress);
+      var memberMediumModel = await accessRights
+          .getMediumHelper(appId, ownerId)
+          .createThumbnailUploadVideoFile(memberMediumDocumentID, path,
+              feedbackProgress: feedbackProgress);
       feedbackFunction(memberMediumModel);
     } catch (error) {
       print('Error trying to uploadVideo: ' + error.toString());

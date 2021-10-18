@@ -2,6 +2,7 @@ import 'package:eliud_core/model/conditions_simple_model.dart';
 import 'package:eliud_core/tools/storage/member_medium_helper.dart';
 import 'package:eliud_core/tools/storage/medium_helper.dart';
 import 'package:eliud_core/tools/storage/platform_medium_helper.dart';
+import 'package:eliud_core/tools/storage/public_medium_helper.dart';
 
 abstract class AccessRights<T extends MediumHelper> {
   T getMediumHelper(String appId, String ownerId);
@@ -24,6 +25,14 @@ class PlatformMediumAccessRights extends AccessRights<PlatformMediumHelper> {
 
   PlatformMediumHelper getMediumHelper(String appId, String ownerId) {
     return PlatformMediumHelper(appId, ownerId, privilegeLevelRequired);
+  }
+}
+
+class PublicMediumAccessRights extends AccessRights<PublicMediumHelper> {
+  PublicMediumAccessRights();
+
+  PublicMediumHelper getMediumHelper(String appId, String ownerId) {
+    return PublicMediumHelper(appId, ownerId);
   }
 }
 
