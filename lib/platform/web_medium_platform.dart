@@ -102,4 +102,7 @@ class WebMediumPlatform extends AbstractMediumPlatform {
       feedbackFunction(null);
     }
   }
+
+  @override
+  bool hasAccessToAssets() => false;
 }

@@ -59,7 +59,15 @@ abstract class AbstractMediumPlatform {
    */
   void uploadVideo(BuildContext context, String appId, String ownerId, AccessRights accessRights, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress);
 
+  /*
+   * Some implementations, e.g. android, have access to the camera. Some other implementations, e.g. web, don't
+   */
   bool hasCamera();
+
+  /*
+   * Some implementations, e.g. android, have access to the assets. Some other implementations, e.g. web, don't
+   */
+  bool hasAccessToAssets();
 
   Future<void> processPhoto(
       String memberMediumDocumentID,

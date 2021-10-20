@@ -183,4 +183,7 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
       feedbackFunction(null);
     }
   }
+
+  @override
+  bool hasAccessToAssets() => true;
 }
