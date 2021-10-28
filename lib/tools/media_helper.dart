@@ -19,8 +19,13 @@ class MediaHelper {
     );
   }
 
-  static Widget staggeredPhotosWithThumbnail(BuildContext context, List<PhotoWithThumbnail> photos,
-      {Function(int index)? deleteAction, Function(int index)? viewAction, double? height, bool reverse : false, bool shrinkWrap : false}) {
+  static Widget staggeredPhotosWithThumbnail(
+      BuildContext context, List<PhotoWithThumbnail> photos,
+      {Function(int index)? deleteAction,
+      Function(int index)? viewAction,
+      double? height,
+      bool reverse: false,
+      bool shrinkWrap: false}) {
     List<Widget> widgets = [];
     for (int i = 0; i < photos.length; i++) {
       var medium = photos[i];
@@ -28,14 +33,19 @@ class MediaHelper {
       image = Image.memory(medium.thumbNailData.data);
       name = medium.photoData.baseName;
 
-      widgets
-          .add(_getPopupMenuButton(context, name, image, i, deleteAction, viewAction));
+      widgets.add(_getPopupMenuButton(
+          context, name, image, i, deleteAction, viewAction));
     }
     return _getContainer(widgets, height, reverse, shrinkWrap);
   }
 
-  static Widget staggeredVideosWithThumbnail(BuildContext context, List<VideoWithThumbnail> videos,
-      {Function(int index)? deleteAction, Function(int index)? viewAction, double? height, bool reverse : false, bool shrinkWrap : false}) {
+  static Widget staggeredVideosWithThumbnail(
+      BuildContext context, List<VideoWithThumbnail> videos,
+      {Function(int index)? deleteAction,
+      Function(int index)? viewAction,
+      double? height,
+      bool reverse: false,
+      bool shrinkWrap: false}) {
     List<Widget> widgets = [];
     for (int i = 0; i < videos.length; i++) {
       var medium = videos[i];
@@ -43,33 +53,43 @@ class MediaHelper {
       image = Image.memory(medium.thumbNailData.data);
       name = medium.videoData.baseName;
 
-      widgets
-          .add(_getPopupMenuButton(context, name, image, i, deleteAction, viewAction));
+      widgets.add(_getPopupMenuButton(
+          context, name, image, i, deleteAction, viewAction));
     }
     return _getContainer(widgets, height, reverse, shrinkWrap);
   }
 
-  static Widget staggeredMemberMediumModel(BuildContext context, List<MemberMediumModel> media,
-      {Function(int index)? deleteAction, Function(int index)? viewAction, double? progressExtra, String? progressLabel, double? height, bool reverse : false, bool shrinkWrap : false}) {
+  static Widget staggeredMemberMediumModel(
+      BuildContext context, List<MemberMediumModel> media,
+      {Function(int index)? deleteAction,
+      Function(int index)? viewAction,
+      double? progressExtra,
+      String? progressLabel,
+      double? height,
+      bool reverse: false,
+      bool shrinkWrap: false}) {
     List<Widget> widgets = [];
     for (int i = 0; i < media.length; i++) {
       var medium = media[i];
       var image, name;
-      image = MemberImageModelWidget(memberMediumModel: medium, showThumbnail: true,);
+      image = MemberImageModelWidget(
+        memberMediumModel: medium,
+        showThumbnail: true,
+      );
       name = medium.urlThumbnail!;
 
-      widgets
-          .add(_getPopupMenuButton(context, name, image, i, deleteAction, viewAction));
+      widgets.add(_getPopupMenuButton(
+          context, name, image, i, deleteAction, viewAction));
     }
     if (progressExtra != null) {
       if (progressExtra >= 0) {
-        widgets.add(Center(child: CircularPercentIndicator(
+        widgets.add(Center(
+            child: CircularPercentIndicator(
           radius: 60.0,
           lineWidth: 5.0,
           percent: progressExtra,
           center: text(context, '100%'),
-        )
-        ));
+        )));
       } else {
         widgets.add(Center(child: CircularProgressIndicator()));
       }
@@ -77,8 +97,13 @@ class MediaHelper {
     return _getContainer(widgets, height, reverse, shrinkWrap);
   }
 
-  static Widget _getPopupMenuButton(BuildContext context, String name, Widget image, int index,
-      Function(int index)? deleteAction, Function(int index)? viewAction) {
+  static Widget _getPopupMenuButton(
+      BuildContext context,
+      String name,
+      Widget image,
+      int index,
+      Function(int index)? deleteAction,
+      Function(int index)? viewAction) {
     if (deleteAction == null) {
       if (viewAction == null) {
         return image;
@@ -114,7 +139,39 @@ class MediaHelper {
     }
   }
 
-  static Widget _getContainer(List<Widget> widgets, double? height, bool reverse, bool shrinkWrap) {
+  static Widget _getContainer(
+      List<Widget> widgets, double? height, bool reverse, bool shrinkWrap) {
+    List<Widget> newWidgets = [];
+    newWidgets.addAll(widgets);
+    newWidgets.addAll(widgets);
+    newWidgets.addAll(widgets);
+    widgets = newWidgets;
+    return Container(
+        padding: EdgeInsets.all(16.0),
+        child: Expanded(child: GridView.extent(
+            maxCrossAxisExtent: 100,
+            padding: const EdgeInsets.all(0),
+            mainAxisSpacing: 20,
+            crossAxisSpacing: 20,
+            physics: ScrollPhysics(), // to disable GridView's scrolling
+            shrinkWrap: true,
+            children: widgets)));/*
+    return Container(
+        height: height == null ? 200 : height,
+        width: 500,
+        child: GridView.extent(
+            maxCrossAxisExtent: 200,
+            shrinkWrap: shrinkWrap,
+            reverse: reverse,
+            physics: ScrollPhysics(),
+            childAspectRatio: 1,
+//        padding: EdgeInsets.all(gridView.padding!),
+            scrollDirection: Axis.horizontal,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+            children: widgets));
+*/
+/*
     return Container(
         height: height == null ? 200 : height,
         child: CustomScrollView(
@@ -132,5 +189,6 @@ class MediaHelper {
             ),
           ],
         ));
+*/
   }
 }
