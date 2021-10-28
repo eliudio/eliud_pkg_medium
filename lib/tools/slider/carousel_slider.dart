@@ -68,7 +68,7 @@ class PlatformMediumSlideImageProvider extends SlideImageProvider {
   @override
   Widget getImage(int index) {
     return PlatformImageModelWidget(
-      memberMediumModel: media[index],
+      platformMediumModel: media[index],
       showThumbnail: false,
       defaultWidget: Image.asset(
           "assets/images/manypixels.co/404_Page_Not_Found _Flatline.png",

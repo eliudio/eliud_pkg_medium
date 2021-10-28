@@ -1,6 +1,7 @@
   import 'dart:typed_data';
 
 import 'package:eliud_core/model/member_medium_model.dart';
+import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/random.dart';
 import 'package:eliud_core/tools/storage/upload_info.dart';
@@ -32,10 +33,26 @@ abstract class AbstractMediumPlatform {
     }));
   }
 
+  void showPhotosPlatform(BuildContext context, List<PlatformMediumModel> media, int initialPage) {
+    var photos = media.where((memberMedium) => memberMedium.mediumType == PlatformMediumType.Photo).toList();
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return AlbumSlider(title: "Photos",
+          slideImageProvider: PlatformMediumSlideImageProvider(ListHelper.getPlatformMediumModelList(photos)),
+          initialPage: initialPage);
+    }));
+  }
+
   Future<void> showVideo(BuildContext context, MemberMediumModel memberMediumModel) async {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return VideoView(
           sourceType: SourceType.Network, source: memberMediumModel.url!);
+    }));
+  }
+
+  Future<void> showVideoPlatform(BuildContext context, PlatformMediumModel platformMediumModel) async {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return VideoView(
+          sourceType: SourceType.Network, source: platformMediumModel.url!);
     }));
   }
 

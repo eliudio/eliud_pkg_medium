@@ -1,7 +1,9 @@
 import 'package:eliud_core/model/member_medium_model.dart';
+import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/tools/storage/medium_base.dart';
 import 'package:eliud_core/tools/storage/member_image_model_widget.dart';
+import 'package:eliud_core/tools/storage/platform_image_model_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -97,6 +99,55 @@ class MediaHelper {
     return _getContainer(widgets, height, reverse, shrinkWrap);
   }
 
+  static Widget staggeredPlatformMediumModel(
+      BuildContext context, List<PlatformMediumModel> media,
+      {Function(int index)? deleteAction,
+        Function(int index)? viewAction,
+        double? progressExtra,
+        String? progressLabel,
+        double? height,
+        bool reverse: false,
+        bool shrinkWrap: false}) {
+    List<Widget> widgets = [];
+    for (int i = 0; i < media.length; i++) {
+      var medium = media[i];
+      var image, name;
+      image = PlatformImageModelWidget(
+        platformMediumModel: medium,
+        showThumbnail: true,
+      );
+      name = medium.urlThumbnail!;
+
+      widgets.add(_getPopupMenuButton(
+          context, name, image, i, deleteAction, viewAction));
+    }
+    if (progressExtra != null) {
+      if (progressExtra >= 0) {
+        widgets.add(Center(
+            child: CircularPercentIndicator(
+              radius: 60.0,
+              lineWidth: 5.0,
+              percent: progressExtra,
+              center: text(context, '100%'),
+            )));
+      } else {
+        widgets.add(Center(child: CircularProgressIndicator()));
+      }
+    }
+
+    return Container(
+        padding: const EdgeInsets.all(16.0),
+        child: GridView.extent(
+            maxCrossAxisExtent: 200,
+            padding: const EdgeInsets.all(0),
+            mainAxisSpacing: 20,
+            crossAxisSpacing: 20,
+            physics: const ScrollPhysics(), // to disable GridView's scrolling
+            shrinkWrap: true,
+            children: widgets));
+
+  }
+
   static Widget _getPopupMenuButton(
       BuildContext context,
       String name,
@@ -141,37 +192,6 @@ class MediaHelper {
 
   static Widget _getContainer(
       List<Widget> widgets, double? height, bool reverse, bool shrinkWrap) {
-    List<Widget> newWidgets = [];
-    newWidgets.addAll(widgets);
-    newWidgets.addAll(widgets);
-    newWidgets.addAll(widgets);
-    widgets = newWidgets;
-    return Container(
-        padding: EdgeInsets.all(16.0),
-        child: Expanded(child: GridView.extent(
-            maxCrossAxisExtent: 100,
-            padding: const EdgeInsets.all(0),
-            mainAxisSpacing: 20,
-            crossAxisSpacing: 20,
-            physics: ScrollPhysics(), // to disable GridView's scrolling
-            shrinkWrap: true,
-            children: widgets)));/*
-    return Container(
-        height: height == null ? 200 : height,
-        width: 500,
-        child: GridView.extent(
-            maxCrossAxisExtent: 200,
-            shrinkWrap: shrinkWrap,
-            reverse: reverse,
-            physics: ScrollPhysics(),
-            childAspectRatio: 1,
-//        padding: EdgeInsets.all(gridView.padding!),
-            scrollDirection: Axis.horizontal,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-            children: widgets));
-*/
-/*
     return Container(
         height: height == null ? 200 : height,
         child: CustomScrollView(
@@ -189,6 +209,5 @@ class MediaHelper {
             ),
           ],
         ));
-*/
   }
 }
