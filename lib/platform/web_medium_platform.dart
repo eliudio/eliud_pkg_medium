@@ -103,6 +103,15 @@ class WebMediumPlatform extends AbstractMediumPlatform {
     }
   }
 
+
+  // Assets need to be store in the directory assets in the web directory of your flutterweb app.
+  // For example, if you have images about.png loaded by specifying path 'packages/eliud_pkg_create/assets/annoyed.png',
+  // then make sure this file annoyed.png is available from you web directory like this:
+  // C:\src\eliud\minkey\web\assets\packages\eliud_pkg_create\assets\annoyed.png
+  // where index.html is available from C:\src\eliud\minkey\web
   @override
-  bool hasAccessToAssets() => false;
+  bool hasAccessToAssets() => true;
+
+  @override
+  bool hasAccessToLocalFilesystem() => false;
 }

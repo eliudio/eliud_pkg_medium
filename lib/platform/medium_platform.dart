@@ -86,6 +86,12 @@ abstract class AbstractMediumPlatform {
    */
   bool hasAccessToAssets();
 
+
+  /*
+   * Some implementations, e.g. android, have access to the local file system, whilst others don't, e.g. Web
+   */
+  bool hasAccessToLocalFilesystem();
+
   Future<void> processPhoto(
       String memberMediumDocumentID,
       String appId,

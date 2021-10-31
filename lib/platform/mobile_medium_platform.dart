@@ -186,4 +186,7 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
 
   @override
   bool hasAccessToAssets() => true;
+
+  @override
+  bool hasAccessToLocalFilesystem() => true;
 }
