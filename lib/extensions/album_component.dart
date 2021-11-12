@@ -1,4 +1,4 @@
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
@@ -69,6 +69,6 @@ class AlbumComponent extends AbstractAlbumComponent {
 
   @override
   AlbumRepository getAlbumRepository(BuildContext context) {
-    return albumRepository(appId: AccessBloc.appId(context))!;
+    return albumRepository(appId: AccessBloc.currentAppId(context))!;
   }
 }

@@ -15,7 +15,7 @@
 
 import '../model/album_repository.dart';
 import '../model/album_entry_repository.dart';
-import 'package:eliud_core/core/access/bloc/user_repository.dart';
+import 'package:eliud_core/core/blocs/access/repo/user_repository.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
 import 'package:eliud_core/package/package.dart';
