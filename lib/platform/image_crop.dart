@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:crop_your_image/crop_your_image.dart';
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/style/frontend/has_dialog.dart';
 import 'package:eliud_core/style/frontend/has_dialog_widget.dart';
@@ -32,7 +33,7 @@ class ImageCropWidget extends StatefulWidget {
     CroppedImage croppedImage,
     Uint8List image,
   ) {
-    openWidgetDialog(context,
+    openWidgetDialog(context, AccessBloc.currentAppId(context) + '/imagecrop',
             child: ImageCropWidget(
               croppedImage: croppedImage,
               image: image,
