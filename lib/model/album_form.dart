@@ -74,6 +74,7 @@ class AlbumForm extends StatelessWidget {
     var accessState = AccessBloc.getState(context);
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text("No app available");
+    var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<AlbumFormBloc >(
             create: (context) => AlbumFormBloc(AccessBloc.currentAppId(context),
@@ -142,6 +143,7 @@ class _MyAlbumFormState extends State<MyAlbumForm> {
   Widget build(BuildContext context) {
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text('No app available');
+    var appId = app.documentID!;
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<AlbumFormBloc, AlbumFormState>(builder: (context, state) {
       if (state is AlbumFormUninitialized) return Center(

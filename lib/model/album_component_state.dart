@@ -35,9 +35,9 @@ class AlbumComponentPermissionDenied extends AlbumComponentState {
 }
 
 class AlbumComponentLoaded extends AlbumComponentState {
-  final AlbumModel? value;
+  final AlbumModel value;
 
-  const AlbumComponentLoaded({ this.value });
+  const AlbumComponentLoaded({ required this.value });
 
   AlbumComponentLoaded copyWith({ AlbumModel? copyThis }) {
     return AlbumComponentLoaded(value: copyThis ?? this.value);

@@ -20,8 +20,8 @@ class AlbumComponentConstructorDefault implements ComponentConstructor {
 
   @override
   Widget createNew(
-      {Key? key, required String id, Map<String, dynamic>? parameters}) {
-    return AlbumComponent(key: key, id: id);
+      {Key? key, required String appId, required String id, Map<String, dynamic>? parameters}) {
+    return AlbumComponent(key: key, appId: appId, id: id);
   }
 
   @override
@@ -32,12 +32,7 @@ class AlbumComponentConstructorDefault implements ComponentConstructor {
 class AlbumComponent extends AbstractAlbumComponent {
   String? parentPageId;
 
-  AlbumComponent({Key? key, required String id}) : super(key: key, albumID: id);
-
-  @override
-  Widget alertWidget({title = String, content = String}) {
-    return AlertWidget(title: title, content: content);
-  }
+  AlbumComponent({Key? key, required String appId, required String id}) : super(key: key, theAppId: appId, albumId: id);
 
   @override
   Widget yourWidget(BuildContext context, AlbumModel? albumModel) {
@@ -64,11 +59,5 @@ class AlbumComponent extends AbstractAlbumComponent {
       AbstractMediumPlatform.platform!
           .showVideoPlatform(context, medium.medium!);
     }
-  }
-
-
-  @override
-  AlbumRepository getAlbumRepository(BuildContext context) {
-    return albumRepository(appId: AccessBloc.currentAppId(context))!;
   }
 }
