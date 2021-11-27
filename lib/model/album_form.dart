@@ -77,7 +77,7 @@ class AlbumForm extends StatelessWidget {
     var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<AlbumFormBloc >(
-            create: (context) => AlbumFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => AlbumFormBloc(appId,
                                        formAction: formAction,
 
                                                 )..add(InitialiseAlbumFormEvent(value: value)),
@@ -86,7 +86,7 @@ class AlbumForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<AlbumFormBloc >(
-            create: (context) => AlbumFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => AlbumFormBloc(appId,
                                        formAction: formAction,
 
                                                 )..add(InitialiseAlbumFormNoLoadEvent(value: value)),
@@ -97,7 +97,7 @@ class AlbumForm extends StatelessWidget {
       return Scaffold(
         appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update Album' : 'Add Album'),
         body: BlocProvider<AlbumFormBloc >(
-            create: (context) => AlbumFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => AlbumFormBloc(appId,
                                        formAction: formAction,
 
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseAlbumFormEvent(value: value) : InitialiseNewAlbumFormEvent())),

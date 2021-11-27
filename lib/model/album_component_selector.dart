@@ -35,10 +35,11 @@ class AlbumComponentSelector extends ComponentSelector {
   @override
   Widget createSelectWidget(BuildContext context, double height,
       SelectComponent selected, editorConstructor) {
+    var appId = AccessBloc.currentAppId(context);
     return BlocProvider<AlbumListBloc>(
           create: (context) => AlbumListBloc(
             albumRepository:
-                albumRepository(appId: AccessBloc.currentAppId(context))!,
+                albumRepository(appId: appId)!,
           )..add(LoadAlbumList()),
       child: SelectAlbumWidget(
           height: height,
