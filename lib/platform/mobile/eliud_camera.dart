@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/style/style_registry.dart';
+import 'package:eliud_core/tools/router_builders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
@@ -46,8 +48,7 @@ class EliudCamera extends StatefulWidget {
       WidgetsFlutterBinding.ensureInitialized();
       var cameras = await availableCameras();
       Navigator.of(context).push(
-        MaterialPageRoute(
-            builder: (_) => EliudCamera(
+        pageRouteBuilder(AccessBloc.currentApp(context), page: EliudCamera(
                   videoSaved: (file) =>
                       _myVideoSaved(context, file, videoSaved),
                   videoError: (error) =>

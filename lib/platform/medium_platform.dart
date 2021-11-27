@@ -1,9 +1,11 @@
   import 'dart:typed_data';
 
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/random.dart';
+import 'package:eliud_core/tools/router_builders.dart';
 import 'package:eliud_core/tools/storage/upload_info.dart';
 import 'package:eliud_pkg_medium/tools/slider/carousel_slider.dart';
 import 'package:eliud_pkg_medium/tools/view/video_view.dart';
@@ -26,34 +28,28 @@ abstract class AbstractMediumPlatform {
 
   void showPhotos(BuildContext context, List<MemberMediumModel> media, int initialPage) {
     var photos = media.where((memberMedium) => memberMedium.mediumType == MediumType.Photo).toList();
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return AlbumSlider(title: "Photos",
+    Navigator.push(context, pageRouteBuilder(AccessBloc.currentApp(context), page: AlbumSlider(title: "Photos",
           slideImageProvider: MemberMediumSlideImageProvider(ListHelper.getMemberMediumModelList(photos)),
-          initialPage: initialPage);
-    }));
+          initialPage: initialPage)));
   }
 
   void showPhotosPlatform(BuildContext context, List<PlatformMediumModel> media, int initialPage) {
     var photos = media.where((memberMedium) => memberMedium.mediumType == PlatformMediumType.Photo).toList();
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return AlbumSlider(title: "Photos",
+    Navigator.push(context, pageRouteBuilder(AccessBloc.currentApp(context), page: AlbumSlider(title: "Photos",
           slideImageProvider: PlatformMediumSlideImageProvider(ListHelper.getPlatformMediumModelList(photos)),
-          initialPage: initialPage);
-    }));
+          initialPage: initialPage)));
   }
 
   Future<void> showVideo(BuildContext context, MemberMediumModel memberMediumModel) async {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return VideoView(
-          sourceType: SourceType.Network, source: memberMediumModel.url!);
-    }));
+    Navigator.push(context, pageRouteBuilder(AccessBloc.currentApp(context), page: VideoView(
+          sourceType: SourceType.Network, source: memberMediumModel.url!)
+    ));
   }
 
   Future<void> showVideoPlatform(BuildContext context, PlatformMediumModel platformMediumModel) async {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return VideoView(
-          sourceType: SourceType.Network, source: platformMediumModel.url!);
-    }));
+    Navigator.push(context, pageRouteBuilder(AccessBloc.currentApp(context), page: VideoView(
+          sourceType: SourceType.Network, source: platformMediumModel.url!)
+    ));
   }
 
   /*
