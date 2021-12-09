@@ -26,7 +26,7 @@ class AlbumEntity {
   final String? appId;
   final List<AlbumEntryEntity>? albumEntries;
   final String? description;
-  final ConditionsSimpleEntity? conditions;
+  final StorageConditionsEntity? conditions;
 
   AlbumEntity({this.appId, this.albumEntries, this.description, this.conditions, });
 
@@ -55,7 +55,7 @@ class AlbumEntity {
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
     if (conditionsFromMap != null)
-      conditionsFromMap = ConditionsSimpleEntity.fromMap(conditionsFromMap);
+      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap);
 
     return AlbumEntity(
       appId: map['appId'], 

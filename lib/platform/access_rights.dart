@@ -1,4 +1,4 @@
-import 'package:eliud_core/model/conditions_simple_model.dart';
+import 'package:eliud_core/model/storage_conditions_model.dart';
 import 'package:eliud_core/tools/storage/member_medium_helper.dart';
 import 'package:eliud_core/tools/storage/medium_helper.dart';
 import 'package:eliud_core/tools/storage/platform_medium_helper.dart';

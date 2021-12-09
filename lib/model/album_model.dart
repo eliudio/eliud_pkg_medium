@@ -43,13 +43,13 @@ class AlbumModel {
   String? appId;
   List<AlbumEntryModel>? albumEntries;
   String? description;
-  ConditionsSimpleModel? conditions;
+  StorageConditionsModel? conditions;
 
   AlbumModel({this.documentID, this.appId, this.albumEntries, this.description, this.conditions, })  {
     assert(documentID != null);
   }
 
-  AlbumModel copyWith({String? documentID, String? appId, List<AlbumEntryModel>? albumEntries, String? description, ConditionsSimpleModel? conditions, }) {
+  AlbumModel copyWith({String? documentID, String? appId, List<AlbumEntryModel>? albumEntries, String? description, StorageConditionsModel? conditions, }) {
     return AlbumModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, albumEntries: albumEntries ?? this.albumEntries, description: description ?? this.description, conditions: conditions ?? this.conditions, );
   }
 
@@ -101,7 +101,7 @@ class AlbumModel {
             .toList(), 
           description: entity.description, 
           conditions: 
-            ConditionsSimpleModel.fromEntity(entity.conditions), 
+            StorageConditionsModel.fromEntity(entity.conditions), 
     );
   }
 
@@ -120,7 +120,7 @@ class AlbumModel {
             .toList())), 
           description: entity.description, 
           conditions: 
-            await ConditionsSimpleModel.fromEntityPlus(entity.conditions, appId: appId), 
+            await StorageConditionsModel.fromEntityPlus(entity.conditions, appId: appId), 
     );
   }
 

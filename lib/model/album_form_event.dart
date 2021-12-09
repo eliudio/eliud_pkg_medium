@@ -108,7 +108,7 @@ class ChangedAlbumDescription extends AlbumFormEvent {
 }
 
 class ChangedAlbumConditions extends AlbumFormEvent {
-  final ConditionsSimpleModel? value;
+  final StorageConditionsModel? value;
 
   ChangedAlbumConditions({this.value});
 
