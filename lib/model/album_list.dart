@@ -107,7 +107,7 @@ class AlbumListWidgetState extends State<AlbumListWidget> {
                       context, label: 'Add',
                       onPressed: () {
                         Navigator.of(context).push(
-                                  pageRouteBuilder(accessState.currentApp(context), page: BlocProvider.value(
+                                  pageRouteBuilder(accessState.currentApp, page: BlocProvider.value(
                                       value: BlocProvider.of<AlbumListBloc>(context),
                                       child: AlbumForm(
                                           value: null,
