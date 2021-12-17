@@ -155,7 +155,7 @@ class AlbumEntryListWidgetState extends State<AlbumEntryListWidget> {
               BlocProvider.of<AlbumEntryListBloc>(context)
                   .add(DeleteAlbumEntryList(value: value));
               Scaffold.of(context).showSnackBar(DeleteSnackBar(
-                message: "AlbumEntry " + value.documentID,
+                message: "AlbumEntry " + value.,
                 onUndo: () => BlocProvider.of<AlbumEntryListBloc>(context)
                     .add(AddAlbumEntryList(value: value)),
               ));
@@ -168,7 +168,7 @@ class AlbumEntryListWidgetState extends State<AlbumEntryListWidget> {
                       if (removedItem != null) {
                         Scaffold.of(context).showSnackBar(
                           DeleteSnackBar(
-                        message: "AlbumEntry " + value.documentID,
+                        message: "AlbumEntry " + value.,
                             onUndo: () => BlocProvider.of<AlbumEntryListBloc>(context)
                                 .add(AddAlbumEntryList(value: value)),
                           ),
@@ -214,6 +214,7 @@ class AlbumEntryListItem extends StatelessWidget {
       child: ListTile(
         onTap: onTap,
         title: value.name != null ? Center(child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().textStyle().text(context, value.name!)) : Container(),
+        subtitle: ,
       ),
     );
   }

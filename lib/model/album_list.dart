@@ -155,7 +155,7 @@ class AlbumListWidgetState extends State<AlbumListWidget> {
               BlocProvider.of<AlbumListBloc>(context)
                   .add(DeleteAlbumList(value: value));
               Scaffold.of(context).showSnackBar(DeleteSnackBar(
-                message: "Album " + value.documentID,
+                message: "Album " + value.,
                 onUndo: () => BlocProvider.of<AlbumListBloc>(context)
                     .add(AddAlbumList(value: value)),
               ));
@@ -168,7 +168,7 @@ class AlbumListWidgetState extends State<AlbumListWidget> {
                       if (removedItem != null) {
                         Scaffold.of(context).showSnackBar(
                           DeleteSnackBar(
-                        message: "Album " + value.documentID,
+                        message: "Album " + value.,
                             onUndo: () => BlocProvider.of<AlbumListBloc>(context)
                                 .add(AddAlbumList(value: value)),
                           ),

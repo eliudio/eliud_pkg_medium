@@ -123,7 +123,12 @@ class AlbumCache implements AlbumRepository {
 
   @override
   StreamSubscription<AlbumModel?> listenTo(String documentId, AlbumChanged changed) {
-    return reference.listenTo(documentId, changed);
+    return reference.listenTo(documentId, ((value) {
+      if (value != null) {
+        fullCache[value.documentID] = value;
+      }
+      changed(value);
+    }));
   }
 
   static Future<AlbumModel> refreshRelations(AlbumModel model) async {
