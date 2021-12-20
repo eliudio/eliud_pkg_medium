@@ -28,7 +28,7 @@ class RepositorySingleton extends AbstractRepositorySingleton {
     var _albumRepository = HashMap<String, AlbumRepository>();
 
     AlbumRepository? albumRepository(String? appId) {
-      if ((appId != null) && (_albumRepository[appId] == null)) _albumRepository[appId] = AlbumCache(AlbumFirestore(appRepository()!.getSubCollection(appId, 'album'), appId));
+      if ((appId != null) && (_albumRepository[appId] == null)) _albumRepository[appId] = AlbumCache(AlbumFirestore(() => appRepository()!.getSubCollection(appId, 'album'), appId));
       return _albumRepository[appId];
     }
 
