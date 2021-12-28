@@ -1,6 +1,7 @@
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
+import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/style/frontend/has_container.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
@@ -20,29 +21,29 @@ class AlbumComponentConstructorDefault implements ComponentConstructor {
 
   @override
   Widget createNew(
-      {Key? key, required String appId, required String id, Map<String, dynamic>? parameters}) {
-    return AlbumComponent(key: key, appId: appId, id: id);
+      {Key? key, required AppModel app, required String id, Map<String, dynamic>? parameters}) {
+    return AlbumComponent(key: key, app: app, id: id);
   }
 
   @override
-  Future<dynamic> getModel({required String appId, required String id}) async =>
-      await albumRepository(appId: appId)!.get(id);
+  Future<dynamic> getModel({required AppModel app, required String id}) async =>
+      await albumRepository(appId: app.documentID!)!.get(id);
 }
 
 class AlbumComponent extends AbstractAlbumComponent {
   String? parentPageId;
 
-  AlbumComponent({Key? key, required String appId, required String id}) : super(key: key, theAppId: appId, albumId: id);
+  AlbumComponent({Key? key, required AppModel app, required String id}) : super(key: key, app: app, albumId: id);
 
   @override
   Widget yourWidget(BuildContext context, AlbumModel? albumModel) {
     if (albumModel == null) {
-      return text(context, "Album is not available");
+      return text(app, context, "Album is not available");
     } else {
       if (albumModel.albumEntries == null) return Container();
       var mmm = albumModel.albumEntries!.map((pm) => pm.medium!).toList();
       List<PlatformMediumModel> media = mmm;
-      return MediaHelper.staggeredPlatformMediumModel(context, media, viewAction: (index) {
+      return MediaHelper.staggeredPlatformMediumModel(app, context, media, viewAction: (index) {
         _action(context, albumModel.albumEntries!, index);
       });
     }
@@ -53,11 +54,11 @@ class AlbumComponent extends AbstractAlbumComponent {
     if (medium.medium!.mediumType! == PlatformMediumType.Photo) {
       if (memberMedia.length > 0) {
         var photos = memberMedia.map((pm) => pm.medium!).toList();
-        AbstractMediumPlatform.platform!.showPhotosPlatform(context, photos, index);
+        AbstractMediumPlatform.platform!.showPhotosPlatform(context, app, photos, index);
       }
     } else {
       AbstractMediumPlatform.platform!
-          .showVideoPlatform(context, medium.medium!);
+          .showVideoPlatform(context, app, medium.medium!);
     }
   }
 }

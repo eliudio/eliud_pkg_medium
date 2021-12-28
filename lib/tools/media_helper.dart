@@ -1,3 +1,4 @@
+import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
@@ -21,7 +22,7 @@ class MediaHelper {
     );
   }
 
-  static Widget staggeredPhotosWithThumbnail(
+  static Widget staggeredPhotosWithThumbnail(AppModel app,
       BuildContext context, List<PhotoWithThumbnail> photos,
       {Function(int index)? deleteAction,
       Function(int index)? viewAction,
@@ -35,13 +36,13 @@ class MediaHelper {
       image = Image.memory(medium.thumbNailData.data);
       name = medium.photoData.baseName;
 
-      widgets.add(_getPopupMenuButton(
+      widgets.add(_getPopupMenuButton(app,
           context, name, image, i, deleteAction, viewAction));
     }
     return _getContainer(widgets, height, reverse, shrinkWrap);
   }
 
-  static Widget staggeredVideosWithThumbnail(
+  static Widget staggeredVideosWithThumbnail(AppModel app,
       BuildContext context, List<VideoWithThumbnail> videos,
       {Function(int index)? deleteAction,
       Function(int index)? viewAction,
@@ -55,13 +56,13 @@ class MediaHelper {
       image = Image.memory(medium.thumbNailData.data);
       name = medium.videoData.baseName;
 
-      widgets.add(_getPopupMenuButton(
+      widgets.add(_getPopupMenuButton(app,
           context, name, image, i, deleteAction, viewAction));
     }
     return _getContainer(widgets, height, reverse, shrinkWrap);
   }
 
-  static Widget staggeredMemberMediumModel(
+  static Widget staggeredMemberMediumModel(AppModel app,
       BuildContext context, List<MemberMediumModel> media,
       {Function(int index)? deleteAction,
       Function(int index)? viewAction,
@@ -80,7 +81,7 @@ class MediaHelper {
       );
       name = medium.urlThumbnail!;
 
-      widgets.add(_getPopupMenuButton(
+      widgets.add(_getPopupMenuButton(app,
           context, name, image, i, deleteAction, viewAction));
     }
     if (progressExtra != null) {
@@ -90,7 +91,7 @@ class MediaHelper {
           radius: 60.0,
           lineWidth: 5.0,
           percent: progressExtra,
-          center: text(context, '100%'),
+          center: text(app, context, '100%'),
         )));
       } else {
         widgets.add(Center(child: CircularProgressIndicator()));
@@ -99,7 +100,7 @@ class MediaHelper {
     return _getContainer(widgets, height, reverse, shrinkWrap);
   }
 
-  static Widget staggeredPlatformMediumModel(
+  static Widget staggeredPlatformMediumModel(AppModel app,
       BuildContext context, List<PlatformMediumModel> media,
       {Function(int index)? deleteAction,
         Function(int index)? viewAction,
@@ -118,7 +119,7 @@ class MediaHelper {
       );
       name = medium.urlThumbnail!;
 
-      widgets.add(_getPopupMenuButton(
+      widgets.add(_getPopupMenuButton(app,
           context, name, image, i, deleteAction, viewAction));
     }
     if (progressExtra != null) {
@@ -128,7 +129,7 @@ class MediaHelper {
               radius: 60.0,
               lineWidth: 5.0,
               percent: progressExtra,
-              center: text(context, '100%'),
+              center: text(app, context, '100%'),
             )));
       } else {
         widgets.add(Center(child: CircularProgressIndicator()));
@@ -148,7 +149,7 @@ class MediaHelper {
 
   }
 
-  static Widget _getPopupMenuButton(
+  static Widget _getPopupMenuButton(AppModel app,
       BuildContext context,
       String name,
       Widget image,
@@ -169,10 +170,10 @@ class MediaHelper {
       List<PopupMenuItem<int>> menuItems = [];
       if (viewAction != null) {
         menuItems.add(new PopupMenuItem<int>(
-            child: text(context, 'View'), value: POPUP_MENU_VIEW));
+            child: text(app, context, 'View'), value: POPUP_MENU_VIEW));
       }
       menuItems.add(new PopupMenuItem<int>(
-          child: text(context, 'Delete'), value: POPUP_MENU_DELETE_VALUE));
+          child: text(app, context, 'Delete'), value: POPUP_MENU_DELETE_VALUE));
 
       return PopupMenuButton(
           color: Colors.red,

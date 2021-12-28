@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
@@ -95,6 +96,7 @@ class Uint8ListSlideImageProvider extends SlideImageProvider {
 }
 
 class AlbumSlider extends StatefulWidget {
+  final AppModel app;
   final String? title;
   final SlideImageProvider slideImageProvider;
   final int? initialPage;
@@ -103,6 +105,7 @@ class AlbumSlider extends StatefulWidget {
 
   AlbumSlider(
       {Key? key,
+        required this.app,
       this.title,
       required this.slideImageProvider,
       this.initialPage,
@@ -131,7 +134,7 @@ class _AlbumSliderState extends State<AlbumSlider> {
       slideBuilder: (index) {
         return Stack(
           children: <Widget>[
-            progressIndicator(context),
+            progressIndicator(widget.app, context),
             Center(
                 child: Container(
               height: MediaQuery.of(context).size.height - height,

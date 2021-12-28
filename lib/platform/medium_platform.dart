@@ -1,6 +1,7 @@
   import 'dart:typed_data';
 
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
+import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/tools/etc.dart';
@@ -26,28 +27,28 @@ typedef void MediumAvailable(dynamic? mediumModel);
 abstract class AbstractMediumPlatform {
   static AbstractMediumPlatform? platform;
 
-  void showPhotos(BuildContext context, List<MemberMediumModel> media, int initialPage) {
+  void showPhotos(BuildContext context, AppModel app, List<MemberMediumModel> media, int initialPage) {
     var photos = media.where((memberMedium) => memberMedium.mediumType == MediumType.Photo).toList();
-    Navigator.push(context, pageRouteBuilder(AccessBloc.currentApp(context), page: AlbumSlider(title: "Photos",
+    Navigator.push(context, pageRouteBuilder(app, page: AlbumSlider(app: app, title: "Photos",
           slideImageProvider: MemberMediumSlideImageProvider(ListHelper.getMemberMediumModelList(photos)),
           initialPage: initialPage)));
   }
 
-  void showPhotosPlatform(BuildContext context, List<PlatformMediumModel> media, int initialPage) {
+  void showPhotosPlatform(BuildContext context, AppModel app, List<PlatformMediumModel> media, int initialPage) {
     var photos = media.where((memberMedium) => memberMedium.mediumType == PlatformMediumType.Photo).toList();
-    Navigator.push(context, pageRouteBuilder(AccessBloc.currentApp(context), page: AlbumSlider(title: "Photos",
+    Navigator.push(context, pageRouteBuilder(app, page: AlbumSlider(app: app, title: "Photos",
           slideImageProvider: PlatformMediumSlideImageProvider(ListHelper.getPlatformMediumModelList(photos)),
           initialPage: initialPage)));
   }
 
-  Future<void> showVideo(BuildContext context, MemberMediumModel memberMediumModel) async {
-    Navigator.push(context, pageRouteBuilder(AccessBloc.currentApp(context), page: VideoView(
+  Future<void> showVideo(BuildContext context, AppModel app, MemberMediumModel memberMediumModel) async {
+    Navigator.push(context, pageRouteBuilder(app, page: VideoView(
           sourceType: SourceType.Network, source: memberMediumModel.url!)
     ));
   }
 
-  Future<void> showVideoPlatform(BuildContext context, PlatformMediumModel platformMediumModel) async {
-    Navigator.push(context, pageRouteBuilder(AccessBloc.currentApp(context), page: VideoView(
+  Future<void> showVideoPlatform(BuildContext context, AppModel app, PlatformMediumModel platformMediumModel) async {
+    Navigator.push(context, pageRouteBuilder(app, page: VideoView(
           sourceType: SourceType.Network, source: platformMediumModel.url!)
     ));
   }
@@ -56,21 +57,21 @@ abstract class AbstractMediumPlatform {
    * Allows the user to take a photo
    * When photo is selected feedbackFunction is triggered
    */
-  void takePhoto(BuildContext context, String appId, String ownerId,       AccessRights accessRights, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress, {bool? allowCrop});
+  void takePhoto(BuildContext context, AppModel app, String ownerId,       AccessRights accessRights, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress, {bool? allowCrop});
 
   /*
    * Allows the user to take a photo
    * When photo is selected feedbackFunction is triggered
    */
-  void takeVideo(BuildContext context, String appId, String ownerId, AccessRights accessRights, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress);
+  void takeVideo(BuildContext context, AppModel app, String ownerId, AccessRights accessRights, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress);
 
-  void uploadPhoto(BuildContext context, String appId, String ownerId, AccessRights accessRights, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress, {bool? allowCrop});
+  void uploadPhoto(BuildContext context, AppModel app, String ownerId, AccessRights accessRights, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress, {bool? allowCrop});
 
   /*
    * Allows the user to select a photo from library
    * When photo is selected feedbackFunction is triggered
    */
-  void uploadVideo(BuildContext context, String appId, String ownerId, AccessRights accessRights, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress);
+  void uploadVideo(BuildContext context, AppModel app, String ownerId, AccessRights accessRights, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress);
 
   /*
    * Some implementations, e.g. android, have access to the camera. Some other implementations, e.g. web, don't
@@ -90,7 +91,7 @@ abstract class AbstractMediumPlatform {
 
   Future<void> processPhoto(
       String memberMediumDocumentID,
-      String appId,
+      AppModel app,
       String baseName,
       String thumbnailBaseName,
       String ownerId,
@@ -100,7 +101,7 @@ abstract class AbstractMediumPlatform {
       FeedbackProgress? feedbackProgress,
       ) async {
     try {
-      var mediumModel =  await accessRights.getMediumHelper(appId, ownerId).createThumbnailUploadPhotoData(memberMediumDocumentID,
+      var mediumModel =  await accessRights.getMediumHelper(app, ownerId).createThumbnailUploadPhotoData(memberMediumDocumentID,
           bytes, baseName, thumbnailBaseName,
           feedbackProgress: feedbackProgress);
       feedbackFunction(mediumModel);

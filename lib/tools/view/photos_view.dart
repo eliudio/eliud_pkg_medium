@@ -1,3 +1,4 @@
+import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ class PhotoView extends StatelessWidget {
   const PhotoView.extent(
       {@required this.maxCrossAxisExtent,
         @required this.tiles,
+        required this.app,
         this.mainAxisSpacing: 4.0,
         this.crossAxisSpacing: 4.0,
         this.widgets})
@@ -15,6 +17,7 @@ class PhotoView extends StatelessWidget {
   static const EdgeInsetsGeometry padding =
   const EdgeInsets.symmetric(horizontal: 4.0);
 
+  final AppModel app;
   final List<StaggeredTile>? tiles;
   final int? crossAxisCount;
   final double? mainAxisSpacing;
@@ -24,8 +27,8 @@ class PhotoView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (maxCrossAxisExtent == null) text(context, 'maxCrossAxisExtent is null');
-    if (tiles == null) return text(context, 'tiles is null');
+    if (maxCrossAxisExtent == null) text(app, context, 'maxCrossAxisExtent is null');
+    if (tiles == null) return text(app, context, 'tiles is null');
     return StaggeredGridView.extentBuilder(
       primary: false,
       maxCrossAxisExtent: maxCrossAxisExtent!,
@@ -47,7 +50,7 @@ class PhotoView extends StatelessWidget {
 
   Widget _getChild(BuildContext context, int i) {
     var widget = i >= widgets!.length ? null : widgets![i];
-    if (widget == null) return text(context, 'No child');
+    if (widget == null) return text(app, context, 'No child');
     return widget;
   }
 }

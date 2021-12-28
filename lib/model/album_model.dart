@@ -85,23 +85,22 @@ class AlbumModel {
     );
   }
 
-  static AlbumModel? fromEntity(String documentID, AlbumEntity? entity) {
+  static Future<AlbumModel?> fromEntity(String documentID, AlbumEntity? entity) async {
     if (entity == null) return null;
     var counter = 0;
     return AlbumModel(
           documentID: documentID, 
           appId: entity.appId, 
           albumEntries: 
-            entity.albumEntries == null ? null :
-            entity.albumEntries
+            entity.albumEntries == null ? null : List<AlbumEntryModel>.from(await Future.wait(entity. albumEntries
             !.map((item) {
-              counter++; 
-              return AlbumEntryModel.fromEntity(counter.toString(), item)!;
+            counter++;
+              return AlbumEntryModel.fromEntity(counter.toString(), item);
             })
-            .toList(), 
+            .toList())), 
           description: entity.description, 
           conditions: 
-            StorageConditionsModel.fromEntity(entity.conditions), 
+            await StorageConditionsModel.fromEntity(entity.conditions), 
     );
   }
 

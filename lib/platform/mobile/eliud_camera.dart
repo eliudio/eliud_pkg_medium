@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
+import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/router_builders.dart';
@@ -14,12 +15,14 @@ typedef VideoSaved(XFile file);
 typedef VideoError(String message);
 
 class EliudCamera extends StatefulWidget {
+  final AppModel app;
   final VideoSaved videoSaved;
   final VideoError videoError;
   final List<CameraDescription> cameras;
 
   const EliudCamera(
       {Key? key,
+      required this.app,
       required this.videoSaved,
       required this.cameras,
       required this.videoError})
@@ -42,13 +45,14 @@ class EliudCamera extends StatefulWidget {
     passToMe(error);
   }
 
-  static Future<void> openVideoRecorder(BuildContext context,
+  static Future<void> openVideoRecorder(BuildContext context, AppModel app,
       VideoSaved videoSaved, VideoError videoError) async {
     try {
       WidgetsFlutterBinding.ensureInitialized();
       var cameras = await availableCameras();
       Navigator.of(context).push(
-        pageRouteBuilder(AccessBloc.currentApp(context), page: EliudCamera(
+        pageRouteBuilder(app, page: EliudCamera(
+          app: app,
                   videoSaved: (file) =>
                       _myVideoSaved(context, file, videoSaved),
                   videoError: (error) =>
@@ -212,7 +216,7 @@ class _EliudCameraState extends State<EliudCamera>
     final CameraController? cameraController = controller;
 
     if (cameraController == null || !cameraController.value.isInitialized) {
-      return h5(context,
+      return h5(widget.app, context,
         'Tap a camera',
       );
     } else {
@@ -542,7 +546,7 @@ class _EliudCameraState extends State<EliudCamera>
             onPressed: onVideoRecordButtonPressed);
       }
     } else {
-      return text(context, 'Select camera');
+      return text(widget.app, context, 'Select camera');
     }
   }
 
@@ -567,7 +571,7 @@ class _EliudCameraState extends State<EliudCamera>
     };
 
     if (widget.cameras.isEmpty) {
-      return text(context, 'No camera found');
+      return text(widget.app, context, 'No camera found');
     } else {
       for (CameraDescription cameraDescription in widget.cameras) {
         toggles.add(Theme(
@@ -600,7 +604,7 @@ class _EliudCameraState extends State<EliudCamera>
 
   void showInSnackBar(String message) {
     // ignore: deprecated_member_use
-    _scaffoldKey.currentState?.showSnackBar(SnackBar(content: text(context, message)));
+    _scaffoldKey.currentState?.showSnackBar(SnackBar(content: text(widget.app, context, message)));
   }
 
   void onViewFinderTap(TapDownDetails details, BoxConstraints constraints) {

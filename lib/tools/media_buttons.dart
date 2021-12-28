@@ -1,3 +1,4 @@
+import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/storage/upload_info.dart';
@@ -8,7 +9,7 @@ import 'package:flutter/material.dart';
 class MediaButtons {
   static PopupMenuButton mediaButtons(
     BuildContext context,
-    String appId,
+    AppModel app,
     String ownerId,
     List<String>? readAccess, {
     MediumAvailable? photoFeedbackFunction,
@@ -25,24 +26,24 @@ class MediaButtons {
       if (AbstractMediumPlatform.platform!.hasCamera()) {
         items.add(
           PopupMenuItem<int>(
-              child: text(context, 'Take photo'),
+              child: text(app, context, 'Take photo'),
               value: 0),
         );
       }
       items.add(new PopupMenuItem<int>(
-          child: text(context, 'Upload photo'),
+          child: text(app, context, 'Upload photo'),
           value: 1));
     }
     if (videoFeedbackFunction != null) {
       if (AbstractMediumPlatform.platform!.hasCamera()) {
         items.add(
           PopupMenuItem<int>(
-              child: text(context, 'Take video'),
+              child: text(app, context, 'Take video'),
               value: 2),
         );
       }
       items.add(new PopupMenuItem<int>(
-          child: text(context, 'Upload video'),
+          child: text(app, context, 'Upload video'),
           value: 3));
     }
     return PopupMenuButton(
@@ -55,7 +56,7 @@ class MediaButtons {
             if (choice == 0) {
               AbstractMediumPlatform.platform!.takePhoto(
                   context,
-                  appId,
+                  app,
                   ownerId,
                   MemberMediumAccessRights(readAccess),
                   photoFeedbackFunction,
@@ -65,7 +66,7 @@ class MediaButtons {
             if (choice == 1) {
               AbstractMediumPlatform.platform!.uploadPhoto(
                   context,
-                  appId,
+                  app,
                   ownerId,
                   MemberMediumAccessRights(readAccess),
                   photoFeedbackFunction,
@@ -77,7 +78,7 @@ class MediaButtons {
             if (choice == 2) {
               AbstractMediumPlatform.platform!.takeVideo(
                   context,
-                  appId,
+                  app,
                   ownerId,
                   MemberMediumAccessRights(readAccess),
                   videoFeedbackFunction,
@@ -86,7 +87,7 @@ class MediaButtons {
             if (choice == 3) {
               AbstractMediumPlatform.platform!.uploadVideo(
                   context,
-                  appId,
+                  app,
                   ownerId,
                   MemberMediumAccessRights(readAccess),
                   videoFeedbackFunction,

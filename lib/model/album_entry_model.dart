@@ -72,7 +72,7 @@ class AlbumEntryModel {
     );
   }
 
-  static AlbumEntryModel? fromEntity(String documentID, AlbumEntryEntity? entity) {
+  static Future<AlbumEntryModel?> fromEntity(String documentID, AlbumEntryEntity? entity) async {
     if (entity == null) return null;
     var counter = 0;
     return AlbumEntryModel(

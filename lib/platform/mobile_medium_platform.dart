@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/tools/random.dart';
 import 'package:eliud_core/tools/storage/basename_helper.dart';
 import 'package:eliud_core/tools/storage/member_medium_helper.dart';
@@ -16,7 +17,7 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
   @override
   Future<void> takePhoto(
       BuildContext context,
-      String appId,
+      AppModel app,
       String ownerId,
       AccessRights accessRights,
       MediumAvailable feedbackFunction,
@@ -47,13 +48,13 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
           BaseNameHelper.thumbnailBaseName(memberMediumDocumentID, _image.path);
       var bytes = await _image.readAsBytes();
       if ((allowCrop != null) && (allowCrop)) {
-        ImageCropWidget.open(context, (croppedImage) {
+        ImageCropWidget.open(context, app, (croppedImage) {
           if (croppedImage == null) {
             feedbackFunction(null);
           } else {
             processPhoto(
                 memberMediumDocumentID,
-                appId,
+                app,
                 baseName,
                 thumbnailBaseName,
                 ownerId,
@@ -64,7 +65,7 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
           }
         }, bytes);
       } else {
-        processPhoto(memberMediumDocumentID, appId, baseName, thumbnailBaseName,
+        processPhoto(memberMediumDocumentID, app, baseName, thumbnailBaseName,
             ownerId, bytes, accessRights, feedbackFunction, feedbackProgress);
       }
     } else {
@@ -75,15 +76,15 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
   @override
   void takeVideo(
       BuildContext context,
-      String appId,
+      AppModel app,
       String ownerId,
       AccessRights accessRights,
       MediumAvailable feedbackFunction,
       FeedbackProgress? feedbackProgress) {
     var memberMediumDocumentID = newRandomKey();
-    EliudCamera.openVideoRecorder(context, (video) async {
+    EliudCamera.openVideoRecorder(context, app, (video) async {
       var memberMediumModel = await accessRights
-          .getMediumHelper(appId, ownerId)
+          .getMediumHelper(app, ownerId)
           .createThumbnailUploadVideoFile(memberMediumDocumentID, video.path,
               feedbackProgress: feedbackProgress);
       feedbackFunction(memberMediumModel);
@@ -99,7 +100,7 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
   @override
   Future<void> uploadPhoto(
       BuildContext context,
-      String appId,
+      AppModel app,
       String ownerId,
       AccessRights accessRights,
       MediumAvailable feedbackFunction,
@@ -125,13 +126,13 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
           BaseNameHelper.thumbnailBaseName(memberMediumDocumentID, path);
       var bytes = await File(path).readAsBytes();
       if ((allowCrop != null) && (allowCrop)) {
-        ImageCropWidget.open(context, (croppedImage) {
+        ImageCropWidget.open(context, app, (croppedImage) {
           if (croppedImage == null) {
             feedbackFunction(null);
           } else {
             processPhoto(
                 memberMediumDocumentID,
-                appId,
+                app,
                 baseName,
                 thumbnailBaseName,
                 ownerId,
@@ -142,7 +143,7 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
           }
         }, bytes);
       } else {
-        processPhoto(memberMediumDocumentID, appId, baseName, thumbnailBaseName,
+        processPhoto(memberMediumDocumentID, app, baseName, thumbnailBaseName,
             ownerId, bytes, accessRights, feedbackFunction, feedbackProgress);
       }
     } catch (error) {
@@ -154,7 +155,7 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
   @override
   Future<void> uploadVideo(
       BuildContext context,
-      String appId,
+      AppModel app,
       String ownerId,
       AccessRights accessRights,
       MediumAvailable feedbackFunction,
@@ -174,7 +175,7 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
         return;
       }
       var memberMediumModel = await accessRights
-          .getMediumHelper(appId, ownerId)
+          .getMediumHelper(app, ownerId)
           .createThumbnailUploadVideoFile(memberMediumDocumentID, path,
               feedbackProgress: feedbackProgress);
       feedbackFunction(memberMediumModel);

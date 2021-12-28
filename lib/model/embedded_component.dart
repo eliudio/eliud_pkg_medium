@@ -17,6 +17,7 @@
 import 'package:eliud_core/tools/random.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
+import 'package:eliud_core/model/app_model.dart';
 
 import 'dart:async';
 
@@ -32,11 +33,11 @@ import '../model/album_entry_repository.dart';
 
 typedef AlbumEntryListChanged(List<AlbumEntryModel> values);
 
-albumEntrysList(context, value, trigger) => EmbeddedComponentFactory.albumEntrysList(context, value, trigger);
+albumEntrysList(app, context, value, trigger) => EmbeddedComponentFactory.albumEntrysList(app, context, value, trigger);
 
 class EmbeddedComponentFactory {
 
-static Widget albumEntrysList(BuildContext context, List<AlbumEntryModel> values, AlbumEntryListChanged trigger) {
+static Widget albumEntrysList(BuildContext context, AppModel app, List<AlbumEntryModel> values, AlbumEntryListChanged trigger) {
   AlbumEntryInMemoryRepository inMemoryRepository = AlbumEntryInMemoryRepository(trigger, values,);
   return MultiBlocProvider(
     providers: [
@@ -46,7 +47,7 @@ static Widget albumEntrysList(BuildContext context, List<AlbumEntryModel> values
           )..add(LoadAlbumEntryList()),
         )
         ],
-    child: AlbumEntryListWidget(isEmbedded: true),
+    child: AlbumEntryListWidget(app: app, isEmbedded: true),
   );
 }
 
