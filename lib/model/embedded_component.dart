@@ -37,7 +37,7 @@ albumEntrysList(app, context, value, trigger) => EmbeddedComponentFactory.albumE
 
 class EmbeddedComponentFactory {
 
-static Widget albumEntrysList(BuildContext context, AppModel app, List<AlbumEntryModel> values, AlbumEntryListChanged trigger) {
+static Widget albumEntrysList(AppModel app, BuildContext context, List<AlbumEntryModel> values, AlbumEntryListChanged trigger) {
   AlbumEntryInMemoryRepository inMemoryRepository = AlbumEntryInMemoryRepository(trigger, values,);
   return MultiBlocProvider(
     providers: [
