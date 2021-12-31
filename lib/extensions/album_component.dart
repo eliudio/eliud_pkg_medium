@@ -41,7 +41,13 @@ class AlbumComponent extends AbstractAlbumComponent {
       return text(app, context, "Album is not available");
     } else {
       if (albumModel.albumEntries == null) return Container();
-      var mmm = albumModel.albumEntries!.map((pm) => pm.medium!).toList();
+      List<PlatformMediumModel> mmm = [];
+      for (var medium in albumModel.albumEntries!) {
+        if ((medium != null) & (medium.medium != null)) {
+          mmm.add(medium.medium!);
+        }
+      }
+
       List<PlatformMediumModel> media = mmm;
       return MediaHelper.staggeredPlatformMediumModel(app, context, media, viewAction: (index) {
         _action(context, albumModel.albumEntries!, index);
