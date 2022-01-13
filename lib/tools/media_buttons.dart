@@ -11,7 +11,9 @@ class MediaButtons {
     BuildContext context,
     AppModel app,
     String ownerId,
-    List<String>? readAccess, {
+    MemberMediumAccessibleByGroup accessibleByGroup,
+    /*List<String>? readAccess, */{
+    List<String>? accessibleByMembers,
     MediumAvailable? photoFeedbackFunction,
     FeedbackProgress? photoFeedbackProgress,
     MediumAvailable? videoFeedbackFunction,
@@ -20,7 +22,6 @@ class MediaButtons {
     bool? allowCrop,
     String? tooltip,
   }) {
-    if (readAccess == null) throw Exception('readAccess is null');
     var items = <PopupMenuItem<int>>[];
     if (photoFeedbackFunction != null) {
       if (AbstractMediumPlatform.platform!.hasCamera()) {
@@ -58,7 +59,7 @@ class MediaButtons {
                   context,
                   app,
                   ownerId,
-                  MemberMediumAccessRights(readAccess),
+                  MemberMediumAccessRights(accessibleByGroup, accessibleByMembers: accessibleByMembers),
                   photoFeedbackFunction,
                   photoFeedbackProgress,
                   allowCrop: allowCrop);
@@ -68,7 +69,7 @@ class MediaButtons {
                   context,
                   app,
                   ownerId,
-                  MemberMediumAccessRights(readAccess),
+                  MemberMediumAccessRights(accessibleByGroup, accessibleByMembers: accessibleByMembers),
                   photoFeedbackFunction,
                   photoFeedbackProgress,
                   allowCrop: allowCrop);
@@ -80,7 +81,7 @@ class MediaButtons {
                   context,
                   app,
                   ownerId,
-                  MemberMediumAccessRights(readAccess),
+                  MemberMediumAccessRights(accessibleByGroup, accessibleByMembers: accessibleByMembers),
                   videoFeedbackFunction,
                   videoFeedbackProgress);
             }
@@ -89,7 +90,7 @@ class MediaButtons {
                   context,
                   app,
                   ownerId,
-                  MemberMediumAccessRights(readAccess),
+                  MemberMediumAccessRights(accessibleByGroup, accessibleByMembers: accessibleByMembers),
                   videoFeedbackFunction,
                   videoFeedbackProgress);
             }
