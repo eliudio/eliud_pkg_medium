@@ -5,15 +5,17 @@ import 'package:eliud_core/tools/storage/upload_info.dart';
 import 'package:eliud_pkg_medium/platform/access_rights.dart';
 import 'package:eliud_pkg_medium/platform/medium_platform.dart';
 import 'package:flutter/material.dart';
+import 'package:tuple/tuple.dart';
+
+typedef Tuple2<MemberMediumAccessibleByGroup,
+    List<String>?> MemberMediumAccessibleProviderFunction();
 
 class MediaButtons {
   static PopupMenuButton mediaButtons(
     BuildContext context,
     AppModel app,
     String ownerId,
-    MemberMediumAccessibleByGroup accessibleByGroup,
-    /*List<String>? readAccess, */{
-    List<String>? accessibleByMembers,
+    MemberMediumAccessibleProviderFunction accessibleByFunction, {
     MediumAvailable? photoFeedbackFunction,
     FeedbackProgress? photoFeedbackProgress,
     MediumAvailable? videoFeedbackFunction,
@@ -26,26 +28,20 @@ class MediaButtons {
     if (photoFeedbackFunction != null) {
       if (AbstractMediumPlatform.platform!.hasCamera()) {
         items.add(
-          PopupMenuItem<int>(
-              child: text(app, context, 'Take photo'),
-              value: 0),
+          PopupMenuItem<int>(child: text(app, context, 'Take photo'), value: 0),
         );
       }
       items.add(new PopupMenuItem<int>(
-          child: text(app, context, 'Upload photo'),
-          value: 1));
+          child: text(app, context, 'Upload photo'), value: 1));
     }
     if (videoFeedbackFunction != null) {
       if (AbstractMediumPlatform.platform!.hasCamera()) {
         items.add(
-          PopupMenuItem<int>(
-              child: text(app, context, 'Take video'),
-              value: 2),
+          PopupMenuItem<int>(child: text(app, context, 'Take video'), value: 2),
         );
       }
       items.add(new PopupMenuItem<int>(
-          child: text(app, context, 'Upload video'),
-          value: 3));
+          child: text(app, context, 'Upload video'), value: 3));
     }
     return PopupMenuButton(
         tooltip: tooltip,
@@ -59,7 +55,8 @@ class MediaButtons {
                   context,
                   app,
                   ownerId,
-                  MemberMediumAccessRights(accessibleByGroup, accessibleByMembers: accessibleByMembers),
+                  () => MemberMediumAccessRights(accessibleByFunction().item1,
+                      accessibleByMembers: accessibleByFunction().item2),
                   photoFeedbackFunction,
                   photoFeedbackProgress,
                   allowCrop: allowCrop);
@@ -69,7 +66,8 @@ class MediaButtons {
                   context,
                   app,
                   ownerId,
-                  MemberMediumAccessRights(accessibleByGroup, accessibleByMembers: accessibleByMembers),
+                  () => MemberMediumAccessRights(accessibleByFunction().item1,
+                      accessibleByMembers: accessibleByFunction().item2),
                   photoFeedbackFunction,
                   photoFeedbackProgress,
                   allowCrop: allowCrop);
@@ -81,7 +79,8 @@ class MediaButtons {
                   context,
                   app,
                   ownerId,
-                  MemberMediumAccessRights(accessibleByGroup, accessibleByMembers: accessibleByMembers),
+                  () => MemberMediumAccessRights(accessibleByFunction().item1,
+                      accessibleByMembers: accessibleByFunction().item2),
                   videoFeedbackFunction,
                   videoFeedbackProgress);
             }
@@ -90,7 +89,8 @@ class MediaButtons {
                   context,
                   app,
                   ownerId,
-                  MemberMediumAccessRights(accessibleByGroup, accessibleByMembers: accessibleByMembers),
+                  () => MemberMediumAccessRights(accessibleByFunction().item1,
+                      accessibleByMembers: accessibleByFunction().item2),
                   videoFeedbackFunction,
                   videoFeedbackProgress);
             }

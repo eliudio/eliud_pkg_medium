@@ -19,7 +19,7 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
       BuildContext context,
       AppModel app,
       String ownerId,
-      AccessRights accessRights,
+      AccessRightsProvider accessRightsProvider,
       MediumAvailable feedbackFunction,
       FeedbackProgress? feedbackProgress,
       {bool? allowCrop}) async {
@@ -59,14 +59,14 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
                 thumbnailBaseName,
                 ownerId,
                 croppedImage,
-                accessRights,
+                accessRightsProvider,
                 feedbackFunction,
                 feedbackProgress);
           }
         }, bytes);
       } else {
         processPhoto(memberMediumDocumentID, app, baseName, thumbnailBaseName,
-            ownerId, bytes, accessRights, feedbackFunction, feedbackProgress);
+            ownerId, bytes, accessRightsProvider, feedbackFunction, feedbackProgress);
       }
     } else {
       feedbackFunction(null);
@@ -78,12 +78,12 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
       BuildContext context,
       AppModel app,
       String ownerId,
-      AccessRights accessRights,
+      AccessRightsProvider accessRightsProvider,
       MediumAvailable feedbackFunction,
       FeedbackProgress? feedbackProgress) {
     var memberMediumDocumentID = newRandomKey();
     EliudCamera.openVideoRecorder(context, app, (video) async {
-      var memberMediumModel = await accessRights
+      var memberMediumModel = await accessRightsProvider()
           .getMediumHelper(app, ownerId)
           .createThumbnailUploadVideoFile(memberMediumDocumentID, video.path,
               feedbackProgress: feedbackProgress);
@@ -102,7 +102,7 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
       BuildContext context,
       AppModel app,
       String ownerId,
-      AccessRights accessRights,
+      AccessRightsProvider accessRightsProvider,
       MediumAvailable feedbackFunction,
       FeedbackProgress? feedbackProgress,
       {bool? allowCrop}) async {
@@ -137,14 +137,14 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
                 thumbnailBaseName,
                 ownerId,
                 croppedImage,
-                accessRights,
+                accessRightsProvider,
                 feedbackFunction,
                 feedbackProgress);
           }
         }, bytes);
       } else {
         processPhoto(memberMediumDocumentID, app, baseName, thumbnailBaseName,
-            ownerId, bytes, accessRights, feedbackFunction, feedbackProgress);
+            ownerId, bytes, accessRightsProvider, feedbackFunction, feedbackProgress);
       }
     } catch (error) {
       print('Error trying to uploadPhoto: ' + error.toString());
@@ -157,7 +157,7 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
       BuildContext context,
       AppModel app,
       String ownerId,
-      AccessRights accessRights,
+      AccessRightsProvider accessRightsProvider,
       MediumAvailable feedbackFunction,
       FeedbackProgress? feedbackProgress) async {
     try {
@@ -174,7 +174,7 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
         feedbackFunction(null);
         return;
       }
-      var memberMediumModel = await accessRights
+      var memberMediumModel = await accessRightsProvider()
           .getMediumHelper(app, ownerId)
           .createThumbnailUploadVideoFile(memberMediumDocumentID, path,
               feedbackProgress: feedbackProgress);

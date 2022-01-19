@@ -23,6 +23,7 @@ import 'access_rights.dart';
  * I assume we might want to have a ui to allow to organise photos in a user image repository
  */
 typedef void MediumAvailable(dynamic? mediumModel);
+typedef AccessRights AccessRightsProvider();
 
 abstract class AbstractMediumPlatform {
   static AbstractMediumPlatform? platform;
@@ -57,21 +58,21 @@ abstract class AbstractMediumPlatform {
    * Allows the user to take a photo
    * When photo is selected feedbackFunction is triggered
    */
-  void takePhoto(BuildContext context, AppModel app, String ownerId,       AccessRights accessRights, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress, {bool? allowCrop});
+  void takePhoto(BuildContext context, AppModel app, String ownerId,       AccessRightsProvider accessRightsProvider, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress, {bool? allowCrop});
 
   /*
    * Allows the user to take a photo
    * When photo is selected feedbackFunction is triggered
    */
-  void takeVideo(BuildContext context, AppModel app, String ownerId, AccessRights accessRights, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress);
+  void takeVideo(BuildContext context, AppModel app, String ownerId, AccessRightsProvider accessRightsProvider, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress);
 
-  void uploadPhoto(BuildContext context, AppModel app, String ownerId, AccessRights accessRights, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress, {bool? allowCrop});
+  void uploadPhoto(BuildContext context, AppModel app, String ownerId, AccessRightsProvider accessRightsProvider, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress, {bool? allowCrop});
 
   /*
    * Allows the user to select a photo from library
    * When photo is selected feedbackFunction is triggered
    */
-  void uploadVideo(BuildContext context, AppModel app, String ownerId, AccessRights accessRights, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress);
+  void uploadVideo(BuildContext context, AppModel app, String ownerId, AccessRightsProvider accessRightsProvider, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress);
 
   /*
    * Some implementations, e.g. android, have access to the camera. Some other implementations, e.g. web, don't
@@ -96,12 +97,12 @@ abstract class AbstractMediumPlatform {
       String thumbnailBaseName,
       String ownerId,
       Uint8List bytes,
-      AccessRights accessRights,
+      AccessRightsProvider accessRightsProvider,
       MediumAvailable feedbackFunction,
       FeedbackProgress? feedbackProgress,
       ) async {
     try {
-      var mediumModel =  await accessRights.getMediumHelper(app, ownerId).createThumbnailUploadPhotoData(memberMediumDocumentID,
+      var mediumModel =  await accessRightsProvider().getMediumHelper(app, ownerId).createThumbnailUploadPhotoData(memberMediumDocumentID,
           bytes, baseName, thumbnailBaseName,
           feedbackProgress: feedbackProgress);
       feedbackFunction(mediumModel);
