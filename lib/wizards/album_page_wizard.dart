@@ -11,9 +11,9 @@ import 'builders/page/album_page_builder.dart';
 class AlbumPageWizard extends NewAppWizardInfoWithActionSpecification {
   static String ALBUM_COMPONENT_IDENTIFIER = "album";
   static String ALBUM_EXAMPLE1_PHOTO_ASSET_PATH =
-      'packages/eliud_pkg_create/assets/example_photo_1.jpg';
+      'packages/eliud_pkg_medium/assets/example_photo_1.jpg';
   static String ALBUM_EXAMPLE2_PHOTO_ASSET_PATH =
-      'packages/eliud_pkg_create/assets/example_photo_2.jpg';
+      'packages/eliud_pkg_medium/assets/example_photo_2.jpg';
   static String ALBUM_PAGE_ID = 'album';
 
   AlbumPageWizard() : super('album', 'Album', 'Generate Album');
