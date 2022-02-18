@@ -34,5 +34,5 @@ flutter:
   uses-material-design: true
 
   assets:
-    - packages/eliud_pkg_create/assets/example_photo_1.jpg
-    - packages/eliud_pkg_create/assets/example_photo_2.jpg
+    - packages/eliud_pkg_medium/assets/example_photo_1.jpg
+    - packages/eliud_pkg_medium/assets/example_photo_2.jpg
