@@ -68,26 +68,39 @@ class AlbumPageBuilder extends PageBuilder {
         memberId: memberId,
         examplePhoto1AssetPath: examplePhoto1AssetPath,
         examplePhoto2AssetPath: examplePhoto2AssetPath);
-    return AlbumModel(
+    print("example1");
+    var example1 = await helper.example1();
+    print("example2");
+    var example2 = await helper.example2();
+    print("end example");
+    var albumModel = AlbumModel(
       documentID: albumComponentIdentifier,
       appId: app.documentID!,
       albumEntries: [
-        await helper.example1(),
-        await helper.example2(),
+        example1,
+        example2,
       ],
       description: "Example Photos",
       conditions: StorageConditionsModel(
           privilegeLevelRequired:
               PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
     );
+    print("return albumModel");
+    return albumModel;
   }
 
   Future<AlbumModel> _setupAlbum() async {
-    return await albumRepository(appId: app.documentID!)!.add(await albumModel());
+    print("_setupAlbum");
+    var _albumModel =
+        await albumRepository(appId: app.documentID!)!.add(await albumModel());
+    print("return _setupAlbum");
+    return _albumModel;
   }
 
   Future<PageModel> create() async {
+    print("create()");
     await _setupAlbum();
+    print("create 2()");
     return await _setupPage();
   }
 }
@@ -106,13 +119,14 @@ class ExampleAlbumHelper {
   });
 
   Future<AlbumEntryModel> example1() async {
+    print("create medium");
+    var medium = await PlatformMediumHelper(app, memberId,
+            PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple)
+        .createThumbnailUploadPhotoAsset(
+            newRandomKey(), examplePhoto1AssetPath);
+    print("add model");
     return AlbumEntryModel(
-        documentID: newRandomKey(),
-        name: 'example 1',
-        medium: await PlatformMediumHelper(app, memberId,
-                PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple)
-            .createThumbnailUploadPhotoAsset(
-                newRandomKey(), examplePhoto1AssetPath));
+        documentID: newRandomKey(), name: 'example 1', medium: medium);
   }
 
   Future<AlbumEntryModel> example2() async {
