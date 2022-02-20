@@ -25,10 +25,10 @@ class AlbumPageWizard extends NewAppWizardInfoWithActionSpecification {
   NewAppWizardParameters newAppWizardParameters() =>
       ActionSpecificationParametersBase(
         requiresAccessToLocalFileSystem: false,
-        availableInLeftDrawer: hasAccessToLocalFileSystem,
+        availableInLeftDrawer: false,
         availableInRightDrawer: false,
         availableInAppBar: false,
-        availableInHomeMenu: hasAccessToLocalFileSystem,
+        availableInHomeMenu: true,
         available: false,
       );
 
