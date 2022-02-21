@@ -5,6 +5,7 @@ import 'package:eliud_core/model/member_model.dart';
 import 'package:eliud_core/model/menu_item_model.dart';
 import 'package:eliud_core/wizards/helpers/menu_helpers.dart';
 import 'package:eliud_pkg_medium/platform/medium_platform.dart';
+import 'package:eliud_pkg_medium/tools/bespoke_models.dart';
 import 'package:flutter/material.dart';
 import 'builders/page/album_page_builder.dart';
 
@@ -83,4 +84,7 @@ class AlbumPageWizard extends NewAppWizardInfoWithActionSpecification {
 
   @override
   String? getPageID(String pageType) => null;
+
+  @override
+  ActionModel? getAction(AppModel app, String actionType) => null;
 }
