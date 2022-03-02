@@ -3,6 +3,7 @@ import 'package:eliud_core/core/wizards/registry/registry.dart';
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/member_model.dart';
 import 'package:eliud_core/model/menu_item_model.dart';
+import 'package:eliud_core/model/public_medium_model.dart';
 import 'package:eliud_core/wizards/helpers/menu_helpers.dart';
 import 'package:eliud_pkg_medium/platform/medium_platform.dart';
 import 'package:eliud_pkg_medium/tools/bespoke_models.dart';
@@ -10,14 +11,14 @@ import 'package:flutter/material.dart';
 import 'builders/page/album_page_builder.dart';
 
 class AlbumPageWizard extends NewAppWizardInfoWithActionSpecification {
-  static String ALBUM_COMPONENT_IDENTIFIER = "album";
-  static String ALBUM_EXAMPLE1_PHOTO_ASSET_PATH =
+  static String albumComponentIdentifier = "album";
+  static String albumExample1PhotoAssetPath =
       'packages/eliud_pkg_medium/assets/example_photo_1.jpg';
-  static String ALBUM_EXAMPLE2_PHOTO_ASSET_PATH =
+  static String albumExample2PhotoAssetPath =
       'packages/eliud_pkg_medium/assets/example_photo_2.jpg';
-  static String ALBUM_PAGE_ID = 'album';
+  static String albumPageId = 'album';
 
-  AlbumPageWizard() : super('album', 'Album', 'Generate Album');
+  AlbumPageWizard() : super('album', 'Album', 'Generate a default Album');
 
   static bool hasAccessToLocalFileSystem =
       AbstractMediumPlatform.platform!.hasAccessToLocalFilesystem();
@@ -34,11 +35,12 @@ class AlbumPageWizard extends NewAppWizardInfoWithActionSpecification {
       );
 
   @override
-  List<MenuItemModel>? getThoseMenuItems(AppModel app) =>[
-      menuItem(app, ALBUM_PAGE_ID, 'Album', Icons.album)];
+  List<MenuItemModel>? getThoseMenuItems(String uniqueId, AppModel app) =>[
+      menuItem(uniqueId, app, albumPageId, 'Album', Icons.album)];
 
   @override
   List<NewAppTask>? getCreateTasks(
+    String uniqueId,
     AppModel app,
     NewAppWizardParameters parameters,
     MemberModel member,
@@ -56,11 +58,11 @@ class AlbumPageWizard extends NewAppWizardInfoWithActionSpecification {
         List<NewAppTask> tasks = [];
         tasks.add(() async {
           print("Album page");
-          await AlbumPageBuilder(
-                  ALBUM_COMPONENT_IDENTIFIER,
-                  ALBUM_EXAMPLE1_PHOTO_ASSET_PATH,
-                  ALBUM_EXAMPLE2_PHOTO_ASSET_PATH,
-                  ALBUM_PAGE_ID,
+          await AlbumPageBuilder(uniqueId,
+              albumComponentIdentifier,
+                  albumExample1PhotoAssetPath,
+                  albumExample2PhotoAssetPath,
+                  albumPageId,
                   app,
                   memberId,
                   homeMenuProvider(),
@@ -79,15 +81,18 @@ class AlbumPageWizard extends NewAppWizardInfoWithActionSpecification {
   }
 
   @override
-  AppModel updateApp(
+  AppModel updateApp(String uniqueId,
     NewAppWizardParameters parameters,
     AppModel adjustMe,
   ) =>
       adjustMe;
 
   @override
-  String? getPageID(NewAppWizardParameters parameters, String pageType) => null;
+  String? getPageID(String uniqueId, NewAppWizardParameters parameters, String pageType) => null;
 
   @override
-  ActionModel? getAction(NewAppWizardParameters parameters, AppModel app, String actionType, ) => null;
+  ActionModel? getAction(String uniqueId, NewAppWizardParameters parameters, AppModel app, String actionType, ) => null;
+
+  @override
+  PublicMediumModel? getPublicMediumModel(String uniqueId, NewAppWizardParameters parameters, String pageType) => null;
 }

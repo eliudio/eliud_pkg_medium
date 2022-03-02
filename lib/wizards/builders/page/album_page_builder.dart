@@ -1,5 +1,6 @@
 import 'package:eliud_core/core/wizards/builders/page_builder.dart';
 import 'package:eliud_core/core/wizards/registry/registry.dart';
+import 'package:eliud_core/core/wizards/tools/documentIdentifier.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart'
     as corerepo;
 import 'package:eliud_core/model/app_bar_model.dart';
@@ -21,6 +22,7 @@ class AlbumPageBuilder extends PageBuilder {
   final String albumComponentIdentifier;
 
   AlbumPageBuilder(
+      String uniqueId,
       this.albumComponentIdentifier,
       this.examplePhoto1AssetPath,
       this.examplePhoto2AssetPath,
@@ -34,7 +36,7 @@ class AlbumPageBuilder extends PageBuilder {
       PageProvider pageProvider,
       ActionProvider actionProvider
       )
-      : super(pageId, app, memberId, theHomeMenu, theAppBar, leftDrawer,
+      : super(uniqueId, pageId, app, memberId, theHomeMenu, theAppBar, leftDrawer,
             rightDrawer, pageProvider, actionProvider);
 
   Future<PageModel> _setupPage() async {
@@ -48,10 +50,10 @@ class AlbumPageBuilder extends PageBuilder {
     components.add(BodyComponentModel(
         documentID: "1",
         componentName: AbstractAlbumComponent.componentName,
-        componentId: albumComponentIdentifier));
+        componentId: constructDocumentId(uniqueId: uniqueId, documentId: albumComponentIdentifier)));
 
     return PageModel(
-        documentID: pageId,
+        documentID: constructDocumentId(uniqueId: uniqueId, documentId: pageId),
         appId: app.documentID!,
         title: "Album",
         drawer: leftDrawer,
@@ -72,13 +74,10 @@ class AlbumPageBuilder extends PageBuilder {
         memberId: memberId,
         examplePhoto1AssetPath: examplePhoto1AssetPath,
         examplePhoto2AssetPath: examplePhoto2AssetPath);
-    print("example1");
     var example1 = await helper.example1();
-    print("example2");
     var example2 = await helper.example2();
-    print("end example");
     var albumModel = AlbumModel(
-      documentID: albumComponentIdentifier,
+      documentID: constructDocumentId(uniqueId: uniqueId, documentId: albumComponentIdentifier),
       appId: app.documentID!,
       albumEntries: [
         example1,
@@ -94,17 +93,13 @@ class AlbumPageBuilder extends PageBuilder {
   }
 
   Future<AlbumModel> _setupAlbum() async {
-    print("_setupAlbum");
     var _albumModel =
         await albumRepository(appId: app.documentID!)!.add(await albumModel());
-    print("return _setupAlbum");
     return _albumModel;
   }
 
   Future<PageModel> create() async {
-    print("create()");
     await _setupAlbum();
-    print("create 2()");
     return await _setupPage();
   }
 }
@@ -123,12 +118,10 @@ class ExampleAlbumHelper {
   });
 
   Future<AlbumEntryModel> example1() async {
-    print("create medium");
     var medium = await PlatformMediumHelper(app, memberId,
             PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple)
         .createThumbnailUploadPhotoAsset(
             newRandomKey(), examplePhoto1AssetPath);
-    print("add model");
     return AlbumEntryModel(
         documentID: newRandomKey(), name: 'example 1', medium: medium);
   }
