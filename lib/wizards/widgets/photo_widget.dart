@@ -81,7 +81,7 @@ class _PlatformPhotoWidgetState extends State<PlatformPhotoWidget> {
                           context,
                           widget.app,
                           widget.app.ownerID!,
-                              () => PublicMediumAccessRights(),
+                              () => PlatformMediumAccessRights(PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
                               (photo) => _photoFeedbackFunction(widget.app, photo),
                           _photoUploading,
                           allowCrop: false);
