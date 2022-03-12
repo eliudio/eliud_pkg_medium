@@ -49,7 +49,6 @@ class AlbumPageWizard extends NewAppWizardInfoWithActionSpecification {
     DrawerProvider leftDrawerProvider,
     DrawerProvider rightDrawerProvider,
     PageProvider pageProvider,
-    ActionProvider actionProvider,
   ) {
     if (parameters is ActionSpecificationParametersBase) {
       var albumPageSpecifications = parameters.actionSpecifications;
@@ -69,7 +68,7 @@ class AlbumPageWizard extends NewAppWizardInfoWithActionSpecification {
                   appBarProvider(),
                   leftDrawerProvider(),
                   rightDrawerProvider(),
-              pageProvider, actionProvider)
+              pageProvider, )
               .create();
         });
         return tasks;
