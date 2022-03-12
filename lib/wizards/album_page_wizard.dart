@@ -20,6 +20,9 @@ class AlbumPageWizard extends NewAppWizardInfoWithActionSpecification {
 
   AlbumPageWizard() : super('album', 'Album', 'Generate a default Album');
 
+  @override
+  String getPackageName() => "eliud_pkg_medium";
+
   static bool hasAccessToLocalFileSystem =
       AbstractMediumPlatform.platform!.hasAccessToLocalFilesystem();
 
