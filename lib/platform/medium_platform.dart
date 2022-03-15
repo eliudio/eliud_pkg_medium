@@ -4,6 +4,7 @@ import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
+import 'package:eliud_core/model/public_medium_model.dart';
 import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/random.dart';
 import 'package:eliud_core/tools/router_builders.dart';
@@ -38,8 +39,15 @@ abstract class AbstractMediumPlatform {
   void showPhotosPlatform(BuildContext context, AppModel app, List<PlatformMediumModel> media, int initialPage) {
     var photos = media.where((memberMedium) => memberMedium.mediumType == PlatformMediumType.Photo).toList();
     Navigator.push(context, pageRouteBuilder(app, page: AlbumSlider(app: app, title: "Photos",
-          slideImageProvider: PlatformMediumSlideImageProvider(ListHelper.getPlatformMediumModelList(photos)),
-          initialPage: initialPage)));
+        slideImageProvider: PlatformMediumSlideImageProvider(ListHelper.getPlatformMediumModelList(photos)),
+        initialPage: initialPage)));
+  }
+
+  void showPhotosPublic(BuildContext context, AppModel app, List<PublicMediumModel> media, int initialPage) {
+    var photos = media.where((memberMedium) => memberMedium.mediumType == PublicMediumType.Photo).toList();
+    Navigator.push(context, pageRouteBuilder(app, page: AlbumSlider(app: app, title: "Photos",
+        slideImageProvider: PublicMediumSlideImageProvider(ListHelper.getPublicMediumModelList(photos)),
+        initialPage: initialPage)));
   }
 
   Future<void> showVideo(BuildContext context, AppModel app, MemberMediumModel memberMediumModel) async {
