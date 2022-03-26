@@ -32,11 +32,12 @@ import 'package:eliud_pkg_medium/model/entity_export.dart';
 import 'dart:async';
 import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
+import 'package:eliud_core/tools/repository_base.dart';
 
 typedef AlbumEntryModelTrigger(List<AlbumEntryModel?> list);
 typedef AlbumEntryChanged(AlbumEntryModel? value);
 
-abstract class AlbumEntryRepository {
+abstract class AlbumEntryRepository extends RepositoryBase<AlbumEntryModel> {
   Future<AlbumEntryModel> add(AlbumEntryModel value);
   Future<void> delete(AlbumEntryModel value);
   Future<AlbumEntryModel?> get(String? id, { Function(Exception)? onError });
