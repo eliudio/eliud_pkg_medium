@@ -13,6 +13,7 @@
 
 */
 
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_medium/model/album_model.dart';
 
@@ -73,5 +74,17 @@ class AlbumListUpdated extends AlbumListEvent {
 
   @override
   String toString() => 'AlbumListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+}
+
+class AlbumChangeQuery extends AlbumListEvent {
+  final EliudQuery newQuery;
+
+  const AlbumChangeQuery({ required this.newQuery });
+
+  @override
+  List<Object?> get props => [ newQuery ];
+
+  @override
+  String toString() => 'AlbumChangeQuery{ value: $newQuery }';
 }
 

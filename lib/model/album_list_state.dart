@@ -13,6 +13,7 @@
 
 */
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_medium/model/album_model.dart';
 
@@ -36,6 +37,13 @@ class AlbumListLoaded extends AlbumListState {
 
   @override
   String toString() => 'AlbumListLoaded { values: $values }';
+
+  @override
+  bool operator ==(Object other) => 
+          other is AlbumListLoaded &&
+              runtimeType == other.runtimeType &&
+              ListEquality().equals(values, other.values) &&
+              mightHaveMore == other.mightHaveMore;
 }
 
 class AlbumNotLoaded extends AlbumListState {}

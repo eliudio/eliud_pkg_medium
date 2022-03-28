@@ -27,7 +27,7 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 class AlbumListBloc extends Bloc<AlbumListEvent, AlbumListState> {
   final AlbumRepository _albumRepository;
   StreamSubscription? _albumsListSubscription;
-  final EliudQuery? eliudQuery;
+  EliudQuery? eliudQuery;
   int pages = 1;
   final bool? paged;
   final String? orderBy;
@@ -99,6 +99,13 @@ class AlbumListBloc extends Bloc<AlbumListEvent, AlbumListState> {
     if (event is NewPage) {
       pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
       yield* _mapLoadAlbumListWithDetailsToState();
+    } else if (event is AlbumChangeQuery) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        yield* _mapLoadAlbumListToState();
+      } else {
+        yield* _mapLoadAlbumListWithDetailsToState();
+      }
     } else if (event is AddAlbumList) {
       yield* _mapAddAlbumListToState(event);
     } else if (event is UpdateAlbumList) {
