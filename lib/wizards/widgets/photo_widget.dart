@@ -23,7 +23,7 @@ class PlatformPhotoWidget extends StatefulWidget {
       {Key? key,
         required this.title,
         required this.app,
-        required this.defaultImage,
+        this.defaultImage,
         required this.feedbackFunction,
         required this.initialImage})
       : super(key: key);
