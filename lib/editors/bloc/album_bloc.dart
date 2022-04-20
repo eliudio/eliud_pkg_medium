@@ -47,11 +47,7 @@ class AlbumBloc extends ExtEditorBaseBloc<AlbumModel, AlbumEntryModel> {
 
   @override
   AlbumModel setDefaultValues(AlbumModel t, StorageConditionsModel conditions) {
-    return t.copyWith(
-        conditions: t.conditions ??
-            StorageConditionsModel(
-                privilegeLevelRequired:
-                PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple));
+    return t.copyWith(conditions: t.conditions ?? conditions);
   }
 
   @override
