@@ -1,3 +1,4 @@
+import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_pkg_medium/platform/medium_platform.dart';
 import 'package:eliud_pkg_medium/platform/web_medium_platform.dart';
 
@@ -8,7 +9,7 @@ class MediumWebPackage extends MediumPackage {
   void init() {
     super.init();
     // initialise the platform
-    AbstractMediumPlatform.platform = WebMediumPlatform();
+    Registry.registry()!.registerMediumApi(WebMediumPlatform());
   }
 
   @override

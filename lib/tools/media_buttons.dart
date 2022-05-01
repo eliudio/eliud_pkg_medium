@@ -1,8 +1,9 @@
 import 'package:eliud_core/model/model_export.dart';
+import 'package:eliud_core/package/access_rights.dart';
+import 'package:eliud_core/package/medium_api.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/storage/upload_info.dart';
-import 'package:eliud_pkg_medium/platform/access_rights.dart';
 import 'package:eliud_pkg_medium/platform/medium_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';

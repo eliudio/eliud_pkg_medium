@@ -1,15 +1,14 @@
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/background_model.dart';
 import 'package:eliud_core/model/public_medium_model.dart';
+import 'package:eliud_core/package/access_rights.dart';
 import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/style/frontend/has_container.dart';
 import 'package:eliud_core/style/frontend/has_dialog.dart';
 import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:flutter/material.dart';
-
 import 'package:eliud_pkg_medium/platform/medium_platform.dart';
-import 'package:eliud_pkg_medium/platform/access_rights.dart';
 
 class ImageWidget extends StatefulWidget {
   final AppModel app;

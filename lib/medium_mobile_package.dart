@@ -1,3 +1,4 @@
+import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_pkg_medium/platform/medium_platform.dart';
 import 'package:eliud_pkg_medium/platform/mobile_medium_platform.dart';
 
@@ -7,8 +8,7 @@ class MediumMobilePackage extends MediumPackage {
   @override
   void init() {
     super.init();
-    // initialise the platform
-    AbstractMediumPlatform.platform = MobileMediumPlatform();
+    Registry.registry()!.registerMediumApi(MobileMediumPlatform());
   }
 
   @override
