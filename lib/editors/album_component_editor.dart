@@ -1,5 +1,6 @@
 import 'package:eliud_core/core/blocs/access/state/access_determined.dart';
 import 'package:eliud_core/core/blocs/access/state/access_state.dart';
+import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/model/pos_size_model.dart';
 import 'package:eliud_core/model/storage_conditions_model.dart';
@@ -315,7 +316,7 @@ class _AlbumComponentEditorState extends State<AlbumComponentEditor> {
           child: Icon(Icons.add),
           elevation: 10,
           itemBuilder: (context) => [
-                if (AbstractMediumPlatform.platform!.hasCamera())
+                if (Registry.registry()!.getMediumApi().hasCamera())
                   PopupMenuItem(
                     value: 0,
                     child: text(widget.app, context, 'Take photo'),
@@ -327,7 +328,7 @@ class _AlbumComponentEditorState extends State<AlbumComponentEditor> {
               ],
           onSelected: (value) async {
             if (value == 0) {
-              AbstractMediumPlatform.platform!.takePhoto(
+              Registry.registry()!.getMediumApi().takePhoto(
                   context,
                   widget.app,
                   widget.app.ownerID!,
@@ -337,7 +338,7 @@ class _AlbumComponentEditorState extends State<AlbumComponentEditor> {
                   _photoUploading,
                   allowCrop: false);
             } else if (value == 1) {
-              AbstractMediumPlatform.platform!.uploadPhoto(
+              Registry.registry()!.getMediumApi().uploadPhoto(
                   context,
                   widget.app,
                   widget.app.ownerID!,

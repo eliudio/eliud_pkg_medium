@@ -1,13 +1,10 @@
 import 'dart:typed_data';
-
-import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/model/public_medium_model.dart';
 import 'package:eliud_core/package/medium_api.dart';
 import 'package:eliud_core/tools/etc.dart';
-import 'package:eliud_core/tools/random.dart';
 import 'package:eliud_core/tools/router_builders.dart';
 import 'package:eliud_core/tools/storage/upload_info.dart';
 import 'package:eliud_pkg_medium/tools/slider/carousel_slider.dart';
@@ -20,8 +17,6 @@ import '../wizards/widgets/platform_photo_widget.dart';
 import '../wizards/widgets/public_photo_widget.dart';
 
 abstract class AbstractMediumPlatform extends MediumApi {
-  static AbstractMediumPlatform? platform;
-
   void showPhotos(BuildContext context, AppModel app,
       List<MemberMediumModel> media, int initialPage) {
     var photos = media
@@ -167,53 +162,56 @@ abstract class AbstractMediumPlatform extends MediumApi {
   /* Allow to add an imnage / upload / ... */
   Widget getPublicPhotoWidget(
           {Key? key,
-          required String title,
-          required BuildContext context, required AppModel app,
+          required BuildContext context,
+          required AppModel app,
           String?
               defaultImage, // asset location of default image which the user can choose
           required MediumAvailable feedbackFunction,
-          required PublicMediumModel? initialImage}) =>
+          required PublicMediumModel? initialImage,
+          bool? allowCrop}) =>
       PublicPhotoWidget(
         key: key,
-        title: title,
         app: app,
         defaultImage: defaultImage,
         feedbackFunction: feedbackFunction,
         initialImage: initialImage,
+        allowCrop: allowCrop,
       );
   Widget getPlatformPhotoWidget(
-      {Key? key,
-      required String title,
-        required BuildContext context, required AppModel app,
-      String?
-          defaultImage, // asset location of default image which the user can choose
-      required MediumAvailable feedbackFunction,
-      required PlatformMediumModel? initialImage}) =>
+          {Key? key,
+          required BuildContext context,
+          required AppModel app,
+          String?
+              defaultImage, // asset location of default image which the user can choose
+          required MediumAvailable feedbackFunction,
+          required PlatformMediumModel? initialImage,
+          bool? allowCrop}) =>
       PlatformPhotoWidget(
         key: key,
-        title: title,
         app: app,
         defaultImage: defaultImage,
         feedbackFunction: feedbackFunction,
         initialImage: initialImage,
+        allowCrop: allowCrop,
       );
   /*
    * Currently default / only access is public. Should expand the api to allow to change
    */
   Widget getMemberPhotoWidget(
-      {Key? key,
-      required String title,
-        required BuildContext context, required AppModel app,
-      String?
-          defaultImage, // asset location of default image which the user can choose
-      required MediumAvailable feedbackFunction,
-      required MemberMediumModel? initialImage}) =>
+          {Key? key,
+          required BuildContext context,
+          required AppModel app,
+          String?
+              defaultImage, // asset location of default image which the user can choose
+          required MediumAvailable feedbackFunction,
+          required MemberMediumModel? initialImage,
+          bool? allowCrop}) =>
       MemberPhotoWidget(
         key: key,
-        title: title,
         app: app,
         defaultImage: defaultImage,
         feedbackFunction: feedbackFunction,
         initialImage: initialImage,
+        allowCrop: allowCrop,
       );
 }

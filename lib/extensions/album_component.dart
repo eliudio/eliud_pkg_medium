@@ -1,4 +1,5 @@
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
+import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
 import 'package:eliud_core/model/app_model.dart';
@@ -60,11 +61,10 @@ class AlbumComponent extends AbstractAlbumComponent {
     if (medium.medium!.mediumType! == PlatformMediumType.Photo) {
       if (memberMedia.length > 0) {
         var photos = memberMedia.map((pm) => pm.medium!).toList();
-        AbstractMediumPlatform.platform!.showPhotosPlatform(context, app, photos, index);
+        Registry.registry()!.getMediumApi().showPhotosPlatform(context, app, photos, index);
       }
     } else {
-      AbstractMediumPlatform.platform!
-          .showVideoPlatform(context, app, medium.medium!);
+      Registry.registry()!.getMediumApi().showVideoPlatform(context, app, medium.medium!);
     }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_core/package/access_rights.dart';
 import 'package:eliud_core/package/medium_api.dart';
@@ -27,7 +28,7 @@ class MediaButtons {
   }) {
     var items = <PopupMenuItem<int>>[];
     if (photoFeedbackFunction != null) {
-      if (AbstractMediumPlatform.platform!.hasCamera()) {
+      if (Registry.registry()!.getMediumApi().hasCamera()) {
         items.add(
           PopupMenuItem<int>(child: text(app, context, 'Take photo'), value: 0),
         );
@@ -36,7 +37,7 @@ class MediaButtons {
           child: text(app, context, 'Upload photo'), value: 1));
     }
     if (videoFeedbackFunction != null) {
-      if (AbstractMediumPlatform.platform!.hasCamera()) {
+      if (Registry.registry()!.getMediumApi().hasCamera()) {
         items.add(
           PopupMenuItem<int>(child: text(app, context, 'Take video'), value: 2),
         );
@@ -52,7 +53,7 @@ class MediaButtons {
         onSelected: (choice) {
           if (photoFeedbackFunction != null) {
             if (choice == 0) {
-              AbstractMediumPlatform.platform!.takePhoto(
+              Registry.registry()!.getMediumApi().takePhoto(
                   context,
                   app,
                   ownerId,
@@ -63,7 +64,7 @@ class MediaButtons {
                   allowCrop: allowCrop);
             }
             if (choice == 1) {
-              AbstractMediumPlatform.platform!.uploadPhoto(
+              Registry.registry()!.getMediumApi().uploadPhoto(
                   context,
                   app,
                   ownerId,
@@ -76,7 +77,7 @@ class MediaButtons {
           }
           if (videoFeedbackFunction != null) {
             if (choice == 2) {
-              AbstractMediumPlatform.platform!.takeVideo(
+              Registry.registry()!.getMediumApi().takeVideo(
                   context,
                   app,
                   ownerId,
@@ -86,7 +87,7 @@ class MediaButtons {
                   videoFeedbackProgress);
             }
             if (choice == 3) {
-              AbstractMediumPlatform.platform!.uploadVideo(
+              Registry.registry()!.getMediumApi().uploadVideo(
                   context,
                   app,
                   ownerId,

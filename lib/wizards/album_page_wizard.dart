@@ -1,3 +1,4 @@
+import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_core/core/wizards/registry/new_app_wizard_info_with_action_specification.dart';
 import 'package:eliud_core/core/wizards/registry/registry.dart';
 import 'package:eliud_core/model/app_model.dart';
@@ -23,8 +24,7 @@ class AlbumPageWizard extends NewAppWizardInfoWithActionSpecification {
   @override
   String getPackageName() => "eliud_pkg_medium";
 
-  static bool hasAccessToLocalFileSystem =
-      AbstractMediumPlatform.platform!.hasAccessToLocalFilesystem();
+  static bool hasAccessToLocalFileSystem = Registry.registry()!.getMediumApi().hasAccessToLocalFilesystem();
 
   @override
   NewAppWizardParameters newAppWizardParameters() =>

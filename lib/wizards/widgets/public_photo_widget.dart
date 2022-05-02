@@ -1,3 +1,4 @@
+import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/model/public_medium_model.dart';
@@ -14,19 +15,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class PublicPhotoWidget extends StatefulWidget {
-  final String title;
   final AppModel app;
   final MediumAvailable feedbackFunction;
   final String? defaultImage;
   final PublicMediumModel? initialImage;
+  final bool? allowCrop;
 
   const PublicPhotoWidget(
       {Key? key,
-        required this.title,
         required this.app,
         required this.defaultImage,
         required this.feedbackFunction,
-        required this.initialImage})
+        required this.initialImage,
+        this.allowCrop})
       : super(key: key);
 
   @override
@@ -38,17 +39,13 @@ class _PublicPhotoWidgetState extends State<PublicPhotoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return topicContainer(widget.app, context,
-        title: widget.title,
-        collapsible: true,
-        collapsed: true,
-        children: [
+    return ListView(shrinkWrap: true, physics: ScrollPhysics(), children: [
           getListTile(context, widget.app,
               trailing: PopupMenuButton<int>(
                   child: Icon(Icons.more_vert),
                   elevation: 10,
                   itemBuilder: (context) => [
-                    if (AbstractMediumPlatform.platform!.hasCamera())
+                    if (Registry.registry()!.getMediumApi().hasCamera())
                       PopupMenuItem(
                         value: 0,
                         child: text(widget.app, context, 'Take photo'),
@@ -69,23 +66,23 @@ class _PublicPhotoWidgetState extends State<PublicPhotoWidget> {
                   ],
                   onSelected: (value) async {
                     if (value == 0) {
-                      AbstractMediumPlatform.platform!.takePhoto(
+                      Registry.registry()!.getMediumApi().takePhoto(
                           context,
                           widget.app,
                           widget.app.ownerID!,
                               () => PublicMediumAccessRights(),
                               (photo) => _photoFeedbackFunction(widget.app, photo),
                           _photoUploading,
-                          allowCrop: false);
+                          allowCrop: widget.allowCrop);
                     } else if (value == 1) {
-                      AbstractMediumPlatform.platform!.uploadPhoto(
+                      Registry.registry()!.getMediumApi().uploadPhoto(
                           context,
                           widget.app,
                           widget.app.ownerID!,
                               () => PublicMediumAccessRights(),
                               (photo) => _photoFeedbackFunction(widget.app, photo),
                           _photoUploading,
-                          allowCrop: false);
+                          allowCrop: widget.allowCrop);
                     } else if (value == 2) {
                       var photo = await PublicMediumAccessRights()
                           .getMediumHelper(
