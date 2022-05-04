@@ -56,20 +56,13 @@ class ImageCropState extends State<ImageCropWidget> {
   }
 
   @override
-  void dispose() {
-    if ((cropped != null) && (!cropped!)) {
-      widget.croppedImage(null);
-    }
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return flexibleDialog(widget.app, context,
             title: 'Crop image',
             buttons: [
               Spacer(),
               dialogButton(widget.app, context, onPressed: () {
+                widget.croppedImage(null);
                 Navigator.pop(context);
               }, label: 'Cancel'),
               dialogButton(widget.app, context, onPressed: () {
