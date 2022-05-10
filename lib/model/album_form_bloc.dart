@@ -105,6 +105,12 @@ class AlbumFormBloc extends Bloc<AlbumFormEvent, AlbumFormState> {
 
         return;
       }
+      if (event is ChangedAlbumBackgroundImage) {
+        newValue = currentState.value!.copyWith(backgroundImage: event.value);
+        yield SubmittableAlbumForm(value: newValue);
+
+        return;
+      }
       if (event is ChangedAlbumConditions) {
         newValue = currentState.value!.copyWith(conditions: event.value);
         yield SubmittableAlbumForm(value: newValue);

@@ -50,7 +50,7 @@ class AlbumComponent extends AbstractAlbumComponent {
       }
 
       List<PlatformMediumModel> media = mmm;
-      return MediaHelper.staggeredPlatformMediumModel(app, context, media, viewAction: (index) {
+      return MediaHelper.staggeredPlatformMediumModel(app, context, media, background: albumModel.backgroundImage, viewAction: (index) {
         _action(context, albumModel.albumEntries!, index);
       });
     }

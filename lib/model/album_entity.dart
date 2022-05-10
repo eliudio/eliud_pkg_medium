@@ -26,18 +26,19 @@ class AlbumEntity {
   final String? appId;
   final List<AlbumEntryEntity>? albumEntries;
   final String? description;
+  final BackgroundEntity? backgroundImage;
   final StorageConditionsEntity? conditions;
 
-  AlbumEntity({this.appId, this.albumEntries, this.description, this.conditions, });
+  AlbumEntity({this.appId, this.albumEntries, this.description, this.backgroundImage, this.conditions, });
 
 
-  List<Object?> get props => [appId, albumEntries, description, conditions, ];
+  List<Object?> get props => [appId, albumEntries, description, backgroundImage, conditions, ];
 
   @override
   String toString() {
     String albumEntriesCsv = (albumEntries == null) ? '' : albumEntries!.join(', ');
 
-    return 'AlbumEntity{appId: $appId, albumEntries: AlbumEntry[] { $albumEntriesCsv }, description: $description, conditions: $conditions}';
+    return 'AlbumEntity{appId: $appId, albumEntries: AlbumEntry[] { $albumEntriesCsv }, description: $description, backgroundImage: $backgroundImage, conditions: $conditions}';
   }
 
   static AlbumEntity? fromMap(Object? o) {
@@ -52,6 +53,10 @@ class AlbumEntity {
         .map((dynamic item) =>
         AlbumEntryEntity.fromMap(item as Map)!)
         .toList();
+    var backgroundImageFromMap;
+    backgroundImageFromMap = map['backgroundImage'];
+    if (backgroundImageFromMap != null)
+      backgroundImageFromMap = BackgroundEntity.fromMap(backgroundImageFromMap);
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
     if (conditionsFromMap != null)
@@ -61,6 +66,7 @@ class AlbumEntity {
       appId: map['appId'], 
       albumEntries: albumEntriesList, 
       description: map['description'], 
+      backgroundImage: backgroundImageFromMap, 
       conditions: conditionsFromMap, 
     );
   }
@@ -68,6 +74,9 @@ class AlbumEntity {
   Map<String, Object?> toDocument() {
     final List<Map<String?, dynamic>>? albumEntriesListMap = albumEntries != null 
         ? albumEntries!.map((item) => item.toDocument()).toList()
+        : null;
+    final Map<String, dynamic>? backgroundImageMap = backgroundImage != null 
+        ? backgroundImage!.toDocument()
         : null;
     final Map<String, dynamic>? conditionsMap = conditions != null 
         ? conditions!.toDocument()
@@ -80,6 +89,8 @@ class AlbumEntity {
       else theDocument["albumEntries"] = null;
     if (description != null) theDocument["description"] = description;
       else theDocument["description"] = null;
+    if (backgroundImage != null) theDocument["backgroundImage"] = backgroundImageMap;
+      else theDocument["backgroundImage"] = null;
     if (conditions != null) theDocument["conditions"] = conditionsMap;
       else theDocument["conditions"] = null;
     return theDocument;

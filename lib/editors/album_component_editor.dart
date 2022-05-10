@@ -6,6 +6,7 @@ import 'package:eliud_core/model/pos_size_model.dart';
 import 'package:eliud_core/model/storage_conditions_model.dart';
 import 'package:eliud_core/package/access_rights.dart';
 import 'package:eliud_core/tools/screen_size.dart';
+import 'package:eliud_core/tools/widgets/background_widget.dart';
 import 'package:eliud_pkg_medium/editors/widgets/album_entry_widget.dart';
 import 'package:eliud_pkg_medium/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_medium/model/album_entry_model.dart';
@@ -106,77 +107,90 @@ class _AlbumComponentEditorState extends State<AlbumComponentEditor> {
     return BlocBuilder<AccessBloc, AccessState>(
         builder: (aContext, accessState) {
       if (accessState is AccessDetermined) {
-        return BlocBuilder<AlbumBloc, ExtEditorBaseState<AlbumModel>>(
-            builder: (ppContext, albumState) {
-          if (albumState is ExtEditorBaseInitialised<AlbumModel, dynamic>) {
-            return ListView(
-                shrinkWrap: true,
-                physics: ScrollPhysics(),
-                children: [
-                  HeaderWidget(
-                    app: widget.app,
-                    title: 'Album',
-                    okAction: () async {
-                      await BlocProvider.of<AlbumBloc>(context).save(
-                          ExtEditorBaseApplyChanges<AlbumModel>(
-                              model: albumState.model));
-                      return true;
-                    },
-                    cancelAction: () async {
-                      return true;
-                    },
-                  ),
-                  topicContainer(widget.app, context,
-                      title: 'General',
-                      collapsible: true,
-                      collapsed: true,
-                      children: [
-                        getListTile(context, widget.app,
-                            leading: Icon(Icons.vpn_key),
-                            title: text(widget.app, context,
-                                albumState.model.documentID!)),
-                        getListTile(context, widget.app,
-                            leading: Icon(Icons.description),
-                            title: dialogField(
-                              widget.app,
-                              context,
-                              initialValue: albumState.model.description,
-                              valueChanged: (value) {
-                                albumState.model.description = value;
-                              },
-                              maxLines: 1,
-                              decoration: const InputDecoration(
-                                hintText: 'Name',
-                                labelText: 'Name',
-                              ),
-                            )),
-                      ]),
-                  topicContainer(widget.app, context,
-                      title: 'Condition',
-                      collapsible: true,
-                      collapsed: true,
-                      children: [
-                        getListTile(context, widget.app,
-                            leading: Icon(Icons.security),
-                            title: ConditionsSimpleWidget(
-                              app: widget.app,
-                              value: albumState.model.conditions!,
-                              readOnly: albumState.model.albumEntries != null &&
-                                  albumState.model.albumEntries!.isNotEmpty,
-                            )),
-                      ]),
-                  topicContainer(widget.app, context,
-                      title: 'Images',
-                      collapsible: true,
-                      collapsed: true,
-                      children: [
-                        _images(context, albumState),
-                      ]),
-                ]);
-          } else {
-            return progressIndicator(widget.app, context);
-          }
-        });
+        var member = accessState.getMember();
+        if (member != null) {
+          var memberId = member.documentID!;
+          return BlocBuilder<AlbumBloc, ExtEditorBaseState<AlbumModel>>(
+              builder: (ppContext, albumState) {
+            if (albumState is ExtEditorBaseInitialised<AlbumModel, dynamic>) {
+              return ListView(
+                  shrinkWrap: true,
+                  physics: ScrollPhysics(),
+                  children: [
+                    HeaderWidget(
+                      app: widget.app,
+                      title: 'Album',
+                      okAction: () async {
+                        await BlocProvider.of<AlbumBloc>(context).save(
+                            ExtEditorBaseApplyChanges<AlbumModel>(
+                                model: albumState.model));
+                        return true;
+                      },
+                      cancelAction: () async {
+                        return true;
+                      },
+                    ),
+                    topicContainer(widget.app, context,
+                        title: 'General',
+                        collapsible: true,
+                        collapsed: true,
+                        children: [
+                          getListTile(context, widget.app,
+                              leading: Icon(Icons.vpn_key),
+                              title: text(widget.app, context,
+                                  albumState.model.documentID!)),
+                          getListTile(context, widget.app,
+                              leading: Icon(Icons.description),
+                              title: dialogField(
+                                widget.app,
+                                context,
+                                initialValue: albumState.model.description,
+                                valueChanged: (value) {
+                                  albumState.model.description = value;
+                                },
+                                maxLines: 1,
+                                decoration: const InputDecoration(
+                                  hintText: 'Name',
+                                  labelText: 'Name',
+                                ),
+                              )),
+                        ]),
+                    BackgroundWidget(
+                        app: widget.app,
+                        memberId: memberId,
+                        value: albumState.model.backgroundImage!,
+                        label: 'Background for Images'),
+                    topicContainer(widget.app, context,
+                        title: 'Images',
+                        collapsible: true,
+                        collapsed: true,
+                        children: [
+                          _images(context, albumState),
+                        ]),
+                    topicContainer(widget.app, context,
+                        title: 'Condition',
+                        collapsible: true,
+                        collapsed: true,
+                        children: [
+                          getListTile(context, widget.app,
+                              leading: Icon(Icons.security),
+                              title: ConditionsSimpleWidget(
+                                app: widget.app,
+                                value: albumState.model.conditions!,
+                                readOnly: albumState.model.albumEntries !=
+                                        null &&
+                                    albumState.model.albumEntries!.isNotEmpty,
+                              )),
+                        ]),
+                  ]);
+            } else {
+              return progressIndicator(widget.app, context);
+            }
+          });
+        } else {
+          return text(widget.app, context,
+              'needs to be logged in as owner to be able to edit');
+        }
       } else {
         return progressIndicator(widget.app, context);
       }
@@ -186,7 +200,8 @@ class _AlbumComponentEditorState extends State<AlbumComponentEditor> {
   Widget _images(BuildContext context,
       ExtEditorBaseInitialised<AlbumModel, dynamic> state) {
     var widgets = <Widget>[];
-    var items = state.model.albumEntries != null ? state.model.albumEntries! : [];
+    var items =
+        state.model.albumEntries != null ? state.model.albumEntries! : [];
     if (state.model.albumEntries != null) {
       var photos = <PlatformMediumModel>[];
       items.forEach((item) {
@@ -359,9 +374,9 @@ class _AlbumComponentEditorState extends State<AlbumComponentEditor> {
         BlocProvider.of<AlbumBloc>(context)
             .add(AddItemEvent<AlbumModel, AlbumEntryModel>(
                 itemModel: AlbumEntryModel(
-                  documentID: newRandomKey(),
-                  medium: platformMediumModel,
-                  name: 'new entry',
+          documentID: newRandomKey(),
+          medium: platformMediumModel,
+          name: 'new entry',
         )));
       }
     });

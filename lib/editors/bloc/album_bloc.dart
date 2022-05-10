@@ -1,4 +1,5 @@
 import 'package:eliud_core/core/editor/ext_editor_base_bloc/ext_editor_base_bloc.dart';
+import 'package:eliud_core/model/background_model.dart';
 import 'package:eliud_core/model/storage_conditions_model.dart';
 import 'package:eliud_core/tools/component/component_spec.dart';
 import 'package:eliud_core/tools/random.dart';
@@ -40,6 +41,7 @@ class AlbumBloc extends ExtEditorBaseBloc<AlbumModel, AlbumEntryModel> {
     return AlbumModel(
       appId: appId,
       documentID: newRandomKey(),
+      backgroundImage: BackgroundModel(),
       description: 'new album',
       conditions: conditions,
     );
@@ -47,7 +49,7 @@ class AlbumBloc extends ExtEditorBaseBloc<AlbumModel, AlbumEntryModel> {
 
   @override
   AlbumModel setDefaultValues(AlbumModel t, StorageConditionsModel conditions) {
-    return t.copyWith(conditions: t.conditions ?? conditions);
+    return t.copyWith(backgroundImage: t.backgroundImage ?? BackgroundModel(), conditions: t.conditions ?? conditions);
   }
 
   @override

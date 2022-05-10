@@ -107,6 +107,18 @@ class ChangedAlbumDescription extends AlbumFormEvent {
   String toString() => 'ChangedAlbumDescription{ value: $value }';
 }
 
+class ChangedAlbumBackgroundImage extends AlbumFormEvent {
+  final BackgroundModel? value;
+
+  ChangedAlbumBackgroundImage({this.value});
+
+  @override
+  List<Object?> get props => [ value ];
+
+  @override
+  String toString() => 'ChangedAlbumBackgroundImage{ value: $value }';
+}
+
 class ChangedAlbumConditions extends AlbumFormEvent {
   final StorageConditionsModel? value;
 

@@ -179,6 +179,7 @@ class _MyAlbumFormState extends State<MyAlbumForm> {
           );
 
 
+
         children.add(Container(height: 20.0));
         children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().divider(widget.app, context));
 
@@ -245,6 +246,7 @@ class _MyAlbumFormState extends State<MyAlbumForm> {
                               appId: state.value!.appId, 
                               albumEntries: state.value!.albumEntries, 
                               description: state.value!.description, 
+                              backgroundImage: state.value!.backgroundImage, 
                               conditions: state.value!.conditions, 
                         )));
                       } else {
@@ -254,6 +256,7 @@ class _MyAlbumFormState extends State<MyAlbumForm> {
                               appId: state.value!.appId, 
                               albumEntries: state.value!.albumEntries, 
                               description: state.value!.description, 
+                              backgroundImage: state.value!.backgroundImage, 
                               conditions: state.value!.conditions, 
                           )));
                       }

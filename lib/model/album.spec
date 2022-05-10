@@ -48,6 +48,13 @@
       "group": "general"
     },
     {
+      "fieldName": "backgroundImage",
+      "displayName": "Background Image",
+      "fieldType": "Background",
+      "optional": true,
+      "group": "background"
+    },
+    {
       "fieldName": "conditions",
       "displayName": "Conditions",
       "fieldType": "StorageConditions",

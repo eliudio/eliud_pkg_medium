@@ -127,6 +127,22 @@ class DescriptionAlbumFormError extends AlbumFormError {
 }
 
 
+class BackgroundImageAlbumFormError extends AlbumFormError { 
+  const BackgroundImageAlbumFormError({ String? message, AlbumModel? value }): super(message: message, value: value);
+
+  @override
+  List<Object?> get props => [ message, value ];
+
+  @override
+  String toString() {
+    return '''BackgroundImageAlbumFormError {
+      value: $value,
+      message: $message,
+    }''';
+  }
+}
+
+
 class ConditionsAlbumFormError extends AlbumFormError { 
   const ConditionsAlbumFormError({ String? message, AlbumModel? value }): super(message: message, value: value);
 

@@ -1,7 +1,10 @@
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/model/app_model.dart';
+import 'package:eliud_core/model/background_model.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
+import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/storage/medium_base.dart';
 import 'package:eliud_core/tools/storage/member_image_model_widget.dart';
 import 'package:eliud_core/tools/storage/platform_image_model_widget.dart';
@@ -108,15 +111,26 @@ class MediaHelper {
         String? progressLabel,
         double? height,
         bool reverse: false,
-        bool shrinkWrap: false}) {
+        bool shrinkWrap: false,
+        BackgroundModel? background,
+      }) {
+    var member;
+    if (background != null) {
+      var member = AccessBloc.member(context);
+    }
     List<Widget> widgets = [];
     for (int i = 0; i < media.length; i++) {
       var medium = media[i];
       var image, name;
-      image = PlatformImageModelWidget(
-        platformMediumModel: medium,
-        showThumbnail: true,
-      );
+      image = Container(
+          clipBehavior: (background == null) ? Clip.none : Clip.hardEdge,
+            decoration: background == null
+              ? null
+              : BoxDecorationHelper.boxDecoration(app, member, background),
+          child: PlatformImageModelWidget(
+            platformMediumModel: medium,
+            showThumbnail: true,
+          ));
       name = medium.urlThumbnail!;
 
       widgets.add(_getPopupMenuButton(app,
@@ -140,7 +154,7 @@ class MediaHelper {
         padding: const EdgeInsets.all(16.0),
         child: GridView.extent(
             maxCrossAxisExtent: 200,
-            padding: const EdgeInsets.all(0),
+            padding: const EdgeInsets.all(20),
             mainAxisSpacing: 20,
             crossAxisSpacing: 20,
             physics: const ScrollPhysics(), // to disable GridView's scrolling
