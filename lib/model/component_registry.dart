@@ -34,7 +34,7 @@ class ComponentRegistry {
     Registry.registry()!.register(componentName: "eliud_pkg_medium_internalWidgets", componentConstructor: ListComponentFactory());
     Registry.registry()!.addDropDownSupporter("albums", DropdownButtonComponentFactory());
     Registry.registry()!.register(componentName: "albums", componentConstructor: AlbumComponentConstructorDefault());
-    Registry.registry()!.addComponentSpec('eliud_pkg_medium', [
+    Registry.registry()!.addComponentSpec('eliud_pkg_medium', 'medium', [
       ComponentSpec('albums', AlbumComponentConstructorDefault(), AlbumComponentSelector(), AlbumComponentEditorConstructor(), ), 
     ]);
 

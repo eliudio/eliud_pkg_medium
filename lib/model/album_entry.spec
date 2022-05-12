@@ -1,11 +1,12 @@
 {
   "id": "AlbumEntry",
   "packageName": "eliud_pkg_medium",
+  "packageFriendlyName": "medium",
   "generate": {
     "generateComponent": false,
     "generateRepository": true,
     "generateCache": true,
-	"hasPersistentRepository": false,
+    "hasPersistentRepository": false,
     "generateFirestoreRepository": false,
     "generateRepositorySingleton": false,
     "generateModel": true,

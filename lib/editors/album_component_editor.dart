@@ -50,6 +50,7 @@ class AlbumComponentEditorConstructor extends ComponentEditorConstructor {
         AlbumModel(
           appId: app.documentID,
           documentID: newRandomKey(),
+          description: 'Album',
           conditions: StorageConditionsModel(
               privilegeLevelRequired:
                   PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
