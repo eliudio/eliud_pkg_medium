@@ -123,10 +123,10 @@ class MediaHelper {
       var medium = media[i];
       var image, name;
       image = Container(
-          clipBehavior: (background == null) ? Clip.none : Clip.hardEdge,
-            decoration: background == null
-              ? null
-              : BoxDecorationHelper.boxDecoration(app, member, background),
+          clipBehavior: BoxDecorationHelper.determineClipBehaviour(app, member, background),
+          decoration: BoxDecorationHelper.boxDecoration(app, member, background),
+          margin: BoxDecorationHelper.determineMargin(app, member, background),
+          padding: BoxDecorationHelper.determinePadding(app, member, background),
           child: PlatformImageModelWidget(
             platformMediumModel: medium,
             showThumbnail: true,

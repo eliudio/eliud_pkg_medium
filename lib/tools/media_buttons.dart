@@ -47,7 +47,7 @@ class MediaButtons {
     }
     return PopupMenuButton(
         tooltip: tooltip,
-        padding: EdgeInsets.all(0.0),
+        padding: EdgeInsets.all(8.0),
         child: icon,
         itemBuilder: (_) => items,
         onSelected: (choice) {
