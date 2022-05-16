@@ -328,18 +328,20 @@ class _AlbumComponentEditorState extends State<AlbumComponentEditor> {
     if (_progress != null) {
       return progressIndicatorWithValue(widget.app, context, value: _progress!);
     } else {
-      return PopupMenuButton<int>(
+      return popupMenuButton<int>(
+          widget.app, context,
           child: Icon(Icons.add),
-          elevation: 10,
           itemBuilder: (context) => [
                 if (Registry.registry()!.getMediumApi().hasCamera())
-                  PopupMenuItem(
+                  popupMenuItem(
+                    widget.app, context,
                     value: 0,
-                    child: text(widget.app, context, 'Take photo'),
+                    label: 'Take photo',
                   ),
-                PopupMenuItem(
+                popupMenuItem(
+                  widget.app, context,
                   value: 1,
-                  child: text(widget.app, context, 'Upload image'),
+                  label: 'Upload image',
                 ),
               ],
           onSelected: (value) async {

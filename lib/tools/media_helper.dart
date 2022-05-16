@@ -3,6 +3,7 @@ import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/background_model.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
+import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/storage/medium_base.dart';
@@ -183,14 +184,16 @@ class MediaHelper {
     } else {
       List<PopupMenuItem<int>> menuItems = [];
       if (viewAction != null) {
-        menuItems.add(new PopupMenuItem<int>(
-            child: text(app, context, 'View'), value: POPUP_MENU_VIEW));
+        menuItems.add(popupMenuItem<int>(
+            app, context,
+            label: 'View', value: POPUP_MENU_VIEW));
       }
-      menuItems.add(new PopupMenuItem<int>(
-          child: text(app, context, 'Delete'), value: POPUP_MENU_DELETE_VALUE));
+      menuItems.add(popupMenuItem<int>(
+          app, context,
+          label: 'Delete', value: POPUP_MENU_DELETE_VALUE));
 
-      return PopupMenuButton(
-          color: Colors.red,
+      return popupMenuButton(
+        app, context,
           tooltip: name,
           child: image,
           itemBuilder: (_) => menuItems,

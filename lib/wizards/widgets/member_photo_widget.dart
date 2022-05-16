@@ -3,6 +3,7 @@ import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/package/access_rights.dart';
 import 'package:eliud_core/package/medium_api.dart';
+import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/style/frontend/has_list_tile.dart';
 import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
@@ -37,27 +38,31 @@ class _MemberPhotoWidgetState extends State<MemberPhotoWidget> {
   Widget build(BuildContext context) {
     return ListView(shrinkWrap: true, physics: ScrollPhysics(), children: [
           getListTile(context, widget.app,
-              trailing: PopupMenuButton<int>(
+              trailing: popupMenuButton<int>(
+                  widget.app, context,
                   child: Icon(Icons.more_vert),
-                  elevation: 10,
                   itemBuilder: (context) => [
                     if (Registry.registry()!.getMediumApi().hasCamera())
-                      PopupMenuItem(
+                      popupMenuItem(
+                        widget.app, context,
                         value: 0,
-                        child: text(widget.app, context, 'Take photo'),
+                        label: 'Take photo',
                       ),
-                    PopupMenuItem(
+                    popupMenuItem(
+                      widget.app, context,
                       value: 1,
-                      child: text(widget.app, context, 'Upload photo'),
+                      label:'Upload photo'
                     ),
                     if (widget.defaultImage != null)
-                      PopupMenuItem(
+                      popupMenuItem(
+                        widget.app, context,
                         value: 2,
-                        child: text(widget.app, context, 'Default photo'),
+                        label:'Default photo'
                       ),
-                    PopupMenuItem(
+                    popupMenuItem(
+                      widget.app, context,
                       value: 3,
-                      child: text(widget.app, context, 'Clear photo'),
+                      label:'Clear photo'
                     ),
                   ],
                   onSelected: (value) async {

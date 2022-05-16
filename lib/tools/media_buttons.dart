@@ -2,6 +2,7 @@ import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_core/package/access_rights.dart';
 import 'package:eliud_core/package/medium_api.dart';
+import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/storage/upload_info.dart';
@@ -30,24 +31,23 @@ class MediaButtons {
     if (photoFeedbackFunction != null) {
       if (Registry.registry()!.getMediumApi().hasCamera()) {
         items.add(
-          PopupMenuItem<int>(child: text(app, context, 'Take photo'), value: 0),
+          popupMenuItem<int>(app, context, label: 'Take photo', value: 0),
         );
       }
-      items.add(new PopupMenuItem<int>(
-          child: text(app, context, 'Upload photo'), value: 1));
+      items.add(
+          popupMenuItem<int>(app, context, label: 'Upload photo', value: 1));
     }
     if (videoFeedbackFunction != null) {
       if (Registry.registry()!.getMediumApi().hasCamera()) {
         items.add(
-          PopupMenuItem<int>(child: text(app, context, 'Take video'), value: 2),
+          popupMenuItem<int>(app, context, label: 'Take video', value: 2),
         );
       }
       items.add(new PopupMenuItem<int>(
           child: text(app, context, 'Upload video'), value: 3));
     }
-    return PopupMenuButton(
+    return popupMenuButton(app, context,
         tooltip: tooltip,
-        padding: EdgeInsets.all(8.0),
         child: icon,
         itemBuilder: (_) => items,
         onSelected: (choice) {
