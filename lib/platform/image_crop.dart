@@ -36,7 +36,7 @@ class ImageCropWidget extends StatefulWidget {
     CroppedImage croppedImage,
     Uint8List image,
   ) {
-    openWidgetDialog(app, context, app.documentID! + '/imagecrop',
+    openWidgetDialog(app, context, app.documentID + '/imagecrop',
             child: ImageCropWidget(
               app: app,
               croppedImage: croppedImage,

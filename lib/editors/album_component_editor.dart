@@ -61,24 +61,24 @@ class AlbumComponentEditorConstructor extends ComponentEditorConstructor {
   @override
   void updateComponentWithID(AppModel app, BuildContext context, String id,
       EditorFeedback feedback) async {
-    var album = await albumRepository(appId: app.documentID!)!.get(id);
+    var album = await albumRepository(appId: app.documentID)!.get(id);
     if (album != null) {
       _openIt(app, context, false, album, feedback);
     } else {
-      openErrorDialog(app, context, app.documentID! + '/_error',
+      openErrorDialog(app, context, app.documentID + '/_error',
           title: 'Error', errorMessage: 'Cannot find album with id $id');
     }
   }
 
   void _openIt(AppModel app, BuildContext context, bool create,
       AlbumModel model, EditorFeedback feedback) {
-    openComplexDialog(app, context, app.documentID! + '/Album',
+    openComplexDialog(app, context, app.documentID + '/Album',
         title: create ? 'Create album' : 'Update album',
         includeHeading: false,
         widthFraction: .9,
         child: BlocProvider<AlbumBloc>(
           create: (context) => AlbumBloc(
-            app.documentID!,
+            app.documentID,
             feedback,
           )..add(ExtEditorBaseInitialise<AlbumModel>(model)),
           child: AlbumComponentEditor(
@@ -110,7 +110,7 @@ class _AlbumComponentEditorState extends State<AlbumComponentEditor> {
       if (accessState is AccessDetermined) {
         var member = accessState.getMember();
         if (member != null) {
-          var memberId = member.documentID!;
+          var memberId = member.documentID;
           return BlocBuilder<AlbumBloc, ExtEditorBaseState<AlbumModel>>(
               builder: (ppContext, albumState) {
             if (albumState is ExtEditorBaseInitialised<AlbumModel, dynamic>) {
@@ -139,7 +139,7 @@ class _AlbumComponentEditorState extends State<AlbumComponentEditor> {
                           getListTile(context, widget.app,
                               leading: Icon(Icons.vpn_key),
                               title: text(widget.app, context,
-                                  albumState.model.documentID!)),
+                                  albumState.model.documentID)),
                           getListTile(context, widget.app,
                               leading: Icon(Icons.description),
                               title: dialogField(
@@ -271,7 +271,7 @@ class _AlbumComponentEditorState extends State<AlbumComponentEditor> {
             openFlexibleDialog(
               widget.app,
               context,
-              widget.app.documentID! + '/_listeditem',
+              widget.app.documentID + '/_listeditem',
               includeHeading: false,
               widthFraction: .8,
               child: AlbumEntryModelWidget.getIt(
@@ -349,7 +349,7 @@ class _AlbumComponentEditorState extends State<AlbumComponentEditor> {
               Registry.registry()!.getMediumApi().takePhoto(
                   context,
                   widget.app,
-                  widget.app.ownerID!,
+                  widget.app.ownerID,
                   () => PlatformMediumAccessRights(
                       albumState.model.conditions!.privilegeLevelRequired!),
                   (photo) => _photoFeedbackFunction(photo),
@@ -359,7 +359,7 @@ class _AlbumComponentEditorState extends State<AlbumComponentEditor> {
               Registry.registry()!.getMediumApi().uploadPhoto(
                   context,
                   widget.app,
-                  widget.app.ownerID!,
+                  widget.app.ownerID,
                   () => PlatformMediumAccessRights(
                       albumState.model.conditions!.privilegeLevelRequired!),
                   (photo) => _photoFeedbackFunction(photo),

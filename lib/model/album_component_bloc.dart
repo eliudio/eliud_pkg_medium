@@ -26,23 +26,22 @@ class AlbumComponentBloc extends Bloc<AlbumComponentEvent, AlbumComponentState> 
   final AlbumRepository? albumRepository;
   StreamSubscription? _albumSubscription;
 
-  Stream<AlbumComponentState> _mapLoadAlbumComponentUpdateToState(String documentId) async* {
+  void _mapLoadAlbumComponentUpdateToState(String documentId) {
     _albumSubscription?.cancel();
     _albumSubscription = albumRepository!.listenTo(documentId, (value) {
-      if (value != null) add(AlbumComponentUpdated(value: value));
+      if (value != null) {
+        add(AlbumComponentUpdated(value: value));
+      }
     });
   }
 
-  AlbumComponentBloc({ this.albumRepository }): super(AlbumComponentUninitialized());
-
-  @override
-  Stream<AlbumComponentState> mapEventToState(AlbumComponentEvent event) async* {
-    final currentState = state;
-    if (event is FetchAlbumComponent) {
-      yield* _mapLoadAlbumComponentUpdateToState(event.id!);
-    } else if (event is AlbumComponentUpdated) {
-      yield AlbumComponentLoaded(value: event.value);
-    }
+  AlbumComponentBloc({ this.albumRepository }): super(AlbumComponentUninitialized()) {
+    on <FetchAlbumComponent> ((event, emit) {
+      _mapLoadAlbumComponentUpdateToState(event.id!);
+    });
+    on <AlbumComponentUpdated> ((event, emit) {
+      emit(AlbumComponentLoaded(value: event.value));
+    });
   }
 
   @override

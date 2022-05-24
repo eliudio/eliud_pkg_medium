@@ -39,7 +39,7 @@ class AlbumPageBuilder extends PageBuilder {
 
   Future<PageModel> _setupPage() async {
     return await corerepo.AbstractRepositorySingleton.singleton
-        .pageRepository(app.documentID!)!
+        .pageRepository(app.documentID)!
         .add(_page());
   }
 
@@ -52,7 +52,7 @@ class AlbumPageBuilder extends PageBuilder {
 
     return PageModel(
         documentID: constructDocumentId(uniqueId: uniqueId, documentId: pageId),
-        appId: app.documentID!,
+        appId: app.documentID,
         title: "Album",
         drawer: leftDrawer,
         endDrawer: rightDrawer,
@@ -76,7 +76,7 @@ class AlbumPageBuilder extends PageBuilder {
     var example2 = await helper.example2();
     var albumModel = AlbumModel(
       documentID: constructDocumentId(uniqueId: uniqueId, documentId: albumComponentIdentifier),
-      appId: app.documentID!,
+      appId: app.documentID,
       albumEntries: [
         example1,
         example2,
@@ -92,7 +92,7 @@ class AlbumPageBuilder extends PageBuilder {
 
   Future<AlbumModel> _setupAlbum() async {
     var _albumModel =
-        await albumRepository(appId: app.documentID!)!.add(await albumModel());
+        await albumRepository(appId: app.documentID)!.add(await albumModel());
     return _albumModel;
   }
 

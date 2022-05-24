@@ -70,7 +70,7 @@ class _MemberPhotoWidgetState extends State<MemberPhotoWidget> {
                       Registry.registry()!.getMediumApi().takePhoto(
                           context,
                           widget.app,
-                          widget.app.ownerID!,
+                          widget.app.ownerID,
                               () => MemberMediumAccessRights(MemberMediumAccessibleByGroup.Public),
                               (photo) => _photoFeedbackFunction(widget.app, photo),
                           _photoUploading,
@@ -79,7 +79,7 @@ class _MemberPhotoWidgetState extends State<MemberPhotoWidget> {
                       Registry.registry()!.getMediumApi().uploadPhoto(
                           context,
                           widget.app,
-                          widget.app.ownerID!,
+                          widget.app.ownerID,
                               () => MemberMediumAccessRights(MemberMediumAccessibleByGroup.Public),
                               (photo) => _photoFeedbackFunction(widget.app, photo),
                           _photoUploading,
@@ -88,7 +88,7 @@ class _MemberPhotoWidgetState extends State<MemberPhotoWidget> {
                       var photo = await MemberMediumAccessRights(MemberMediumAccessibleByGroup.Public)
                           .getMediumHelper(
                         widget.app,
-                        widget.app.ownerID!,
+                        widget.app.ownerID,
                       )
                           .createThumbnailUploadPhotoAsset(newRandomKey(), widget.defaultImage!,
                           feedbackProgress: _photoUploading);

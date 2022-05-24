@@ -77,7 +77,7 @@ class AlbumListUpdated extends AlbumListEvent {
 }
 
 class AlbumChangeQuery extends AlbumListEvent {
-  final EliudQuery newQuery;
+  final EliudQuery? newQuery;
 
   const AlbumChangeQuery({ required this.newQuery });
 

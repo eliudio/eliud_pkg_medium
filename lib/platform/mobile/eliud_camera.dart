@@ -117,7 +117,7 @@ class _EliudCameraState extends State<EliudCamera>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
 //    SystemChrome.setEnabledSystemUIOverlays ([SystemUiOverlay.top]);
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     _flashModeControlRowAnimationController = AnimationController(
@@ -149,7 +149,7 @@ class _EliudCameraState extends State<EliudCamera>
 
   @override
   void dispose() {
-    WidgetsBinding.instance?.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     _flashModeControlRowAnimationController.dispose();
     _exposureModeControlRowAnimationController.dispose();
 

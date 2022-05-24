@@ -28,7 +28,7 @@ class AlbumComponentConstructorDefault implements ComponentConstructor {
 
   @override
   Future<dynamic> getModel({required AppModel app, required String id}) async =>
-      await albumRepository(appId: app.documentID!)!.get(id);
+      await albumRepository(appId: app.documentID)!.get(id);
 }
 
 class AlbumComponent extends AbstractAlbumComponent {

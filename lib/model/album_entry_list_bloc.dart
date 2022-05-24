@@ -38,9 +38,47 @@ class AlbumEntryListBloc extends Bloc<AlbumEntryListEvent, AlbumEntryListState> 
   AlbumEntryListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required AlbumEntryRepository albumEntryRepository, this.albumEntryLimit = 5})
       : assert(albumEntryRepository != null),
         _albumEntryRepository = albumEntryRepository,
-        super(AlbumEntryListLoading());
+        super(AlbumEntryListLoading()) {
+    on <LoadAlbumEntryList> ((event, emit) {
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadAlbumEntryListToState();
+      } else {
+        _mapLoadAlbumEntryListWithDetailsToState();
+      }
+    });
+    
+    on <NewPage> ((event, emit) {
+      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+      _mapLoadAlbumEntryListWithDetailsToState();
+    });
+    
+    on <AlbumEntryChangeQuery> ((event, emit) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadAlbumEntryListToState();
+      } else {
+        _mapLoadAlbumEntryListWithDetailsToState();
+      }
+    });
+      
+    on <AddAlbumEntryList> ((event, emit) async {
+      await _mapAddAlbumEntryListToState(event);
+    });
+    
+    on <UpdateAlbumEntryList> ((event, emit) async {
+      await _mapUpdateAlbumEntryListToState(event);
+    });
+    
+    on <DeleteAlbumEntryList> ((event, emit) async {
+      await _mapDeleteAlbumEntryListToState(event);
+    });
+    
+    on <AlbumEntryListUpdated> ((event, emit) {
+      emit(_mapAlbumEntryListUpdatedToState(event));
+    });
+  }
 
-  Stream<AlbumEntryListState> _mapLoadAlbumEntryListToState() async* {
+  Future<void> _mapLoadAlbumEntryListToState() async {
     int amountNow =  (state is AlbumEntryListLoaded) ? (state as AlbumEntryListLoaded).values!.length : 0;
     _albumEntrysListSubscription?.cancel();
     _albumEntrysListSubscription = _albumEntryRepository.listen(
@@ -52,7 +90,7 @@ class AlbumEntryListBloc extends Bloc<AlbumEntryListEvent, AlbumEntryListState> 
     );
   }
 
-  Stream<AlbumEntryListState> _mapLoadAlbumEntryListWithDetailsToState() async* {
+  Future<void> _mapLoadAlbumEntryListWithDetailsToState() async {
     int amountNow =  (state is AlbumEntryListLoaded) ? (state as AlbumEntryListLoaded).values!.length : 0;
     _albumEntrysListSubscription?.cancel();
     _albumEntrysListSubscription = _albumEntryRepository.listenWithDetails(
@@ -64,58 +102,29 @@ class AlbumEntryListBloc extends Bloc<AlbumEntryListEvent, AlbumEntryListState> 
     );
   }
 
-  Stream<AlbumEntryListState> _mapAddAlbumEntryListToState(AddAlbumEntryList event) async* {
+  Future<void> _mapAddAlbumEntryListToState(AddAlbumEntryList event) async {
     var value = event.value;
-    if (value != null) 
-      _albumEntryRepository.add(value);
-  }
-
-  Stream<AlbumEntryListState> _mapUpdateAlbumEntryListToState(UpdateAlbumEntryList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _albumEntryRepository.update(value);
-  }
-
-  Stream<AlbumEntryListState> _mapDeleteAlbumEntryListToState(DeleteAlbumEntryList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _albumEntryRepository.delete(value);
-  }
-
-  Stream<AlbumEntryListState> _mapAlbumEntryListUpdatedToState(
-      AlbumEntryListUpdated event) async* {
-    yield AlbumEntryListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
-  }
-
-  @override
-  Stream<AlbumEntryListState> mapEventToState(AlbumEntryListEvent event) async* {
-    if (event is LoadAlbumEntryList) {
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadAlbumEntryListToState();
-      } else {
-        yield* _mapLoadAlbumEntryListWithDetailsToState();
-      }
-    }
-    if (event is NewPage) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
-      yield* _mapLoadAlbumEntryListWithDetailsToState();
-    } else if (event is AlbumEntryChangeQuery) {
-      eliudQuery = event.newQuery;
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadAlbumEntryListToState();
-      } else {
-        yield* _mapLoadAlbumEntryListWithDetailsToState();
-      }
-    } else if (event is AddAlbumEntryList) {
-      yield* _mapAddAlbumEntryListToState(event);
-    } else if (event is UpdateAlbumEntryList) {
-      yield* _mapUpdateAlbumEntryListToState(event);
-    } else if (event is DeleteAlbumEntryList) {
-      yield* _mapDeleteAlbumEntryListToState(event);
-    } else if (event is AlbumEntryListUpdated) {
-      yield* _mapAlbumEntryListUpdatedToState(event);
+    if (value != null) {
+      await _albumEntryRepository.add(value);
     }
   }
+
+  Future<void> _mapUpdateAlbumEntryListToState(UpdateAlbumEntryList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _albumEntryRepository.update(value);
+    }
+  }
+
+  Future<void> _mapDeleteAlbumEntryListToState(DeleteAlbumEntryList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _albumEntryRepository.delete(value);
+    }
+  }
+
+  AlbumEntryListLoaded _mapAlbumEntryListUpdatedToState(
+      AlbumEntryListUpdated event) => AlbumEntryListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {

@@ -38,9 +38,47 @@ class AlbumListBloc extends Bloc<AlbumListEvent, AlbumListState> {
   AlbumListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required AlbumRepository albumRepository, this.albumLimit = 5})
       : assert(albumRepository != null),
         _albumRepository = albumRepository,
-        super(AlbumListLoading());
+        super(AlbumListLoading()) {
+    on <LoadAlbumList> ((event, emit) {
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadAlbumListToState();
+      } else {
+        _mapLoadAlbumListWithDetailsToState();
+      }
+    });
+    
+    on <NewPage> ((event, emit) {
+      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+      _mapLoadAlbumListWithDetailsToState();
+    });
+    
+    on <AlbumChangeQuery> ((event, emit) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadAlbumListToState();
+      } else {
+        _mapLoadAlbumListWithDetailsToState();
+      }
+    });
+      
+    on <AddAlbumList> ((event, emit) async {
+      await _mapAddAlbumListToState(event);
+    });
+    
+    on <UpdateAlbumList> ((event, emit) async {
+      await _mapUpdateAlbumListToState(event);
+    });
+    
+    on <DeleteAlbumList> ((event, emit) async {
+      await _mapDeleteAlbumListToState(event);
+    });
+    
+    on <AlbumListUpdated> ((event, emit) {
+      emit(_mapAlbumListUpdatedToState(event));
+    });
+  }
 
-  Stream<AlbumListState> _mapLoadAlbumListToState() async* {
+  Future<void> _mapLoadAlbumListToState() async {
     int amountNow =  (state is AlbumListLoaded) ? (state as AlbumListLoaded).values!.length : 0;
     _albumsListSubscription?.cancel();
     _albumsListSubscription = _albumRepository.listen(
@@ -52,7 +90,7 @@ class AlbumListBloc extends Bloc<AlbumListEvent, AlbumListState> {
     );
   }
 
-  Stream<AlbumListState> _mapLoadAlbumListWithDetailsToState() async* {
+  Future<void> _mapLoadAlbumListWithDetailsToState() async {
     int amountNow =  (state is AlbumListLoaded) ? (state as AlbumListLoaded).values!.length : 0;
     _albumsListSubscription?.cancel();
     _albumsListSubscription = _albumRepository.listenWithDetails(
@@ -64,58 +102,29 @@ class AlbumListBloc extends Bloc<AlbumListEvent, AlbumListState> {
     );
   }
 
-  Stream<AlbumListState> _mapAddAlbumListToState(AddAlbumList event) async* {
+  Future<void> _mapAddAlbumListToState(AddAlbumList event) async {
     var value = event.value;
-    if (value != null) 
-      _albumRepository.add(value);
-  }
-
-  Stream<AlbumListState> _mapUpdateAlbumListToState(UpdateAlbumList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _albumRepository.update(value);
-  }
-
-  Stream<AlbumListState> _mapDeleteAlbumListToState(DeleteAlbumList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _albumRepository.delete(value);
-  }
-
-  Stream<AlbumListState> _mapAlbumListUpdatedToState(
-      AlbumListUpdated event) async* {
-    yield AlbumListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
-  }
-
-  @override
-  Stream<AlbumListState> mapEventToState(AlbumListEvent event) async* {
-    if (event is LoadAlbumList) {
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadAlbumListToState();
-      } else {
-        yield* _mapLoadAlbumListWithDetailsToState();
-      }
-    }
-    if (event is NewPage) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
-      yield* _mapLoadAlbumListWithDetailsToState();
-    } else if (event is AlbumChangeQuery) {
-      eliudQuery = event.newQuery;
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadAlbumListToState();
-      } else {
-        yield* _mapLoadAlbumListWithDetailsToState();
-      }
-    } else if (event is AddAlbumList) {
-      yield* _mapAddAlbumListToState(event);
-    } else if (event is UpdateAlbumList) {
-      yield* _mapUpdateAlbumListToState(event);
-    } else if (event is DeleteAlbumList) {
-      yield* _mapDeleteAlbumListToState(event);
-    } else if (event is AlbumListUpdated) {
-      yield* _mapAlbumListUpdatedToState(event);
+    if (value != null) {
+      await _albumRepository.add(value);
     }
   }
+
+  Future<void> _mapUpdateAlbumListToState(UpdateAlbumList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _albumRepository.update(value);
+    }
+  }
+
+  Future<void> _mapDeleteAlbumListToState(DeleteAlbumList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _albumRepository.delete(value);
+    }
+  }
+
+  AlbumListLoaded _mapAlbumListUpdatedToState(
+      AlbumListUpdated event) => AlbumListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {

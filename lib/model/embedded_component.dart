@@ -83,14 +83,14 @@ class AlbumEntryInMemoryRepository implements AlbumEntryRepository {
     }
 
     Future<void> delete(AlbumEntryModel value) {
-      int index = _index(value.documentID!);
+      int index = _index(value.documentID);
       if (index >= 0) items.removeAt(index);
       trigger(items);
       return Future.value(value);
     }
 
     Future<AlbumEntryModel> update(AlbumEntryModel value) {
-      int index = _index(value.documentID!);
+      int index = _index(value.documentID);
       if (index >= 0) {
         items.replaceRange(index, index+1, [value]);
         trigger(items);

@@ -29,7 +29,7 @@ class AlbumEntity {
   final BackgroundEntity? backgroundImage;
   final StorageConditionsEntity? conditions;
 
-  AlbumEntity({this.appId, this.albumEntries, this.description, this.backgroundImage, this.conditions, });
+  AlbumEntity({required this.appId, this.albumEntries, this.description, this.backgroundImage, this.conditions, });
 
 
   List<Object?> get props => [appId, albumEntries, description, backgroundImage, conditions, ];

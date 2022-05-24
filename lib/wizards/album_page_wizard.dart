@@ -55,7 +55,7 @@ class AlbumPageWizard extends NewAppWizardInfoWithActionSpecification {
     if (parameters is ActionSpecificationParametersBase) {
       var albumPageSpecifications = parameters.actionSpecifications;
       if (albumPageSpecifications.shouldCreatePageDialogOrWorkflow()) {
-        var memberId = member.documentID!;
+        var memberId = member.documentID;
         List<NewAppTask> tasks = [];
         tasks.add(() async {
           print("Album page");

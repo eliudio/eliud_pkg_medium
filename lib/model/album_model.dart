@@ -16,6 +16,7 @@
 import 'package:collection/collection.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eliud_core/core/base/model_base.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
@@ -36,17 +37,17 @@ import 'package:eliud_core/tools/random.dart';
 
 
 
-class AlbumModel {
-  String? documentID;
+class AlbumModel implements ModelBase, WithAppId {
+  String documentID;
 
   // This is the identifier of the app to which this feed belongs
-  String? appId;
+  String appId;
   List<AlbumEntryModel>? albumEntries;
   String? description;
   BackgroundModel? backgroundImage;
   StorageConditionsModel? conditions;
 
-  AlbumModel({this.documentID, this.appId, this.albumEntries, this.description, this.backgroundImage, this.conditions, })  {
+  AlbumModel({required this.documentID, required this.appId, this.albumEntries, this.description, this.backgroundImage, this.conditions, })  {
     assert(documentID != null);
   }
 
@@ -93,7 +94,7 @@ class AlbumModel {
     var counter = 0;
     return AlbumModel(
           documentID: documentID, 
-          appId: entity.appId, 
+          appId: entity.appId ?? '', 
           albumEntries: 
             entity.albumEntries == null ? null : List<AlbumEntryModel>.from(await Future.wait(entity. albumEntries
             !.map((item) {
@@ -115,7 +116,7 @@ class AlbumModel {
     var counter = 0;
     return AlbumModel(
           documentID: documentID, 
-          appId: entity.appId, 
+          appId: entity.appId ?? '', 
           albumEntries: 
             entity. albumEntries == null ? null : List<AlbumEntryModel>.from(await Future.wait(entity. albumEntries
             !.map((item) {

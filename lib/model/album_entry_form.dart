@@ -74,7 +74,7 @@ class AlbumEntryForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var appId = app.documentID!;
+    var appId = app.documentID;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<AlbumEntryFormBloc >(
             create: (context) => AlbumEntryFormBloc(appId,
@@ -275,7 +275,7 @@ class _MyAlbumEntryFormState extends State<MyAlbumEntryForm> {
   }
 
   bool _readOnly(AccessState accessState, AlbumEntryFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID!));
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID));
   }
   
 

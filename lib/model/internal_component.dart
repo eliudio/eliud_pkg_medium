@@ -114,9 +114,9 @@ class ListComponent extends StatelessWidget with HasFab {
           create: (context) => AlbumListBloc(
             eliudQuery: EliudQuery(theConditions: [
               EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
             ),
-            albumRepository: albumRepository(appId: app.documentID!)!,
+            albumRepository: albumRepository(appId: app.documentID)!,
           )..add(LoadAlbumList()),
         )
       ],
@@ -154,9 +154,9 @@ class DropdownButtonComponent extends StatelessWidget {
           create: (context) => AlbumListBloc(
             eliudQuery: EliudQuery(theConditions: [
               EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
             ),
-            albumRepository: albumRepository(appId: app.documentID!)!,
+            albumRepository: albumRepository(appId: app.documentID)!,
           )..add(LoadAlbumList()),
         )
       ],

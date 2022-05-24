@@ -50,48 +50,36 @@ class AlbumEntryFormBloc extends Bloc<AlbumEntryFormEvent, AlbumEntryFormState> 
   Stream<AlbumEntryFormState> mapEventToState(AlbumEntryFormEvent event) async* {
     final currentState = state;
     if (currentState is AlbumEntryFormUninitialized) {
-      if (event is InitialiseNewAlbumEntryFormEvent) {
+      on <InitialiseNewAlbumEntryFormEvent> ((event, emit) {
         AlbumEntryFormLoaded loaded = AlbumEntryFormLoaded(value: AlbumEntryModel(
                                                documentID: "IDENTIFIED", 
                                  name: "",
 
         ));
-        yield loaded;
-        return;
-
-      }
+        emit(loaded);
+      });
 
 
       if (event is InitialiseAlbumEntryFormEvent) {
         AlbumEntryFormLoaded loaded = AlbumEntryFormLoaded(value: event.value);
-        yield loaded;
-        return;
+        emit(loaded);
       } else if (event is InitialiseAlbumEntryFormNoLoadEvent) {
         AlbumEntryFormLoaded loaded = AlbumEntryFormLoaded(value: event.value);
-        yield loaded;
-        return;
+        emit(loaded);
       }
     } else if (currentState is AlbumEntryFormInitialized) {
       AlbumEntryModel? newValue = null;
-      if (event is ChangedAlbumEntryName) {
+      on <ChangedAlbumEntryName> ((event, emit) async {
         newValue = currentState.value!.copyWith(name: event.value);
-        yield SubmittableAlbumEntryForm(value: newValue);
+        emit(SubmittableAlbumEntryForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedAlbumEntryMedium) {
+      });
+      on <ChangedAlbumEntryMedium> ((event, emit) async {
         if (event.value != null)
           newValue = currentState.value!.copyWith(medium: await platformMediumRepository(appId: appId)!.get(event.value));
-        else
-          newValue = new AlbumEntryModel(
-                                 documentID: currentState.value!.documentID,
-                                 name: currentState.value!.name,
-                                 medium: null,
-          );
-        yield SubmittableAlbumEntryForm(value: newValue);
+        emit(SubmittableAlbumEntryForm(value: newValue));
 
-        return;
-      }
+      });
     }
   }
 

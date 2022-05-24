@@ -39,7 +39,7 @@ abstract class AbstractAlbumComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<AlbumComponentBloc> (
           create: (context) => AlbumComponentBloc(
-            albumRepository: albumRepository(appId: app.documentID!)!)
+            albumRepository: albumRepository(appId: app.documentID)!)
         ..add(FetchAlbumComponent(id: albumId)),
       child: _albumBlockBuilder(context),
     );
