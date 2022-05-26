@@ -54,6 +54,7 @@ class AlbumPageBuilder extends PageBuilder {
         documentID: constructDocumentId(uniqueId: uniqueId, documentId: pageId),
         appId: app.documentID,
         title: "Album",
+        description: "Album",
         drawer: leftDrawer,
         endDrawer: rightDrawer,
         appBar: theAppBar,

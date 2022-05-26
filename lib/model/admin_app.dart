@@ -63,6 +63,7 @@ class AdminApp extends AdminAppInstallerBase {
         appId: appId,
         documentID: "eliud_pkg_medium_albums_page",
         title: "Albums",
+        description: "Albums",
         drawer: _drawer,
         endDrawer: _endDrawer,
         appBar: _appBar,
