@@ -4,14 +4,18 @@ import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/model/public_medium_model.dart';
 import 'package:eliud_core/package/medium_api.dart';
+import 'package:eliud_core/style/frontend/has_button.dart';
+import 'package:eliud_core/style/frontend/has_dialog.dart';
 import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/router_builders.dart';
+import 'package:eliud_core/tools/screen_size.dart';
 import 'package:eliud_core/tools/storage/upload_info.dart';
-import 'package:eliud_pkg_medium/tools/slider/carousel_slider.dart';
 import 'package:eliud_pkg_medium/tools/view/video_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../tools/slider/album_slider.dart';
+import '../tools/slider/slide_image_provider.dart';
 import '../wizards/widgets/member_photo_widget.dart';
 import '../wizards/widgets/platform_photo_widget.dart';
 import '../wizards/widgets/public_photo_widget.dart';
@@ -22,15 +26,22 @@ abstract class AbstractMediumPlatform extends MediumApi {
     var photos = media
         .where((memberMedium) => memberMedium.mediumType == MediumType.Photo)
         .toList();
-    Navigator.push(
-        context,
-        pageRouteBuilder(app,
-            page: AlbumSlider(
+    //title: "Photos",
+    //
+    openFlexibleDialog(app, context, app.documentID + '/_showphotosplatform',
+        includeHeading: true,
+        title: "Photos",
+        buttons: [
+          dialogButton(app, context,
+              label: 'Close', onPressed: () => Navigator.of(context).pop()),
+        ],
+        widthFraction: .9,
+        child: AlbumSlider(
+                height: fullFullScreenHeight(context) * .7,
                 app: app,
-                title: "Photos",
                 slideImageProvider: MemberMediumSlideImageProvider(
                     ListHelper.getMemberMediumModelList(photos)),
-                initialPage: initialPage)));
+                initialPage: initialPage));
   }
 
   void showPhotosPlatform(BuildContext context, AppModel app,
@@ -39,15 +50,20 @@ abstract class AbstractMediumPlatform extends MediumApi {
         .where((memberMedium) =>
             memberMedium.mediumType == PlatformMediumType.Photo)
         .toList();
-    Navigator.push(
-        context,
-        pageRouteBuilder(app,
-            page: AlbumSlider(
-                app: app,
-                title: "Photos",
-                slideImageProvider: PlatformMediumSlideImageProvider(
-                    ListHelper.getPlatformMediumModelList(photos)),
-                initialPage: initialPage)));
+    openFlexibleDialog(app, context, app.documentID + '/_showphotosplatform',
+        includeHeading: true,
+        title: "Photos",
+        buttons: [
+          dialogButton(app, context,
+              label: 'Close', onPressed: () => Navigator.of(context).pop()),
+        ],
+        widthFraction: .9,
+        child: AlbumSlider(
+            height: fullFullScreenHeight(context) * .7,
+            app: app,
+            slideImageProvider: PlatformMediumSlideImageProvider(
+                ListHelper.getPlatformMediumModelList(photos)),
+            initialPage: initialPage));
   }
 
   void showPhotosPublic(BuildContext context, AppModel app,
@@ -56,15 +72,21 @@ abstract class AbstractMediumPlatform extends MediumApi {
         .where(
             (memberMedium) => memberMedium.mediumType == PublicMediumType.Photo)
         .toList();
-    Navigator.push(
-        context,
-        pageRouteBuilder(app,
-            page: AlbumSlider(
+
+    openFlexibleDialog(app, context, app.documentID + '/_showphotosplatform',
+        includeHeading: true,
+        title: "Photos",
+        buttons: [
+          dialogButton(app, context,
+              label: 'Close', onPressed: () => Navigator.of(context).pop()),
+        ],
+        widthFraction: .9,
+        child: AlbumSlider(
+                height: fullFullScreenHeight(context) * .7,
                 app: app,
-                title: "Photos",
                 slideImageProvider: PublicMediumSlideImageProvider(
                     ListHelper.getPublicMediumModelList(photos)),
-                initialPage: initialPage)));
+                initialPage: initialPage));
   }
 
   Future<void> showVideo(BuildContext context, AppModel app,
