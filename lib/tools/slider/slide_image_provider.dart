@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
