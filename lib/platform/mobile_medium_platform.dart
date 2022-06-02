@@ -1,10 +1,9 @@
 import 'dart:io';
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/package/medium_api.dart';
-import 'package:eliud_core/package/access_rights.dart';
 import 'package:eliud_core/tools/random.dart';
 import 'package:eliud_core/tools/storage/basename_helper.dart';
-import 'package:eliud_core/tools/storage/member_medium_helper.dart';
 import 'package:eliud_core/tools/storage/upload_info.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,11 +18,12 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
   Future<void> takePhoto(
       BuildContext context,
       AppModel app,
-      String ownerId,
       AccessRightsProvider accessRightsProvider,
       MediumAvailable feedbackFunction,
       FeedbackProgress? feedbackProgress,
       {bool? allowCrop}) async {
+    var ownerId = AccessBloc.memberId(context);
+    if (ownerId == null) throw Exception("Expecting to have a member logged in to take a photo");
     if (feedbackProgress != null) feedbackProgress(-1);
     var _image = await ImagePickerGC.pickImage(
       enableCloseButton: true,
@@ -78,10 +78,11 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
   void takeVideo(
       BuildContext context,
       AppModel app,
-      String ownerId,
       AccessRightsProvider accessRightsProvider,
       MediumAvailable feedbackFunction,
       FeedbackProgress? feedbackProgress) {
+    var ownerId = AccessBloc.memberId(context);
+    if (ownerId == null) throw Exception("Expecting to have a member logged in to take a photo");
     var memberMediumDocumentID = newRandomKey();
     EliudCamera.openVideoRecorder(context, app, (video) async {
       var memberMediumModel = await accessRightsProvider()
@@ -102,12 +103,13 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
   Future<void> uploadPhoto(
       BuildContext context,
       AppModel app,
-      String ownerId,
       AccessRightsProvider accessRightsProvider,
       MediumAvailable feedbackFunction,
       FeedbackProgress? feedbackProgress,
       {bool? allowCrop}) async {
     try {
+      var ownerId = AccessBloc.memberId(context);
+      if (ownerId == null) throw Exception("Expecting to have a member logged in to take a photo");
       var memberMediumDocumentID = newRandomKey();
       if (feedbackProgress != null) feedbackProgress(-1);
       var _result = await FilePicker.platform
@@ -157,11 +159,12 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
   Future<void> uploadVideo(
       BuildContext context,
       AppModel app,
-      String ownerId,
       AccessRightsProvider accessRightsProvider,
       MediumAvailable feedbackFunction,
       FeedbackProgress? feedbackProgress) async {
     try {
+      var ownerId = AccessBloc.memberId(context);
+      if (ownerId == null) throw Exception("Expecting to have a member logged in to take a photo");
       var memberMediumDocumentID = newRandomKey();
       var result = await FilePicker.platform
           .pickFiles(type: FileType.video, allowMultiple: false);

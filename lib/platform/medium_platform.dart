@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
@@ -116,7 +117,6 @@ abstract class AbstractMediumPlatform extends MediumApi {
   void takeVideo(
       BuildContext context,
       AppModel app,
-      String ownerId,
       AccessRightsProvider accessRightsProvider,
       MediumAvailable feedbackFunction,
       FeedbackProgress? feedbackProgress);
@@ -124,7 +124,6 @@ abstract class AbstractMediumPlatform extends MediumApi {
   void uploadPhoto(
       BuildContext context,
       AppModel app,
-      String ownerId,
       AccessRightsProvider accessRightsProvider,
       MediumAvailable feedbackFunction,
       FeedbackProgress? feedbackProgress,
@@ -137,7 +136,6 @@ abstract class AbstractMediumPlatform extends MediumApi {
   void uploadVideo(
       BuildContext context,
       AppModel app,
-      String ownerId,
       AccessRightsProvider accessRightsProvider,
       MediumAvailable feedbackFunction,
       FeedbackProgress? feedbackProgress);

@@ -56,7 +56,6 @@ class MediaButtons {
               Registry.registry()!.getMediumApi().takePhoto(
                   context,
                   app,
-                  ownerId,
                   () => MemberMediumAccessRights(accessibleByFunction().item1,
                       accessibleByMembers: accessibleByFunction().item2),
                   photoFeedbackFunction,
@@ -67,7 +66,6 @@ class MediaButtons {
               Registry.registry()!.getMediumApi().uploadPhoto(
                   context,
                   app,
-                  ownerId,
                   () => MemberMediumAccessRights(accessibleByFunction().item1,
                       accessibleByMembers: accessibleByFunction().item2),
                   photoFeedbackFunction,
@@ -80,7 +78,6 @@ class MediaButtons {
               Registry.registry()!.getMediumApi().takeVideo(
                   context,
                   app,
-                  ownerId,
                   () => MemberMediumAccessRights(accessibleByFunction().item1,
                       accessibleByMembers: accessibleByFunction().item2),
                   videoFeedbackFunction,
@@ -90,7 +87,6 @@ class MediaButtons {
               Registry.registry()!.getMediumApi().uploadVideo(
                   context,
                   app,
-                  ownerId,
                   () => MemberMediumAccessRights(accessibleByFunction().item1,
                       accessibleByMembers: accessibleByFunction().item2),
                   videoFeedbackFunction,

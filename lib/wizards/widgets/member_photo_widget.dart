@@ -70,7 +70,6 @@ class _MemberPhotoWidgetState extends State<MemberPhotoWidget> {
                       Registry.registry()!.getMediumApi().takePhoto(
                           context,
                           widget.app,
-                          widget.app.ownerID,
                               () => MemberMediumAccessRights(MemberMediumAccessibleByGroup.Public),
                               (photo) => _photoFeedbackFunction(widget.app, photo),
                           _photoUploading,
@@ -79,7 +78,6 @@ class _MemberPhotoWidgetState extends State<MemberPhotoWidget> {
                       Registry.registry()!.getMediumApi().uploadPhoto(
                           context,
                           widget.app,
-                          widget.app.ownerID,
                               () => MemberMediumAccessRights(MemberMediumAccessibleByGroup.Public),
                               (photo) => _photoFeedbackFunction(widget.app, photo),
                           _photoUploading,

@@ -349,7 +349,6 @@ class _AlbumComponentEditorState extends State<AlbumComponentEditor> {
               Registry.registry()!.getMediumApi().takePhoto(
                   context,
                   widget.app,
-                  widget.app.ownerID,
                   () => PlatformMediumAccessRights(
                       albumState.model.conditions!.privilegeLevelRequired!),
                   (photo) => _photoFeedbackFunction(photo),
@@ -359,7 +358,6 @@ class _AlbumComponentEditorState extends State<AlbumComponentEditor> {
               Registry.registry()!.getMediumApi().uploadPhoto(
                   context,
                   widget.app,
-                  widget.app.ownerID,
                   () => PlatformMediumAccessRights(
                       albumState.model.conditions!.privilegeLevelRequired!),
                   (photo) => _photoFeedbackFunction(photo),

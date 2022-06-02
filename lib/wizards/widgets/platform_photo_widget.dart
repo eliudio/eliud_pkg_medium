@@ -74,7 +74,6 @@ class _PlatformPhotoWidgetState extends State<PlatformPhotoWidget> {
                       Registry.registry()!.getMediumApi().takePhoto(
                           context,
                           widget.app,
-                          widget.app.ownerID,
                               () => PlatformMediumAccessRights(PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
                               (photo) => _photoFeedbackFunction(widget.app, photo),
                           _photoUploading,
@@ -83,7 +82,6 @@ class _PlatformPhotoWidgetState extends State<PlatformPhotoWidget> {
                       Registry.registry()!.getMediumApi().uploadPhoto(
                           context,
                           widget.app,
-                          widget.app.ownerID,
                               () => PlatformMediumAccessRights(PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
                               (photo) => _photoFeedbackFunction(widget.app, photo),
                           _photoUploading,
