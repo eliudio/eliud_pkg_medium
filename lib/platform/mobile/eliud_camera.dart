@@ -604,7 +604,8 @@ class _EliudCameraState extends State<EliudCamera>
 
   void showInSnackBar(String message) {
     // ignore: deprecated_member_use
-    _scaffoldKey.currentState?.showSnackBar(SnackBar(content: text(widget.app, context, message)));
+    //_scaffoldKey.currentState?.showSnackBar(SnackBar(content: text(widget.app, context, message)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: text(widget.app, context, message)));
   }
 
   void onViewFinderTap(TapDownDetails details, BoxConstraints constraints) {

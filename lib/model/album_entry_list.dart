@@ -156,7 +156,7 @@ class AlbumEntryListWidgetState extends State<AlbumEntryListWidget> {
             onDismissed: (direction) {
               BlocProvider.of<AlbumEntryListBloc>(context)
                   .add(DeleteAlbumEntryList(value: value));
-              Scaffold.of(context).showSnackBar(DeleteSnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(DeleteSnackBar(
                 message: "AlbumEntry " + value.documentID,
                 onUndo: () => BlocProvider.of<AlbumEntryListBloc>(context)
                     .add(AddAlbumEntryList(value: value)),
@@ -168,7 +168,7 @@ class AlbumEntryListWidgetState extends State<AlbumEntryListWidget> {
                               value: BlocProvider.of<AlbumEntryListBloc>(context),
                               child: getForm(value, FormAction.UpdateAction))));
                       if (removedItem != null) {
-                        Scaffold.of(context).showSnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar(
                           DeleteSnackBar(
                         message: "AlbumEntry " + value.documentID,
                             onUndo: () => BlocProvider.of<AlbumEntryListBloc>(context)
