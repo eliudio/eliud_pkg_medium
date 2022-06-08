@@ -61,6 +61,10 @@ class AlbumEntryModel implements ModelBase {
           name == other.name &&
           medium == other.medium;
 
+  String toJsonString({String? appId}) {
+    return toEntity(appId: appId).toJsonString();
+  }
+
   @override
   String toString() {
     return 'AlbumEntryModel{documentID: $documentID, name: $name, medium: $medium}';

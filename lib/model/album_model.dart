@@ -70,6 +70,10 @@ class AlbumModel implements ModelBase, WithAppId {
           backgroundImage == other.backgroundImage &&
           conditions == other.conditions;
 
+  String toJsonString({String? appId}) {
+    return toEntity(appId: appId).toJsonString();
+  }
+
   @override
   String toString() {
     String albumEntriesCsv = (albumEntries == null) ? '' : albumEntries!.join(', ');
