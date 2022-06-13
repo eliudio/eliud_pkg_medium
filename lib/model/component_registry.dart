@@ -17,6 +17,7 @@
 import '../model/internal_component.dart';
 import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_core/tools/component/component_spec.dart';
+import 'abstract_repository_singleton.dart';
 
 import '../extensions/album_component.dart';
 import '../editors/album_component_editor.dart';
@@ -35,7 +36,7 @@ class ComponentRegistry {
     Registry.registry()!.addDropDownSupporter("albums", DropdownButtonComponentFactory());
     Registry.registry()!.register(componentName: "albums", componentConstructor: AlbumComponentConstructorDefault());
     Registry.registry()!.addComponentSpec('eliud_pkg_medium', 'medium', [
-      ComponentSpec('albums', AlbumComponentConstructorDefault(), AlbumComponentSelector(), AlbumComponentEditorConstructor(), ), 
+      ComponentSpec('albums', AlbumComponentConstructorDefault(), AlbumComponentSelector(), AlbumComponentEditorConstructor(), ({String? appId}) => albumRepository(appId: appId)! ), 
     ]);
 
   }
