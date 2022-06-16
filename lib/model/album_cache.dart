@@ -47,6 +47,14 @@ class AlbumCache implements AlbumRepository {
     });
   }
 
+  Future<AlbumEntity> addEntity(String documentID, AlbumEntity value) {
+    return reference.addEntity(documentID, value);
+  }
+
+  Future<AlbumEntity> updateEntity(String documentID, AlbumEntity value) {
+    return reference.updateEntity(documentID, value);
+  }
+
   Future<void> delete(AlbumModel value){
     fullCache.remove(value.documentID);
     reference.delete(value);

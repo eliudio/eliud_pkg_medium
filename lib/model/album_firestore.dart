@@ -36,6 +36,14 @@ import 'package:eliud_core/tools/firestore/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
 class AlbumFirestore implements AlbumRepository {
+  Future<AlbumEntity> addEntity(String documentID, AlbumEntity value) {
+    return AlbumCollection.doc(documentID).set(value.toDocument()).then((_) => value);
+  }
+
+  Future<AlbumEntity> updateEntity(String documentID, AlbumEntity value) {
+    return AlbumCollection.doc(documentID).update(value.toDocument()).then((_) => value);
+  }
+
   Future<AlbumModel> add(AlbumModel value) {
     return AlbumCollection.doc(value.documentID).set(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
@@ -54,6 +62,21 @@ class AlbumFirestore implements AlbumRepository {
 
   Future<AlbumModel?> _populateDocPlus(DocumentSnapshot value) async {
     return AlbumModel.fromEntityPlus(value.id, AlbumEntity.fromMap(value.data()), appId: appId);  }
+
+  Future<AlbumEntity?> getEntity(String? id, {Function(Exception)? onError}) async {
+    try {
+      var collection = AlbumCollection.doc(id);
+      var doc = await collection.get();
+      return AlbumEntity.fromMap(doc.data());
+    } on Exception catch(e) {
+      if (onError != null) {
+        onError(e);
+      } else {
+        print("Error whilst retrieving Album with id $id");
+        print("Exceptoin: $e");
+      }
+    };
+  }
 
   Future<AlbumModel?> get(String? id, {Function(Exception)? onError}) async {
     try {

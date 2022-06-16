@@ -38,6 +38,8 @@ typedef AlbumEntryModelTrigger(List<AlbumEntryModel?> list);
 typedef AlbumEntryChanged(AlbumEntryModel? value);
 
 abstract class AlbumEntryRepository extends RepositoryBase<AlbumEntryModel> {
+  Future<AlbumEntryEntity> addEntity(String documentID, AlbumEntryEntity value);
+  Future<AlbumEntryEntity> updateEntity(String documentID, AlbumEntryEntity value);
   Future<AlbumEntryModel> add(AlbumEntryModel value);
   Future<void> delete(AlbumEntryModel value);
   Future<AlbumEntryModel?> get(String? id, { Function(Exception)? onError });

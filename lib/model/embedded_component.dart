@@ -29,6 +29,7 @@ import '../model/album_entry_list_bloc.dart';
 import '../model/album_entry_list.dart';
 import '../model/album_entry_list_event.dart';
 import '../model/album_entry_model.dart';
+import '../model/album_entry_entity.dart';
 import '../model/album_entry_repository.dart';
 
 typedef AlbumEntryListChanged(List<AlbumEntryModel> values);
@@ -74,6 +75,14 @@ class AlbumEntryInMemoryRepository implements AlbumEntryRepository {
         i++;
       }
       return -1;
+    }
+
+    Future<AlbumEntryEntity> addEntity(String documentID, AlbumEntryEntity value) {
+      throw Exception('Not implemented'); 
+    }
+
+    Future<AlbumEntryEntity> updateEntity(String documentID, AlbumEntryEntity value) {
+      throw Exception('Not implemented'); 
     }
 
     Future<AlbumEntryModel> add(AlbumEntryModel value) {
