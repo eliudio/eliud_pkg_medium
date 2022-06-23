@@ -37,7 +37,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 typedef AlbumModelTrigger(List<AlbumModel?> list);
 typedef AlbumChanged(AlbumModel? value);
 
-abstract class AlbumRepository extends RepositoryBase<AlbumModel> {
+abstract class AlbumRepository extends RepositoryBase<AlbumModel, AlbumEntity> {
   Future<AlbumEntity> addEntity(String documentID, AlbumEntity value);
   Future<AlbumEntity> updateEntity(String documentID, AlbumEntity value);
   Future<AlbumModel> add(AlbumModel value);

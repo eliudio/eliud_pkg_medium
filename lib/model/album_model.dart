@@ -19,6 +19,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/model_base.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:eliud_core/model/app_model.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
@@ -73,28 +74,23 @@ class AlbumModel implements ModelBase, WithAppId {
           conditions == other.conditions;
 
   @override
-  Future<String> toRichJsonString({String? appId}) async {
-    var document = toEntity(appId: appId).toDocument();
-    document['documentID'] = documentID;
-    return jsonEncode(document);
-  }
-
-  @override
   String toString() {
     String albumEntriesCsv = (albumEntries == null) ? '' : albumEntries!.join(', ');
 
     return 'AlbumModel{documentID: $documentID, appId: $appId, albumEntries: AlbumEntry[] { $albumEntriesCsv }, description: $description, backgroundImage: $backgroundImage, conditions: $conditions}';
   }
 
-  AlbumEntity toEntity({String? appId}) {
+  AlbumEntity toEntity({String? appId, List<ModelBase>? referencesCollector}) {
+    if (referencesCollector != null) {
+    }
     return AlbumEntity(
           appId: (appId != null) ? appId : null, 
           albumEntries: (albumEntries != null) ? albumEntries
-            !.map((item) => item.toEntity(appId: appId))
+            !.map((item) => item.toEntity(appId: appId, referencesCollector: referencesCollector))
             .toList() : null, 
           description: (description != null) ? description : null, 
-          backgroundImage: (backgroundImage != null) ? backgroundImage!.toEntity(appId: appId) : null, 
-          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
+          backgroundImage: (backgroundImage != null) ? backgroundImage!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
     );
   }
 

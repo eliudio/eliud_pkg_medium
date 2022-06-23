@@ -17,12 +17,13 @@ import 'dart:collection';
 import 'dart:convert';
 import 'abstract_repository_singleton.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eliud_core/core/base/entity_base.dart';
 import 'package:eliud_core/model/entity_export.dart';
 import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_medium/model/entity_export.dart';
 
 import 'package:eliud_core/tools/common_tools.dart';
-class AlbumEntity {
+class AlbumEntity implements EntityBase {
   final String? appId;
   final List<AlbumEntryEntity>? albumEntries;
   final String? description;

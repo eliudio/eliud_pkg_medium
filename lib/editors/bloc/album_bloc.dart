@@ -7,7 +7,9 @@ import 'package:eliud_pkg_medium/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_medium/model/album_entry_model.dart';
 import 'package:eliud_pkg_medium/model/album_model.dart';
 
-class AlbumBloc extends ExtEditorBaseBloc<AlbumModel, AlbumEntryModel> {
+import '../../model/album_entity.dart';
+
+class AlbumBloc extends ExtEditorBaseBloc<AlbumModel, AlbumEntryModel, AlbumEntity> {
 
   AlbumBloc(String appId, EditorFeedback feedback)
       : super(appId, albumRepository(appId: appId)!, feedback);

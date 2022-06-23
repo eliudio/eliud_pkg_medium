@@ -18,6 +18,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/model_base.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:eliud_core/model/app_model.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
@@ -64,26 +65,14 @@ class AlbumEntryModel implements ModelBase {
           medium == other.medium;
 
   @override
-  Future<String> toRichJsonString({String? appId}) async {
-    var document = toEntity(appId: appId).toDocument();
-    document['documentID'] = documentID;
-    if ((medium != null) && (medium!.url != null)) {
-      var url = medium!.url!;
-      var uriurl = Uri.parse(url);
-      final response = await http.get(uriurl);
-      var bytes = response.bodyBytes.toList();
-      document['medium-extract'] = bytes.toList();
-    }
-
-    return jsonEncode(document);
-  }
-
-  @override
   String toString() {
     return 'AlbumEntryModel{documentID: $documentID, name: $name, medium: $medium}';
   }
 
-  AlbumEntryEntity toEntity({String? appId}) {
+  AlbumEntryEntity toEntity({String? appId, List<ModelBase>? referencesCollector}) {
+    if (referencesCollector != null) {
+      if (medium != null) referencesCollector.add(medium!);
+    }
     return AlbumEntryEntity(
           name: (name != null) ? name : null, 
           mediumId: (medium != null) ? medium!.documentID : null, 

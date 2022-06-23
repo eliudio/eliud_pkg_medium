@@ -162,6 +162,15 @@ class AlbumEntryInMemoryRepository implements AlbumEntryRepository {
     throw UnimplementedError();
   }
   
+  @override
+  Future<AlbumEntryEntity?> getEntity(String? id, {Function(Exception p1)? onError}) {
+    throw UnimplementedError();
+  }
+
+  @override
+  AlbumEntryEntity? fromMap(Object? o) {
+    throw UnimplementedError();
+  }
 
     Future<void> deleteAll() async {}
 }
