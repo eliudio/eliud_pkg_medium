@@ -41,6 +41,9 @@ import 'package:eliud_core/tools/random.dart';
 
 
 class AlbumModel implements ModelBase, WithAppId {
+  static const String packageName = 'eliud_pkg_medium';
+  static const String id = 'Album';
+
   String documentID;
 
   // This is the identifier of the app to which this feed belongs
@@ -80,7 +83,7 @@ class AlbumModel implements ModelBase, WithAppId {
     return 'AlbumModel{documentID: $documentID, appId: $appId, albumEntries: AlbumEntry[] { $albumEntriesCsv }, description: $description, backgroundImage: $backgroundImage, conditions: $conditions}';
   }
 
-  AlbumEntity toEntity({String? appId, List<ModelBase>? referencesCollector}) {
+  AlbumEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
     }
     return AlbumEntity(

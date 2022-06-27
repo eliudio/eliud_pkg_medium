@@ -40,6 +40,9 @@ import 'package:eliud_core/tools/random.dart';
 
 
 class AlbumEntryModel implements ModelBase {
+  static const String packageName = 'eliud_pkg_medium';
+  static const String id = 'AlbumEntry';
+
   String documentID;
   String? name;
   PlatformMediumModel? medium;
@@ -69,9 +72,9 @@ class AlbumEntryModel implements ModelBase {
     return 'AlbumEntryModel{documentID: $documentID, name: $name, medium: $medium}';
   }
 
-  AlbumEntryEntity toEntity({String? appId, List<ModelBase>? referencesCollector}) {
+  AlbumEntryEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
-      if (medium != null) referencesCollector.add(medium!);
+      if (medium != null) referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, medium!));
     }
     return AlbumEntryEntity(
           name: (name != null) ? name : null, 
