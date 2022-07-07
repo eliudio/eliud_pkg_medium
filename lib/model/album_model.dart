@@ -83,7 +83,7 @@ class AlbumModel implements ModelBase, WithAppId {
     return 'AlbumModel{documentID: $documentID, appId: $appId, albumEntries: AlbumEntry[] { $albumEntriesCsv }, description: $description, backgroundImage: $backgroundImage, conditions: $conditions}';
   }
 
-  AlbumEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
+  AlbumEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
     }
     return AlbumEntity(

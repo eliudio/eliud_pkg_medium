@@ -72,7 +72,7 @@ class AlbumEntryModel implements ModelBase {
     return 'AlbumEntryModel{documentID: $documentID, name: $name, medium: $medium}';
   }
 
-  AlbumEntryEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
+  AlbumEntryEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
       if (medium != null) referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, medium!));
     }
