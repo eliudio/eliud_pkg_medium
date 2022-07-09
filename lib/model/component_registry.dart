@@ -38,6 +38,7 @@ class ComponentRegistry {
     Registry.registry()!.addComponentSpec('eliud_pkg_medium', 'medium', [
       ComponentSpec('albums', AlbumComponentConstructorDefault(), AlbumComponentSelector(), AlbumComponentEditorConstructor(), ({String? appId}) => albumRepository(appId: appId)! ), 
     ]);
+      Registry.registry()!.registerRetrieveRepository('eliud_pkg_medium', 'albums', ({String? appId}) => albumRepository(appId: appId)!);
 
   }
 }

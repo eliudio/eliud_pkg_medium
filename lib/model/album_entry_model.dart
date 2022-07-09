@@ -41,7 +41,7 @@ import 'package:eliud_core/tools/random.dart';
 
 class AlbumEntryModel implements ModelBase {
   static const String packageName = 'eliud_pkg_medium';
-  static const String id = 'AlbumEntry';
+  static const String id = 'albumEntrys';
 
   String documentID;
   String? name;
