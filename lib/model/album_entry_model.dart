@@ -72,10 +72,16 @@ class AlbumEntryModel implements ModelBase {
     return 'AlbumEntryModel{documentID: $documentID, name: $name, medium: $medium}';
   }
 
-  AlbumEntryEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
-    if (referencesCollector != null) {
-      if (medium != null) referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, medium!));
+  Future<List<ModelReference>> collectReferences({String? appId}) async {
+    List<ModelReference> referencesCollector = [];
+    if (medium != null) {
+      referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, medium!));
     }
+    if (medium != null) referencesCollector.addAll(await medium!.collectReferences(appId: appId));
+    return referencesCollector;
+  }
+
+  AlbumEntryEntity toEntity({String? appId}) {
     return AlbumEntryEntity(
           name: (name != null) ? name : null, 
           mediumId: (medium != null) ? medium!.documentID : null, 

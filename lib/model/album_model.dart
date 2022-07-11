@@ -83,17 +83,27 @@ class AlbumModel implements ModelBase, WithAppId {
     return 'AlbumModel{documentID: $documentID, appId: $appId, albumEntries: AlbumEntry[] { $albumEntriesCsv }, description: $description, backgroundImage: $backgroundImage, conditions: $conditions}';
   }
 
-  AlbumEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
-    if (referencesCollector != null) {
+  Future<List<ModelReference>> collectReferences({String? appId}) async {
+    List<ModelReference> referencesCollector = [];
+    if (albumEntries != null) {
+      for (var item in albumEntries!) {
+        referencesCollector.addAll(await item.collectReferences(appId: appId));
+      }
     }
+    if (backgroundImage != null) referencesCollector.addAll(await backgroundImage!.collectReferences(appId: appId));
+    if (conditions != null) referencesCollector.addAll(await conditions!.collectReferences(appId: appId));
+    return referencesCollector;
+  }
+
+  AlbumEntity toEntity({String? appId}) {
     return AlbumEntity(
           appId: (appId != null) ? appId : null, 
           albumEntries: (albumEntries != null) ? albumEntries
-            !.map((item) => item.toEntity(appId: appId, referencesCollector: referencesCollector))
+            !.map((item) => item.toEntity(appId: appId))
             .toList() : null, 
           description: (description != null) ? description : null, 
-          backgroundImage: (backgroundImage != null) ? backgroundImage!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
-          conditions: (conditions != null) ? conditions!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
+          backgroundImage: (backgroundImage != null) ? backgroundImage!.toEntity(appId: appId) : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
     );
   }
 
