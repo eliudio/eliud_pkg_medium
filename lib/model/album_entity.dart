@@ -32,7 +32,9 @@ class AlbumEntity implements EntityBase {
 
   AlbumEntity({required this.appId, this.albumEntries, this.description, this.backgroundImage, this.conditions, });
 
-
+  AlbumEntity copyWith({String? documentID, String? appId, List<AlbumEntryEntity>? albumEntries, String? description, BackgroundEntity? backgroundImage, StorageConditionsEntity? conditions, }) {
+    return AlbumEntity(appId : appId ?? this.appId, albumEntries : albumEntries ?? this.albumEntries, description : description ?? this.description, backgroundImage : backgroundImage ?? this.backgroundImage, conditions : conditions ?? this.conditions, );
+  }
   List<Object?> get props => [appId, albumEntries, description, backgroundImage, conditions, ];
 
   @override
@@ -95,6 +97,12 @@ class AlbumEntity implements EntityBase {
     if (conditions != null) theDocument["conditions"] = conditionsMap;
       else theDocument["conditions"] = null;
     return theDocument;
+  }
+
+  @override
+  AlbumEntity switchAppId({required String newAppId}) {
+    var newEntity = copyWith(appId: newAppId);
+    return newEntity;
   }
 
   static AlbumEntity? fromJsonString(String json) {

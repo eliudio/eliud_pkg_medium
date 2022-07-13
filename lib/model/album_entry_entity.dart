@@ -29,7 +29,9 @@ class AlbumEntryEntity implements EntityBase {
 
   AlbumEntryEntity({this.name, this.mediumId, });
 
-
+  AlbumEntryEntity copyWith({String? documentID, String? name, String? mediumId, }) {
+    return AlbumEntryEntity(name : name ?? this.name, mediumId : mediumId ?? this.mediumId, );
+  }
   List<Object?> get props => [name, mediumId, ];
 
   @override
@@ -54,6 +56,12 @@ class AlbumEntryEntity implements EntityBase {
     if (mediumId != null) theDocument["mediumId"] = mediumId;
       else theDocument["mediumId"] = null;
     return theDocument;
+  }
+
+  @override
+  AlbumEntryEntity switchAppId({required String newAppId}) {
+    var newEntity = copyWith();
+    return newEntity;
   }
 
   static AlbumEntryEntity? fromJsonString(String json) {
