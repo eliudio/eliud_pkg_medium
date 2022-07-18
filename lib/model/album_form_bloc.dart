@@ -46,11 +46,7 @@ class AlbumFormBloc extends Bloc<AlbumFormEvent, AlbumFormState> {
   final FormAction? formAction;
   final String? appId;
 
-  AlbumFormBloc(this.appId, { this.formAction }): super(AlbumFormUninitialized());
-  @override
-  Stream<AlbumFormState> mapEventToState(AlbumFormEvent event) async* {
-    final currentState = state;
-    if (currentState is AlbumFormUninitialized) {
+  AlbumFormBloc(this.appId, { this.formAction }): super(AlbumFormUninitialized()) {
       on <InitialiseNewAlbumFormEvent> ((event, emit) {
         AlbumFormLoaded loaded = AlbumFormLoaded(value: AlbumModel(
                                                documentID: "",
@@ -63,17 +59,19 @@ class AlbumFormBloc extends Bloc<AlbumFormEvent, AlbumFormState> {
       });
 
 
-      if (event is InitialiseAlbumFormEvent) {
+      on <InitialiseAlbumFormEvent> ((event, emit) async {
         // Need to re-retrieve the document from the repository so that I get all associated types
         AlbumFormLoaded loaded = AlbumFormLoaded(value: await albumRepository(appId: appId)!.get(event.value!.documentID));
         emit(loaded);
-      } else if (event is InitialiseAlbumFormNoLoadEvent) {
+      });
+      on <InitialiseAlbumFormNoLoadEvent> ((event, emit) async {
         AlbumFormLoaded loaded = AlbumFormLoaded(value: event.value);
         emit(loaded);
-      }
-    } else if (currentState is AlbumFormInitialized) {
+      });
       AlbumModel? newValue = null;
       on <ChangedAlbumDocumentID> ((event, emit) async {
+      if (state is AlbumFormInitialized) {
+        final currentState = state as AlbumFormInitialized;
         newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
           emit(await _isDocumentIDValid(event.value, newValue!));
@@ -81,33 +79,48 @@ class AlbumFormBloc extends Bloc<AlbumFormEvent, AlbumFormState> {
           emit(SubmittableAlbumForm(value: newValue));
         }
 
+      }
       });
       on <ChangedAlbumAppId> ((event, emit) async {
+      if (state is AlbumFormInitialized) {
+        final currentState = state as AlbumFormInitialized;
         newValue = currentState.value!.copyWith(appId: event.value);
         emit(SubmittableAlbumForm(value: newValue));
 
+      }
       });
       on <ChangedAlbumAlbumEntries> ((event, emit) async {
+      if (state is AlbumFormInitialized) {
+        final currentState = state as AlbumFormInitialized;
         newValue = currentState.value!.copyWith(albumEntries: event.value);
         emit(SubmittableAlbumForm(value: newValue));
 
+      }
       });
       on <ChangedAlbumDescription> ((event, emit) async {
+      if (state is AlbumFormInitialized) {
+        final currentState = state as AlbumFormInitialized;
         newValue = currentState.value!.copyWith(description: event.value);
         emit(SubmittableAlbumForm(value: newValue));
 
+      }
       });
       on <ChangedAlbumBackgroundImage> ((event, emit) async {
+      if (state is AlbumFormInitialized) {
+        final currentState = state as AlbumFormInitialized;
         newValue = currentState.value!.copyWith(backgroundImage: event.value);
         emit(SubmittableAlbumForm(value: newValue));
 
+      }
       });
       on <ChangedAlbumConditions> ((event, emit) async {
+      if (state is AlbumFormInitialized) {
+        final currentState = state as AlbumFormInitialized;
         newValue = currentState.value!.copyWith(conditions: event.value);
         emit(SubmittableAlbumForm(value: newValue));
 
+      }
       });
-    }
   }
 
 

@@ -45,11 +45,7 @@ import 'package:eliud_pkg_medium/model/album_entry_repository.dart';
 class AlbumEntryFormBloc extends Bloc<AlbumEntryFormEvent, AlbumEntryFormState> {
   final String? appId;
 
-  AlbumEntryFormBloc(this.appId, ): super(AlbumEntryFormUninitialized());
-  @override
-  Stream<AlbumEntryFormState> mapEventToState(AlbumEntryFormEvent event) async* {
-    final currentState = state;
-    if (currentState is AlbumEntryFormUninitialized) {
+  AlbumEntryFormBloc(this.appId, ): super(AlbumEntryFormUninitialized()) {
       on <InitialiseNewAlbumEntryFormEvent> ((event, emit) {
         AlbumEntryFormLoaded loaded = AlbumEntryFormLoaded(value: AlbumEntryModel(
                                                documentID: "IDENTIFIED", 
@@ -60,27 +56,32 @@ class AlbumEntryFormBloc extends Bloc<AlbumEntryFormEvent, AlbumEntryFormState> 
       });
 
 
-      if (event is InitialiseAlbumEntryFormEvent) {
+      on <InitialiseAlbumEntryFormEvent> ((event, emit) async {
         AlbumEntryFormLoaded loaded = AlbumEntryFormLoaded(value: event.value);
         emit(loaded);
-      } else if (event is InitialiseAlbumEntryFormNoLoadEvent) {
+      });
+      on <InitialiseAlbumEntryFormNoLoadEvent> ((event, emit) async {
         AlbumEntryFormLoaded loaded = AlbumEntryFormLoaded(value: event.value);
         emit(loaded);
-      }
-    } else if (currentState is AlbumEntryFormInitialized) {
+      });
       AlbumEntryModel? newValue = null;
       on <ChangedAlbumEntryName> ((event, emit) async {
+      if (state is AlbumEntryFormInitialized) {
+        final currentState = state as AlbumEntryFormInitialized;
         newValue = currentState.value!.copyWith(name: event.value);
         emit(SubmittableAlbumEntryForm(value: newValue));
 
+      }
       });
       on <ChangedAlbumEntryMedium> ((event, emit) async {
+      if (state is AlbumEntryFormInitialized) {
+        final currentState = state as AlbumEntryFormInitialized;
         if (event.value != null)
           newValue = currentState.value!.copyWith(medium: await platformMediumRepository(appId: appId)!.get(event.value));
         emit(SubmittableAlbumEntryForm(value: newValue));
 
+      }
       });
-    }
   }
 
 
