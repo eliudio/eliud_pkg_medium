@@ -45,6 +45,23 @@ abstract class AbstractMediumPlatform extends MediumApi {
                 initialPage: initialPage));
   }
 
+  void showPhotosUrls(BuildContext context, AppModel app,
+      List<String> urls, int initialPage) {
+    openFlexibleDialog(app, context, app.documentID + '/_showphotosurls',
+        includeHeading: true,
+        title: "Photos",
+        buttons: [
+          dialogButton(app, context,
+              label: 'Close', onPressed: () => Navigator.of(context).pop()),
+        ],
+        widthFraction: .9,
+        child: AlbumSlider(
+            height: fullFullScreenHeight(context) * .7,
+            app: app,
+            slideImageProvider: UrlSlideImageProvider(urls),
+            initialPage: initialPage));
+  }
+
   void showPhotosPlatform(BuildContext context, AppModel app,
       List<PlatformMediumModel> media, int initialPage) {
     var photos = media
