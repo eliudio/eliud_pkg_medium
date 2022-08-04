@@ -16,7 +16,7 @@ dependencies:
   crop_your_image: 0.7.2
   image_picker_gallery_camera:
     path: ../../image_picker_gallery_camera
-  file_picker: 4.5.1
+  file_picker: 4.6.0
   percent_indicator: 4.2.2
   pinch_zoom: 1.0.0
   easy_image_viewer: 1.0.4
