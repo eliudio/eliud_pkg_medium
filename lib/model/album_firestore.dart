@@ -37,8 +37,8 @@ import 'package:eliud_core/tools/common_tools.dart';
 
 class AlbumFirestore implements AlbumRepository {
   @override
-  AlbumEntity? fromMap(Object? o) {
-    return AlbumEntity.fromMap(o);
+  AlbumEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return AlbumEntity.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<AlbumEntity> addEntity(String documentID, AlbumEntity value) {

@@ -121,8 +121,8 @@ class AlbumCache implements AlbumRepository {
   }
 
   @override
-  AlbumEntity? fromMap(Object? o) {
-    return reference.fromMap(o);
+  AlbumEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return reference.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<void> deleteAll() {

@@ -15,6 +15,7 @@
 
 import 'dart:collection';
 import 'dart:convert';
+import 'package:eliud_core/tools/random.dart';
 import 'abstract_repository_singleton.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/entity_base.dart';
@@ -39,13 +40,19 @@ class AlbumEntryEntity implements EntityBase {
     return 'AlbumEntryEntity{name: $name, mediumId: $mediumId}';
   }
 
-  static AlbumEntryEntity? fromMap(Object? o) {
+  static AlbumEntryEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     if (o == null) return null;
     var map = o as Map<String, dynamic>;
 
+    var mediumIdNewDocmentId = map['mediumId'];
+    if ((newDocumentIds != null) && (mediumIdNewDocmentId != null)) {
+      var mediumIdOldDocmentId = mediumIdNewDocmentId;
+      mediumIdNewDocmentId = newRandomKey();
+      newDocumentIds[mediumIdOldDocmentId] = mediumIdNewDocmentId;
+    }
     return AlbumEntryEntity(
       name: map['name'], 
-      mediumId: map['mediumId'], 
+      mediumId: mediumIdNewDocmentId, 
     );
   }
 
@@ -64,9 +71,9 @@ class AlbumEntryEntity implements EntityBase {
     return newEntity;
   }
 
-  static AlbumEntryEntity? fromJsonString(String json) {
+  static AlbumEntryEntity? fromJsonString(String json, {Map<String, String>? newDocumentIds}) {
     Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
-    return fromMap(generationSpecificationMap);
+    return fromMap(generationSpecificationMap, newDocumentIds: newDocumentIds);
   }
 
   String toJsonString() {

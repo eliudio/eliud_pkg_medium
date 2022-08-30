@@ -168,7 +168,7 @@ class AlbumEntryInMemoryRepository implements AlbumEntryRepository {
   }
 
   @override
-  AlbumEntryEntity? fromMap(Object? o) {
+  AlbumEntryEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     throw UnimplementedError();
   }
 
