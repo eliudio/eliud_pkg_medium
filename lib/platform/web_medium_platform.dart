@@ -13,67 +13,10 @@ import 'medium_platform.dart';
 
 class WebMediumPlatform extends AbstractMediumPlatform {
   @override
-  void takePhoto(BuildContext context, AppModel app, AccessRightsProvider accessRightsProvider, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress, {bool? allowCrop}) {}
-
-  @override
   void takeVideo(BuildContext context, AppModel app, AccessRightsProvider accessRightsProvider, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress) {}
 
   @override
   bool hasCamera() => false;
-
-  Future<void> uploadPhoto(BuildContext context, AppModel app, AccessRightsProvider accessRightsProvider, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress, {bool? allowCrop}) async {
-    try {
-      var ownerId = AccessBloc.memberId(context);
-      if (ownerId == null) throw Exception("Expecting to have a member logged in to take a photo");
-
-      var memberMediumDocumentID = newRandomKey();
-      if (feedbackProgress != null) feedbackProgress(-1);
-      var _result = await FilePicker.platform
-          .pickFiles(type: FileType.image, allowMultiple: false);
-      if (_result == null) {
-        feedbackFunction(null);
-        return;
-      }
-      var aFile = _result.files[0];
-      var baseName = memberMediumDocumentID + '-' + aFile.name;
-  //    var thumbnailBaseName = aFile.extension!;
-      if (baseName == null) {
-        print("basename is null");
-      } else {
-        print("basename is " + baseName);
-      }
-      var thumbnailBaseName = baseName + '.thumbnail.png';
-      var bytes = aFile.bytes;
-      if (bytes == null) {
-        feedbackFunction(null);
-        return;
-      }
-
-      if ((allowCrop != null) && (allowCrop)) {
-        ImageCropWidget.open(context, app, (croppedImage) {
-          if (croppedImage == null) {
-            feedbackFunction(null);
-          } else {
-            processPhoto(memberMediumDocumentID,
-                app,
-                baseName,
-                thumbnailBaseName,
-                ownerId,
-                croppedImage,
-                accessRightsProvider,
-                feedbackFunction,
-                feedbackProgress);
-          }
-        }, bytes);
-      } else {
-        processPhoto(memberMediumDocumentID, app, baseName, thumbnailBaseName, ownerId, bytes,
-            accessRightsProvider, feedbackFunction, feedbackProgress);
-      }
-    } catch (error) {
-      print('Error trying to uploadPhoto: ' + error.toString());
-      feedbackFunction(null);
-    }
-  }
 
   Future<void> uploadVideo(BuildContext context, AppModel app, AccessRightsProvider accessRightsProvider, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress) async {
     try {

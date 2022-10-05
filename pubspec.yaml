@@ -14,8 +14,7 @@ dependencies:
   camera: 0.9.6
   chewie: 1.3.2
   crop_your_image: 0.7.2
-  image_picker_gallery_camera:
-    path: ../../image_picker_gallery_camera
+  image_picker: 0.8.5+3
   file_picker: 4.6.0
   percent_indicator: 4.2.2
   pinch_zoom: 1.0.0
