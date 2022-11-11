@@ -9,6 +9,10 @@ import 'model/abstract_repository_singleton.dart';
 import 'model/component_registry.dart';
 import 'model/repository_singleton.dart';
 
+import 'package:eliud_pkg_medium/medium_package_stub.dart'
+if (dart.library.io) 'medium_mobile_package.dart'
+if (dart.library.html) 'medium_web_package.dart';
+
 abstract class MediumPackage extends Package {
   MediumPackage() : super('eliud_pkg_medium');
 
@@ -30,4 +34,6 @@ abstract class MediumPackage extends Package {
 
   @override
   List<MemberCollectionInfo> getMemberCollectionInfo() => [];
+
+  static MediumPackage instance() => getMediumPackage();
 }

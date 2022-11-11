@@ -4,6 +4,8 @@ import 'package:eliud_pkg_medium/platform/web_medium_platform.dart';
 
 import 'medium_package.dart';
 
+MediumPackage getMediumPackage() => MediumWebPackage();
+
 class MediumWebPackage extends MediumPackage {
   @override
   void init() {
@@ -21,4 +23,5 @@ class MediumWebPackage extends MediumPackage {
       identical(this, other) ||
           other is MediumWebPackage &&
               runtimeType == other.runtimeType;
+
 }
