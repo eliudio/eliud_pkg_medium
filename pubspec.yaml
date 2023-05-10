@@ -16,7 +16,12 @@ dependencies:
   crop_your_image: 0.7.4
   file_picker: ^5.2.0+1
   image_picker: 0.8.6
+<<<<<<< HEAD
   percent_indicator: 4.2.3
+=======
+  file_picker: 5.2.0+1
+  percent_indicator: 4.2.2
+>>>>>>> 0de3147c5 (Apple stuff)
   pinch_zoom: 1.0.0
   easy_image_viewer: 1.2.0
 
