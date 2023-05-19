@@ -119,7 +119,7 @@ class _EliudCameraState extends State<EliudCamera>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
 //    SystemChrome.setEnabledSystemUIOverlays ([SystemUiOverlay.top]);
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
     _flashModeControlRowAnimationController = AnimationController(
       duration: const Duration(milliseconds: 300),
       vsync: this,
