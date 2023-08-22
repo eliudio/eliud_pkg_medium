@@ -4,7 +4,7 @@ Eliud medium package
 
 ## Dependency diagram
 
-![Dependency diagram](https://github.com/eliudio/eliud_pkg_medium/blob/main/depends.jpg)
+![Dependency diagram](https://github.com/eliudio/eliud_pkg_medium/raw/main/depends.jpg)
 
 ## eliud.io
 
