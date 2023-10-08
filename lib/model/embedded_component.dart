@@ -153,7 +153,7 @@ class AlbumEntryInMemoryRepository implements AlbumEntryRepository {
   }
   
   @override
-  StreamSubscription<AlbumEntryModel> listenTo(String documentId, AlbumEntryChanged changed) {
+  StreamSubscription<AlbumEntryModel> listenTo(String documentId, AlbumEntryChanged changed, {AlbumEntryErrorHandler? errorHandler}) {
     throw UnimplementedError();
   }
 

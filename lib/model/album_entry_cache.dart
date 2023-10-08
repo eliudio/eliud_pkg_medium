@@ -140,13 +140,13 @@ class AlbumEntryCache implements AlbumEntryRepository {
   }
 
   @override
-  StreamSubscription<AlbumEntryModel?> listenTo(String documentId, AlbumEntryChanged changed) {
+  StreamSubscription<AlbumEntryModel?> listenTo(String documentId, AlbumEntryChanged changed, {AlbumEntryErrorHandler? errorHandler}) {
     return reference.listenTo(documentId, ((value) {
       if (value != null) {
         fullCache[value.documentID] = value;
       }
       changed(value);
-    }));
+    }), errorHandler: errorHandler);
   }
 
   static Future<AlbumEntryModel> refreshRelations(AlbumEntryModel model) async {

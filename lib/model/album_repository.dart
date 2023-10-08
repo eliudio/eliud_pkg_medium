@@ -36,6 +36,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 
 typedef AlbumModelTrigger(List<AlbumModel?> list);
 typedef AlbumChanged(AlbumModel? value);
+typedef AlbumErrorHandler(o, e);
 
 abstract class AlbumRepository extends RepositoryBase<AlbumModel, AlbumEntity> {
   Future<AlbumEntity> addEntity(String documentID, AlbumEntity value);
@@ -52,7 +53,7 @@ abstract class AlbumRepository extends RepositoryBase<AlbumModel, AlbumEntity> {
 
   StreamSubscription<List<AlbumModel?>> listen(AlbumModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
   StreamSubscription<List<AlbumModel?>> listenWithDetails(AlbumModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
-  StreamSubscription<AlbumModel?> listenTo(String documentId, AlbumChanged changed);
+  StreamSubscription<AlbumModel?> listenTo(String documentId, AlbumChanged changed, {AlbumErrorHandler? errorHandler});
   void flush();
   
   String? timeStampToString(dynamic timeStamp);
