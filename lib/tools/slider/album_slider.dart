@@ -3,7 +3,6 @@ import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/tools/screen_size.dart';
 import 'package:eliud_pkg_medium/tools/slider/slide_image_provider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'multi_image_slide_provider.dart';

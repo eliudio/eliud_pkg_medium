@@ -19,10 +19,7 @@ import 'dart:collection';
 import '../model/album_firestore.dart';
 import '../model/album_repository.dart';
 import '../model/album_cache.dart';
-import '../model/album_entry_repository.dart';
-import '../model/album_entry_cache.dart';
 
-import '../model/album_entry_model.dart';
 
 class RepositorySingleton extends AbstractRepositorySingleton {
     var _albumRepository = HashMap<String, AlbumRepository>();

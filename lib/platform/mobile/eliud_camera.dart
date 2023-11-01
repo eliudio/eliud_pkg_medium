@@ -2,10 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
-import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
-import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/router_builders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

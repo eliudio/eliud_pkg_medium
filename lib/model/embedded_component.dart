@@ -23,7 +23,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 
 import '../model/album_entry_list_bloc.dart';
 import '../model/album_entry_list.dart';
@@ -62,7 +61,7 @@ class AlbumEntryInMemoryRepository implements AlbumEntryRepository {
 
     AlbumEntryInMemoryRepository(this.trigger, this.items) {
         List<List<AlbumEntryModel>> myList = <List<AlbumEntryModel>>[];
-        if (items != null) myList.add(items);
+        myList.add(items);
         theValues = Stream<List<AlbumEntryModel>>.fromIterable(myList);
     }
 

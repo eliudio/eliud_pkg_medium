@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:chewie/chewie.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -64,8 +63,7 @@ class _VideoViewState extends State<VideoView> {
         backgroundColor: Colors.black,
         body: Stack(children: [
           Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            videoPlayerController != null &&
-                    videoPlayerController.value.isInitialized
+            videoPlayerController.value.isInitialized
                 ? SizedBox(
                     height: MediaQuery.of(context).size.height * .8,
                     child: Chewie(

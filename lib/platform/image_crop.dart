@@ -1,12 +1,10 @@
 import 'dart:typed_data';
 
 import 'package:crop_your_image/crop_your_image.dart';
-import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/style/frontend/has_dialog.dart';
 import 'package:eliud_core/style/frontend/has_dialog_widget.dart';
-import 'package:eliud_core/style/style_registry.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

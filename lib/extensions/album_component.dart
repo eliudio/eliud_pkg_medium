@@ -1,19 +1,12 @@
-import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/core/registry.dart';
-import 'package:eliud_core/core/widgets/alert_widget.dart';
-import 'package:eliud_core/model/abstract_repository_singleton.dart';
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
-import 'package:eliud_core/style/frontend/has_container.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
-import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/component/component_constructor.dart';
 import 'package:eliud_pkg_medium/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_medium/model/album_component.dart';
 import 'package:eliud_pkg_medium/model/album_entry_model.dart';
 import 'package:eliud_pkg_medium/model/album_model.dart';
-import 'package:eliud_pkg_medium/model/album_repository.dart';
-import 'package:eliud_pkg_medium/platform/medium_platform.dart';
 import 'package:eliud_pkg_medium/tools/media_helper.dart';
 import 'package:flutter/material.dart';
 

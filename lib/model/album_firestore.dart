@@ -16,16 +16,8 @@
 import 'package:eliud_pkg_medium/model/album_repository.dart';
 
 
-import 'package:eliud_core/model/repository_export.dart';
-import 'package:eliud_core/model/abstract_repository_singleton.dart';
-import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import 'package:eliud_pkg_medium/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_medium/model/repository_export.dart';
-import 'package:eliud_core/model/model_export.dart';
-import '../tools/bespoke_models.dart';
 import 'package:eliud_pkg_medium/model/model_export.dart';
-import 'package:eliud_core/model/entity_export.dart';
-import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_medium/model/entity_export.dart';
 
 
@@ -81,6 +73,7 @@ class AlbumFirestore implements AlbumRepository {
         print("Exceptoin: $e");
       }
     };
+return null;
   }
 
   Future<AlbumModel?> get(String? id, {Function(Exception)? onError}) async {
@@ -96,6 +89,7 @@ class AlbumFirestore implements AlbumRepository {
         print("Exceptoin: $e");
       }
     };
+return null;
   }
 
   StreamSubscription<List<AlbumModel?>> listen(AlbumModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery}) {

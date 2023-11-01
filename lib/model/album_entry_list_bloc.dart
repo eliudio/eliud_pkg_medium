@@ -15,16 +15,20 @@
 
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 import 'package:eliud_pkg_medium/model/album_entry_repository.dart';
 import 'package:eliud_pkg_medium/model/album_entry_list_event.dart';
 import 'package:eliud_pkg_medium/model/album_entry_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
+import 'album_entry_model.dart';
+
+typedef List<AlbumEntryModel?> FilterAlbumEntryModels(List<AlbumEntryModel?> values);
+
 
 
 class AlbumEntryListBloc extends Bloc<AlbumEntryListEvent, AlbumEntryListState> {
+  final FilterAlbumEntryModels? filter;
   final AlbumEntryRepository _albumEntryRepository;
   StreamSubscription? _albumEntrysListSubscription;
   EliudQuery? eliudQuery;
@@ -35,9 +39,8 @@ class AlbumEntryListBloc extends Bloc<AlbumEntryListEvent, AlbumEntryListState> 
   final bool? detailed;
   final int albumEntryLimit;
 
-  AlbumEntryListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required AlbumEntryRepository albumEntryRepository, this.albumEntryLimit = 5})
-      : assert(albumEntryRepository != null),
-        _albumEntryRepository = albumEntryRepository,
+  AlbumEntryListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required AlbumEntryRepository albumEntryRepository, this.albumEntryLimit = 5})
+      : _albumEntryRepository = albumEntryRepository,
         super(AlbumEntryListLoading()) {
     on <LoadAlbumEntryList> ((event, emit) {
       if ((detailed == null) || (!detailed!)) {
@@ -78,11 +81,19 @@ class AlbumEntryListBloc extends Bloc<AlbumEntryListEvent, AlbumEntryListState> 
     });
   }
 
+  List<AlbumEntryModel?> _filter(List<AlbumEntryModel?> original) {
+    if (filter != null) {
+      return filter!(original);
+    } else {
+      return original;
+    }
+  }
+
   Future<void> _mapLoadAlbumEntryListToState() async {
     int amountNow =  (state is AlbumEntryListLoaded) ? (state as AlbumEntryListLoaded).values!.length : 0;
     _albumEntrysListSubscription?.cancel();
     _albumEntrysListSubscription = _albumEntryRepository.listen(
-          (list) => add(AlbumEntryListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+          (list) => add(AlbumEntryListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
@@ -94,7 +105,7 @@ class AlbumEntryListBloc extends Bloc<AlbumEntryListEvent, AlbumEntryListState> 
     int amountNow =  (state is AlbumEntryListLoaded) ? (state as AlbumEntryListLoaded).values!.length : 0;
     _albumEntrysListSubscription?.cancel();
     _albumEntrysListSubscription = _albumEntryRepository.listenWithDetails(
-            (list) => add(AlbumEntryListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+            (list) => add(AlbumEntryListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,

@@ -1,18 +1,9 @@
 import 'dart:typed_data';
-import 'package:easy_image_viewer/easy_image_viewer.dart';
-import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/model/public_medium_model.dart';
-import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
-import 'package:eliud_core/style/style_registry.dart';
-import 'package:eliud_core/tools/screen_size.dart';
-import 'package:eliud_core/tools/storage/member_image_model_widget.dart';
-import 'package:eliud_core/tools/storage/platform_image_model_widget.dart';
-import 'package:eliud_core/tools/storage/public_image_model_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pinch_zoom/pinch_zoom.dart';
 
 abstract class SlideImageProvider {
   ImageProvider getImage(int index);

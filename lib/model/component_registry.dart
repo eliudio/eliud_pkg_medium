@@ -22,7 +22,6 @@ import 'abstract_repository_singleton.dart';
 import '../extensions/album_component.dart';
 import '../editors/album_component_editor.dart';
 import 'album_component_selector.dart';
-import 'package:eliud_pkg_medium/model/internal_component.dart';
 
 
 

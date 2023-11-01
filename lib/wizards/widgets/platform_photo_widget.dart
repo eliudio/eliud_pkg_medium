@@ -1,19 +1,15 @@
 import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
-import 'package:eliud_core/model/public_medium_model.dart';
 import 'package:eliud_core/model/storage_conditions_model.dart';
 import 'package:eliud_core/package/access_rights.dart';
 import 'package:eliud_core/package/medium_api.dart';
 import 'package:eliud_core/style/frontend/has_button.dart';
-import 'package:eliud_core/style/frontend/has_container.dart';
 import 'package:eliud_core/style/frontend/has_list_tile.dart';
 import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/tools/random.dart';
-import 'package:eliud_pkg_medium/platform/medium_platform.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class PlatformPhotoWidget extends StatefulWidget {
   final AppModel app;

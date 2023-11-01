@@ -9,7 +9,6 @@ import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/tools/random.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class MemberPhotoWidget extends StatefulWidget {
   final AppModel app;

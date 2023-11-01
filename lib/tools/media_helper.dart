@@ -31,8 +31,8 @@ class MediaHelper {
       {Function(int index)? deleteAction,
       Function(int index)? viewAction,
       double? height,
-      bool reverse: false,
-      bool shrinkWrap: false}) {
+      bool reverse = false,
+      bool shrinkWrap = false}) {
     List<Widget> widgets = [];
     for (int i = 0; i < photos.length; i++) {
       var medium = photos[i];
@@ -51,8 +51,8 @@ class MediaHelper {
       {Function(int index)? deleteAction,
       Function(int index)? viewAction,
       double? height,
-      bool reverse: false,
-      bool shrinkWrap: false}) {
+      bool reverse = false,
+      bool shrinkWrap = false}) {
     List<Widget> widgets = [];
     for (int i = 0; i < videos.length; i++) {
       var medium = videos[i];
@@ -73,8 +73,8 @@ class MediaHelper {
       double? progressExtra,
       String? progressLabel,
       double? height,
-      bool reverse: false,
-      bool shrinkWrap: false}) {
+      bool reverse = false,
+      bool shrinkWrap = false}) {
     List<Widget> widgets = [];
     for (int i = 0; i < media.length; i++) {
       var medium = media[i];
@@ -111,8 +111,8 @@ class MediaHelper {
         double? progressExtra,
         String? progressLabel,
         double? height,
-        bool reverse: false,
-        bool shrinkWrap: false,
+        bool reverse = false,
+        bool shrinkWrap = false,
         BackgroundModel? background,
       }) {
     var member;

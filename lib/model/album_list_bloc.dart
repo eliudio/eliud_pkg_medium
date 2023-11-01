@@ -15,16 +15,20 @@
 
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 import 'package:eliud_pkg_medium/model/album_repository.dart';
 import 'package:eliud_pkg_medium/model/album_list_event.dart';
 import 'package:eliud_pkg_medium/model/album_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
+import 'album_model.dart';
+
+typedef List<AlbumModel?> FilterAlbumModels(List<AlbumModel?> values);
+
 
 
 class AlbumListBloc extends Bloc<AlbumListEvent, AlbumListState> {
+  final FilterAlbumModels? filter;
   final AlbumRepository _albumRepository;
   StreamSubscription? _albumsListSubscription;
   EliudQuery? eliudQuery;
@@ -35,9 +39,8 @@ class AlbumListBloc extends Bloc<AlbumListEvent, AlbumListState> {
   final bool? detailed;
   final int albumLimit;
 
-  AlbumListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required AlbumRepository albumRepository, this.albumLimit = 5})
-      : assert(albumRepository != null),
-        _albumRepository = albumRepository,
+  AlbumListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required AlbumRepository albumRepository, this.albumLimit = 5})
+      : _albumRepository = albumRepository,
         super(AlbumListLoading()) {
     on <LoadAlbumList> ((event, emit) {
       if ((detailed == null) || (!detailed!)) {
@@ -78,11 +81,19 @@ class AlbumListBloc extends Bloc<AlbumListEvent, AlbumListState> {
     });
   }
 
+  List<AlbumModel?> _filter(List<AlbumModel?> original) {
+    if (filter != null) {
+      return filter!(original);
+    } else {
+      return original;
+    }
+  }
+
   Future<void> _mapLoadAlbumListToState() async {
     int amountNow =  (state is AlbumListLoaded) ? (state as AlbumListLoaded).values!.length : 0;
     _albumsListSubscription?.cancel();
     _albumsListSubscription = _albumRepository.listen(
-          (list) => add(AlbumListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+          (list) => add(AlbumListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
@@ -94,7 +105,7 @@ class AlbumListBloc extends Bloc<AlbumListEvent, AlbumListState> {
     int amountNow =  (state is AlbumListLoaded) ? (state as AlbumListLoaded).values!.length : 0;
     _albumsListSubscription?.cancel();
     _albumsListSubscription = _albumRepository.listenWithDetails(
-            (list) => add(AlbumListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+            (list) => add(AlbumListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,

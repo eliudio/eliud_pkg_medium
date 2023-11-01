@@ -15,45 +15,22 @@
 
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/core/blocs/access/state/access_state.dart';
-import 'package:eliud_core/core/blocs/access/state/logged_in.dart';
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import '../tools/bespoke_models.dart';
 import 'package:eliud_core/core/navigate/router.dart' as eliudrouter;
-import 'package:eliud_core/tools/screen_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter/foundation.dart';
-import 'package:eliud_core/tools/common_tools.dart';
 import 'package:eliud_core/style/style_registry.dart';
-import 'package:eliud_core/style/admin/admin_form_style.dart';
 
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
-import 'package:intl/intl.dart';
 
-import 'package:eliud_core/eliud.dart';
 
 import 'package:eliud_core/model/internal_component.dart';
-import 'package:eliud_pkg_medium/model/embedded_component.dart';
-import 'package:eliud_pkg_medium/tools/bespoke_formfields.dart';
-import 'package:eliud_core/tools/bespoke_formfields.dart';
 
 import 'package:eliud_core/tools/enums.dart';
-import 'package:eliud_core/tools/etc.dart';
 
-import 'package:eliud_core/model/repository_export.dart';
-import 'package:eliud_core/model/abstract_repository_singleton.dart';
-import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import 'package:eliud_pkg_medium/model/abstract_repository_singleton.dart';
-import 'package:eliud_pkg_medium/model/repository_export.dart';
-import 'package:eliud_core/model/embedded_component.dart';
-import 'package:eliud_pkg_medium/model/embedded_component.dart';
 import 'package:eliud_core/model/model_export.dart';
-import '../tools/bespoke_models.dart';
 import 'package:eliud_pkg_medium/model/model_export.dart';
-import 'package:eliud_core/model/entity_export.dart';
-import '../tools/bespoke_entities.dart';
-import 'package:eliud_pkg_medium/model/entity_export.dart';
 
 import 'package:eliud_pkg_medium/model/album_entry_list_bloc.dart';
 import 'package:eliud_pkg_medium/model/album_entry_list_event.dart';
@@ -238,7 +215,7 @@ class _MyAlbumEntryFormState extends State<MyAlbumEntryForm> {
               padding: const EdgeInsets.all(8),
               physics: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? NeverScrollableScrollPhysics() : null,
               shrinkWrap: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)),
-              children: children as List<Widget>
+              children: children
             ),
           ), formAction!
         );
