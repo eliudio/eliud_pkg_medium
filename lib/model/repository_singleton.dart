@@ -20,13 +20,15 @@ import '../model/album_firestore.dart';
 import '../model/album_repository.dart';
 import '../model/album_cache.dart';
 
-
 class RepositorySingleton extends AbstractRepositorySingleton {
-    var _albumRepository = HashMap<String, AlbumRepository>();
+  final _albumRepository = HashMap<String, AlbumRepository>();
 
-    AlbumRepository? albumRepository(String? appId) {
-      if ((appId != null) && (_albumRepository[appId] == null)) _albumRepository[appId] = AlbumCache(AlbumFirestore(() => appRepository()!.getSubCollection(appId, 'album'), appId));
-      return _albumRepository[appId];
+  @override
+  AlbumRepository? albumRepository(String? appId) {
+    if ((appId != null) && (_albumRepository[appId] == null)) {
+      _albumRepository[appId] = AlbumCache(AlbumFirestore(
+          () => appRepository()!.getSubCollection(appId, 'album'), appId));
     }
-
+    return _albumRepository[appId];
+  }
 }

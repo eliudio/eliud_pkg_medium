@@ -18,7 +18,9 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
       MediumAvailable feedbackFunction,
       FeedbackProgress? feedbackProgress) {
     var ownerId = AccessBloc.memberId(context);
-    if (ownerId == null) throw Exception("Expecting to have a member logged in to take a photo");
+    if (ownerId == null) {
+      throw Exception("Expecting to have a member logged in to take a photo");
+    }
     var memberMediumDocumentID = newRandomKey();
     EliudCamera.openVideoRecorder(context, app, (video) async {
       var memberMediumModel = await accessRightsProvider()
@@ -27,7 +29,7 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
               feedbackProgress: feedbackProgress);
       feedbackFunction(memberMediumModel);
     }, (message) {
-      print('Error during takeVideo ' + message.toString());
+      print('Error during takeVideo $message');
       feedbackFunction(null);
     });
   }
@@ -44,7 +46,9 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
       FeedbackProgress? feedbackProgress) async {
     try {
       var ownerId = AccessBloc.memberId(context);
-      if (ownerId == null) throw Exception("Expecting to have a member logged in to take a photo");
+      if (ownerId == null) {
+        throw Exception("Expecting to have a member logged in to take a photo");
+      }
       var memberMediumDocumentID = newRandomKey();
       var result = await FilePicker.platform
           .pickFiles(type: FileType.video, allowMultiple: false);
@@ -64,7 +68,7 @@ class MobileMediumPlatform extends AbstractMediumPlatform {
               feedbackProgress: feedbackProgress);
       feedbackFunction(memberMediumModel);
     } catch (error) {
-      print('Error trying to uploadVideo: ' + error.toString());
+      print('Error trying to uploadVideo: $error');
       feedbackFunction(null);
     }
   }

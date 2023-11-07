@@ -51,7 +51,7 @@ class AlbumComponentEditorConstructor extends ComponentEditorConstructor {
           description: 'Album',
           conditions: StorageConditionsModel(
               privilegeLevelRequired:
-                  PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
+                  PrivilegeLevelRequiredSimple.noPrivilegeRequiredSimple),
         ),
         feedback);
   }
@@ -63,14 +63,14 @@ class AlbumComponentEditorConstructor extends ComponentEditorConstructor {
     if (album != null) {
       _openIt(app, context, false, album, feedback);
     } else {
-      openErrorDialog(app, context, app.documentID + '/_error',
+      openErrorDialog(app, context, '${app.documentID}/_error',
           title: 'Error', errorMessage: 'Cannot find album with id $id');
     }
   }
 
   void _openIt(AppModel app, BuildContext context, bool create,
       AlbumModel model, EditorFeedback feedback) {
-    openComplexDialog(app, context, app.documentID + '/Album',
+    openComplexDialog(app, context, '${app.documentID}/Album',
         title: create ? 'Create album' : 'Update album',
         includeHeading: false,
         widthFraction: .9,
@@ -90,9 +90,9 @@ class AlbumComponentEditor extends StatefulWidget {
   final AppModel app;
 
   const AlbumComponentEditor({
-    Key? key,
+    super.key,
     required this.app,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() => _AlbumComponentEditorState();
@@ -203,11 +203,11 @@ class _AlbumComponentEditorState extends State<AlbumComponentEditor> {
         state.model.albumEntries != null ? state.model.albumEntries! : [];
     if (state.model.albumEntries != null) {
       var photos = <PlatformMediumModel>[];
-      items.forEach((item) {
+      for (var item in items) {
         if (item.medium != null) {
           photos.add(item.medium!);
         }
-      });
+      }
     }
     for (var item in items) {
       var medium = item.medium;
@@ -269,7 +269,7 @@ class _AlbumComponentEditorState extends State<AlbumComponentEditor> {
             openFlexibleDialog(
               widget.app,
               context,
-              widget.app.documentID + '/_listeditem',
+              '${widget.app.documentID}/_listeditem',
               includeHeading: false,
               widthFraction: .8,
               child: AlbumEntryModelWidget.getIt(
@@ -326,18 +326,19 @@ class _AlbumComponentEditorState extends State<AlbumComponentEditor> {
     if (_progress != null) {
       return progressIndicatorWithValue(widget.app, context, value: _progress!);
     } else {
-      return popupMenuButton<int>(
-          widget.app, context,
+      return popupMenuButton<int>(widget.app, context,
           child: Icon(Icons.add),
           itemBuilder: (context) => [
                 if (Registry.registry()!.getMediumApi().hasCamera())
                   popupMenuItem(
-                    widget.app, context,
+                    widget.app,
+                    context,
                     value: 0,
                     label: 'Take photo',
                   ),
                 popupMenuItem(
-                  widget.app, context,
+                  widget.app,
+                  context,
                   value: 1,
                   label: 'Upload image',
                 ),

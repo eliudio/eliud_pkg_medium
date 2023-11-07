@@ -8,10 +8,11 @@ import 'package:eliud_core/tools/storage/upload_info.dart';
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 
-typedef Tuple2<MemberMediumAccessibleByGroup,
-    List<String>?> MemberMediumAccessibleProviderFunction();
+typedef MemberMediumAccessibleProviderFunction
+    = Tuple2<MemberMediumAccessibleByGroup, List<String>?> Function();
 
-typedef PrivilegeLevelRequiredSimple PlatformMediumAccessibleProviderFunction();
+typedef PlatformMediumAccessibleProviderFunction = PrivilegeLevelRequiredSimple
+    Function();
 
 class MediaButtons {
   // memberMediaButtons
@@ -43,9 +44,10 @@ class MediaButtons {
           popupMenuItem<int>(app, context, label: 'Take video', value: 2),
         );
       }
-      items.add(new PopupMenuItem<int>(
+      items.add(PopupMenuItem<int>(
           child: text(app, context, 'Upload video'), value: 3));
     }
+
     return popupMenuButton(app, context,
         tooltip: tooltip,
         child: icon,
@@ -98,17 +100,17 @@ class MediaButtons {
 
   // platformMediaButtons
   static PopupMenuButton platformMediaButtons(
-      BuildContext context,
-      AppModel app,
-      PlatformMediumAccessibleProviderFunction accessibleByFunction, {
-        MediumAvailable? photoFeedbackFunction,
-        FeedbackProgress? photoFeedbackProgress,
-        MediumAvailable? videoFeedbackFunction,
-        FeedbackProgress? videoFeedbackProgress,
-        Widget? icon,
-        bool? allowCrop,
-        String? tooltip,
-      }) {
+    BuildContext context,
+    AppModel app,
+    PlatformMediumAccessibleProviderFunction accessibleByFunction, {
+    MediumAvailable? photoFeedbackFunction,
+    FeedbackProgress? photoFeedbackProgress,
+    MediumAvailable? videoFeedbackFunction,
+    FeedbackProgress? videoFeedbackProgress,
+    Widget? icon,
+    bool? allowCrop,
+    String? tooltip,
+  }) {
     var items = <PopupMenuItem<int>>[];
     if (photoFeedbackFunction != null) {
       if (Registry.registry()!.getMediumApi().hasCamera()) {
@@ -125,7 +127,7 @@ class MediaButtons {
           popupMenuItem<int>(app, context, label: 'Take video', value: 2),
         );
       }
-      items.add(new PopupMenuItem<int>(
+      items.add(PopupMenuItem<int>(
           child: text(app, context, 'Upload video'), value: 3));
     }
     return popupMenuButton(app, context,
@@ -138,7 +140,7 @@ class MediaButtons {
               Registry.registry()!.getMediumApi().takePhoto(
                   context,
                   app,
-                      () => PlatformMediumAccessRights(accessibleByFunction()),
+                  () => PlatformMediumAccessRights(accessibleByFunction()),
                   photoFeedbackFunction,
                   photoFeedbackProgress,
                   allowCrop: allowCrop);
@@ -147,7 +149,7 @@ class MediaButtons {
               Registry.registry()!.getMediumApi().uploadPhoto(
                   context,
                   app,
-                      () => PlatformMediumAccessRights(accessibleByFunction()),
+                  () => PlatformMediumAccessRights(accessibleByFunction()),
                   photoFeedbackFunction,
                   photoFeedbackProgress,
                   allowCrop: allowCrop);
@@ -158,7 +160,7 @@ class MediaButtons {
               Registry.registry()!.getMediumApi().takeVideo(
                   context,
                   app,
-                      () => PlatformMediumAccessRights(accessibleByFunction()),
+                  () => PlatformMediumAccessRights(accessibleByFunction()),
                   videoFeedbackFunction,
                   videoFeedbackProgress);
             }
@@ -166,10 +168,11 @@ class MediaButtons {
               Registry.registry()!.getMediumApi().uploadVideo(
                   context,
                   app,
-                      () => PlatformMediumAccessRights(accessibleByFunction()),
+                  () => PlatformMediumAccessRights(accessibleByFunction()),
                   videoFeedbackFunction,
                   videoFeedbackProgress);
             }
           }
         });
-  }}
+  }
+}

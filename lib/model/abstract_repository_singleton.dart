@@ -16,11 +16,11 @@
 import '../model/album_repository.dart';
 import 'package:eliud_core/package/package.dart';
 
-AlbumRepository? albumRepository({ String? appId }) => AbstractRepositorySingleton.singleton.albumRepository(appId);
+AlbumRepository? albumRepository({String? appId}) =>
+    AbstractRepositorySingleton.singleton.albumRepository(appId);
 
 abstract class AbstractRepositorySingleton {
-  static List<MemberCollectionInfo> collections = [
-  ];
+  static List<MemberCollectionInfo> collections = [];
   static late AbstractRepositorySingleton singleton;
 
   AlbumRepository? albumRepository(String? appId);

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:eliud_core/model/app_model.dart';
@@ -9,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 
-typedef VideoSaved(XFile file);
-typedef VideoError(String message);
+typedef VideoSaved = Function(XFile file);
+typedef VideoError = Function(String message);
 
 class EliudCamera extends StatefulWidget {
   final AppModel app;
@@ -19,17 +18,14 @@ class EliudCamera extends StatefulWidget {
   final List<CameraDescription> cameras;
 
   const EliudCamera(
-      {Key? key,
+      {super.key,
       required this.app,
       required this.videoSaved,
       required this.cameras,
-      required this.videoError})
-      : super(key: key);
+      required this.videoError});
 
   @override
-  _EliudCameraState createState() {
-    return _EliudCameraState();
-  }
+  State<EliudCamera> createState() => _EliudCameraState();
 
   static void _myVideoSaved(
       BuildContext context, XFile file, VideoSaved passToMe) {
@@ -49,18 +45,17 @@ class EliudCamera extends StatefulWidget {
       WidgetsFlutterBinding.ensureInitialized();
       var cameras = await availableCameras();
       Navigator.of(context).push(
-        pageRouteBuilder(app, page: EliudCamera(
-          app: app,
-                  videoSaved: (file) =>
-                      _myVideoSaved(context, file, videoSaved),
-                  videoError: (error) =>
-                      _myVideoError(context, error, videoError),
-                  cameras: cameras,
-                )),
+        pageRouteBuilder(app,
+            page: EliudCamera(
+              app: app,
+              videoSaved: (file) => _myVideoSaved(context, file, videoSaved),
+              videoError: (error) => _myVideoError(context, error, videoError),
+              cameras: cameras,
+            )),
       );
     } on CameraException catch (e) {
       logError(e.code, e.description);
-      throw Exception("Can't retrieve camers: " + e.description!);
+      throw Exception("Can't retrieve camera: ${e.description!}");
     }
   }
 }
@@ -95,15 +90,15 @@ class _EliudCameraState extends State<EliudCamera>
   VideoPlayerController? videoController;
   VoidCallback? videoPlayerListener;
   bool enableAudio = true;
-  double _minAvailableExposureOffset = 0.0;
-  double _maxAvailableExposureOffset = 0.0;
-  double _currentExposureOffset = 0.0;
+  double minAvailableExposureOffset = 0.0;
+  double maxAvailableExposureOffset = 0.0;
+  double currentExposureOffset = 0.0;
   late AnimationController _flashModeControlRowAnimationController;
-  late Animation<double> _flashModeControlRowAnimation;
+  late Animation<double> flashModeControlRowAnimation;
   late AnimationController _exposureModeControlRowAnimationController;
-  late Animation<double> _exposureModeControlRowAnimation;
+  late Animation<double> exposureModeControlRowAnimation;
   late AnimationController _focusModeControlRowAnimationController;
-  late Animation<double> _focusModeControlRowAnimation;
+  late Animation<double> focusModeControlRowAnimation;
   double _minAvailableZoom = 1.0;
   double _maxAvailableZoom = 1.0;
   double _currentScale = 1.0;
@@ -117,12 +112,13 @@ class _EliudCameraState extends State<EliudCamera>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
 //    SystemChrome.setEnabledSystemUIOverlays ([SystemUiOverlay.top]);
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: SystemUiOverlay.values);
     _flashModeControlRowAnimationController = AnimationController(
       duration: const Duration(milliseconds: 300),
       vsync: this,
     );
-    _flashModeControlRowAnimation = CurvedAnimation(
+    flashModeControlRowAnimation = CurvedAnimation(
       parent: _flashModeControlRowAnimationController,
       curve: Curves.easeInCubic,
     );
@@ -130,7 +126,7 @@ class _EliudCameraState extends State<EliudCamera>
       duration: const Duration(milliseconds: 300),
       vsync: this,
     );
-    _exposureModeControlRowAnimation = CurvedAnimation(
+    exposureModeControlRowAnimation = CurvedAnimation(
       parent: _exposureModeControlRowAnimationController,
       curve: Curves.easeInCubic,
     );
@@ -138,7 +134,7 @@ class _EliudCameraState extends State<EliudCamera>
       duration: const Duration(milliseconds: 300),
       vsync: this,
     );
-    _focusModeControlRowAnimation = CurvedAnimation(
+    focusModeControlRowAnimation = CurvedAnimation(
       parent: _focusModeControlRowAnimationController,
       curve: Curves.easeInCubic,
     );
@@ -214,7 +210,9 @@ class _EliudCameraState extends State<EliudCamera>
     final CameraController? cameraController = controller;
 
     if (cameraController == null || !cameraController.value.isInitialized) {
-      return h5(widget.app, context,
+      return h5(
+        widget.app,
+        context,
         'Tap a camera',
       );
     } else {
@@ -254,6 +252,7 @@ class _EliudCameraState extends State<EliudCamera>
   }
 
   /// Display the thumbnail of the captured image or video.
+/*
   Widget _thumbnailWidget() {
     final VideoPlayerController? localVideoController = videoController;
 
@@ -272,10 +271,9 @@ class _EliudCameraState extends State<EliudCamera>
                             child: Center(
                               child: AspectRatio(
                                   aspectRatio:
-                                      localVideoController.value.size != null
-                                          ? localVideoController
+                                          localVideoController
                                               .value.aspectRatio
-                                          : 1.0,
+                                          ,
                                   child: VideoPlayer(localVideoController)),
                             ),
                             decoration: BoxDecoration(
@@ -289,6 +287,7 @@ class _EliudCameraState extends State<EliudCamera>
       ),
     );
   }
+*/
 
   /// Display a bar with buttons to change the flash and exposure modes
 /*
@@ -339,6 +338,7 @@ class _EliudCameraState extends State<EliudCamera>
   }
 */
 
+/*
   Widget _flashModeControlRowWidget() {
     return SizeTransition(
       sizeFactor: _flashModeControlRowAnimation,
@@ -388,6 +388,7 @@ class _EliudCameraState extends State<EliudCamera>
       ),
     );
   }
+*/
 /*
   Widget _exposureModeControlRowWidget() {
     final ButtonStyle styleAuto = TextButton.styleFrom(
@@ -539,7 +540,8 @@ class _EliudCameraState extends State<EliudCamera>
             color: Colors.red,
             onPressed: onStopButtonPressed);
       } else {
-        return IconButton(icon: const Icon(Icons.videocam_sharp, size: 40),
+        return IconButton(
+            icon: const Icon(Icons.videocam_sharp, size: 40),
             color: Colors.white,
             onPressed: onVideoRecordButtonPressed);
       }
@@ -560,13 +562,13 @@ class _EliudCameraState extends State<EliudCamera>
   Widget _cameraTogglesRowWidget() {
     final List<Widget> toggles = <Widget>[];
 
-    final onChanged = (CameraDescription? description) {
+    onChanged(CameraDescription? description) {
       if (description == null) {
         return;
       }
 
       onNewCameraSelected(description);
-    };
+    }
 
     if (widget.cameras.isEmpty) {
       return text(widget.app, context, 'No camera found');
@@ -603,7 +605,8 @@ class _EliudCameraState extends State<EliudCamera>
   void showInSnackBar(String message) {
     // ignore: deprecated_member_use
     //_scaffoldKey.currentState?.showSnackBar(SnackBar(content: text(widget.app, context, message)));
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: text(widget.app, context, message)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: text(widget.app, context, message)));
   }
 
   void onViewFinderTap(TapDownDetails details, BoxConstraints constraints) {
@@ -647,10 +650,10 @@ class _EliudCameraState extends State<EliudCamera>
       await Future.wait([
         cameraController
             .getMinExposureOffset()
-            .then((value) => _minAvailableExposureOffset = value),
+            .then((value) => minAvailableExposureOffset = value),
         cameraController
             .getMaxExposureOffset()
-            .then((value) => _maxAvailableExposureOffset = value),
+            .then((value) => maxAvailableExposureOffset = value),
         cameraController
             .getMaxZoomLevel()
             .then((value) => _maxAvailableZoom = value),
@@ -823,7 +826,7 @@ class _EliudCameraState extends State<EliudCamera>
     final CameraController? cameraController = controller;
 
     if (cameraController == null || !cameraController.value.isRecordingVideo) {
-      return null;
+      return;
     }
 
     try {
@@ -838,7 +841,7 @@ class _EliudCameraState extends State<EliudCamera>
     final CameraController? cameraController = controller;
 
     if (cameraController == null || !cameraController.value.isRecordingVideo) {
-      return null;
+      return;
     }
 
     try {
@@ -881,7 +884,7 @@ class _EliudCameraState extends State<EliudCamera>
     }
 
     setState(() {
-      _currentExposureOffset = offset;
+      currentExposureOffset = offset;
     });
     try {
       offset = await controller!.setExposureOffset(offset);

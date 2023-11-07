@@ -9,16 +9,15 @@ import 'package:eliud_pkg_medium/model/album_model.dart';
 
 import '../../model/album_entity.dart';
 
-class AlbumBloc extends ExtEditorBaseBloc<AlbumModel, AlbumEntryModel, AlbumEntity> {
-
+class AlbumBloc
+    extends ExtEditorBaseBloc<AlbumModel, AlbumEntryModel, AlbumEntity> {
   AlbumBloc(String appId, EditorFeedback feedback)
       : super(appId, albumRepository(appId: appId)!, feedback);
 
   @override
   AlbumModel addItem(AlbumModel model, AlbumEntryModel newItem) {
-    List<AlbumEntryModel> newItems = model.albumEntries == null
-        ? []
-        : model.albumEntries!;
+    List<AlbumEntryModel> newItems =
+        model.albumEntries == null ? [] : model.albumEntries!;
     newItems.add(newItem);
     var newModel = model.copyWith(albumEntries: newItems);
     return newModel;
@@ -51,14 +50,16 @@ class AlbumBloc extends ExtEditorBaseBloc<AlbumModel, AlbumEntryModel, AlbumEnti
 
   @override
   AlbumModel setDefaultValues(AlbumModel t, StorageConditionsModel conditions) {
-    return t.copyWith(backgroundImage: t.backgroundImage ?? BackgroundModel(), conditions: t.conditions ?? conditions);
+    return t.copyWith(
+        backgroundImage: t.backgroundImage ?? BackgroundModel(),
+        conditions: t.conditions ?? conditions);
   }
 
   @override
-  AlbumModel updateItem(AlbumModel model, AlbumEntryModel oldItem, AlbumEntryModel newItem) {
-    List<AlbumEntryModel> currentItems = model.albumEntries == null
-        ? []
-        : model.albumEntries!;
+  AlbumModel updateItem(
+      AlbumModel model, AlbumEntryModel oldItem, AlbumEntryModel newItem) {
+    List<AlbumEntryModel> currentItems =
+        model.albumEntries == null ? [] : model.albumEntries!;
     var index = currentItems.indexOf(oldItem);
     if (index != -1) {
       var newItems = currentItems.map((e) => e).toList();
@@ -66,7 +67,7 @@ class AlbumBloc extends ExtEditorBaseBloc<AlbumModel, AlbumEntryModel, AlbumEnti
       var newModel = model.copyWith(albumEntries: newItems);
       return newModel;
     } else {
-      throw Exception("Could not find " + oldItem.toString());
+      throw Exception("Could not find $oldItem");
     }
   }
 
@@ -74,5 +75,4 @@ class AlbumBloc extends ExtEditorBaseBloc<AlbumModel, AlbumEntryModel, AlbumEnti
   List<AlbumEntryModel> copyOf(List<AlbumEntryModel> ts) {
     return ts.map((t) => t).toList();
   }
-
 }

@@ -24,13 +24,11 @@ abstract class AlbumComponentEvent extends Equatable {
 class FetchAlbumComponent extends AlbumComponentEvent {
   final String? id;
 
-  FetchAlbumComponent({ this.id });
+  FetchAlbumComponent({this.id});
 }
 
 class AlbumComponentUpdated extends AlbumComponentEvent {
   final AlbumModel value;
 
-  AlbumComponentUpdated({ required this.value });
+  AlbumComponentUpdated({required this.value});
 }
-
-

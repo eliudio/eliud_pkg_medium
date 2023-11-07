@@ -1,5 +1,5 @@
 import 'package:eliud_core/core/wizards/builders/page_builder.dart';
-import 'package:eliud_core/core/wizards/tools/documentIdentifier.dart';
+import 'package:eliud_core/core/wizards/tools/document_identifier.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart'
     as corerepo;
 import 'package:eliud_core/model/model_export.dart';
@@ -16,20 +16,27 @@ class AlbumPageBuilder extends PageBuilder {
   final String albumComponentIdentifier;
 
   AlbumPageBuilder(
-      String uniqueId,
-      this.albumComponentIdentifier,
-      this.examplePhoto1AssetPath,
-      this.examplePhoto2AssetPath,
-      String pageId,
-      AppModel app,
-      String memberId,
-      HomeMenuModel theHomeMenu,
-      AppBarModel theAppBar,
-      DrawerModel leftDrawer,
-      DrawerModel rightDrawer,
-      )
-      : super(uniqueId, pageId, app, memberId, theHomeMenu, theAppBar, leftDrawer,
-            rightDrawer, );
+    String uniqueId,
+    this.albumComponentIdentifier,
+    this.examplePhoto1AssetPath,
+    this.examplePhoto2AssetPath,
+    String pageId,
+    AppModel app,
+    String memberId,
+    HomeMenuModel theHomeMenu,
+    AppBarModel theAppBar,
+    DrawerModel leftDrawer,
+    DrawerModel rightDrawer,
+  ) : super(
+          uniqueId,
+          pageId,
+          app,
+          memberId,
+          theHomeMenu,
+          theAppBar,
+          leftDrawer,
+          rightDrawer,
+        );
 
   Future<PageModel> _setupPage() async {
     return await corerepo.AbstractRepositorySingleton.singleton
@@ -42,7 +49,8 @@ class AlbumPageBuilder extends PageBuilder {
     components.add(BodyComponentModel(
         documentID: "1",
         componentName: AbstractAlbumComponent.componentName,
-        componentId: constructDocumentId(uniqueId: uniqueId, documentId: albumComponentIdentifier)));
+        componentId: constructDocumentId(
+            uniqueId: uniqueId, documentId: albumComponentIdentifier)));
 
     return PageModel(
         documentID: constructDocumentId(uniqueId: uniqueId, documentId: pageId),
@@ -53,10 +61,10 @@ class AlbumPageBuilder extends PageBuilder {
         endDrawer: rightDrawer,
         appBar: theAppBar,
         homeMenu: theHomeMenu,
-        layout: PageLayout.ListView,
+        layout: PageLayout.listView,
         conditions: StorageConditionsModel(
           privilegeLevelRequired:
-              PrivilegeLevelRequiredSimple.Level1PrivilegeRequiredSimple,
+              PrivilegeLevelRequiredSimple.level1PrivilegeRequiredSimple,
         ),
         bodyComponents: components);
   }
@@ -70,7 +78,8 @@ class AlbumPageBuilder extends PageBuilder {
     var example1 = await helper.example1();
     var example2 = await helper.example2();
     var albumModel = AlbumModel(
-      documentID: constructDocumentId(uniqueId: uniqueId, documentId: albumComponentIdentifier),
+      documentID: constructDocumentId(
+          uniqueId: uniqueId, documentId: albumComponentIdentifier),
       appId: app.documentID,
       albumEntries: [
         example1,
@@ -79,16 +88,16 @@ class AlbumPageBuilder extends PageBuilder {
       description: "Example Photos",
       conditions: StorageConditionsModel(
           privilegeLevelRequired:
-              PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
+              PrivilegeLevelRequiredSimple.noPrivilegeRequiredSimple),
     );
     print("return albumModel");
     return albumModel;
   }
 
   Future<AlbumModel> _setupAlbum() async {
-    var _albumModel =
+    var theAlbumModel =
         await albumRepository(appId: app.documentID)!.add(await albumModel());
-    return _albumModel;
+    return theAlbumModel;
   }
 
   Future<PageModel> create() async {
@@ -112,7 +121,7 @@ class ExampleAlbumHelper {
 
   Future<AlbumEntryModel> example1() async {
     var medium = await PlatformMediumHelper(app, memberId,
-            PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple)
+            PrivilegeLevelRequiredSimple.noPrivilegeRequiredSimple)
         .createThumbnailUploadPhotoAsset(
             newRandomKey(), examplePhoto1AssetPath);
     return AlbumEntryModel(
@@ -124,7 +133,7 @@ class ExampleAlbumHelper {
         documentID: newRandomKey(),
         name: 'example 2',
         medium: await PlatformMediumHelper(app, memberId,
-                PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple)
+                PrivilegeLevelRequiredSimple.noPrivilegeRequiredSimple)
             .createThumbnailUploadPhotoAsset(
                 newRandomKey(), examplePhoto2AssetPath));
   }

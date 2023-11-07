@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 class EmbeddedVideo extends StatefulWidget {
   final String url;
 
-  const EmbeddedVideo({Key? key, required this.url}) : super(key: key);
+  const EmbeddedVideo({super.key, required this.url});
 
   @override
-  _EmbeddedVideoState createState() => _EmbeddedVideoState();
+  State<EmbeddedVideo> createState() => _EmbeddedVideoState();
 }
 
 class _EmbeddedVideoState extends State<EmbeddedVideo> {
@@ -15,7 +15,7 @@ class _EmbeddedVideoState extends State<EmbeddedVideo> {
 
   @override
   void initState() {
-    _controller = VideoPlayerController.network(widget.url)
+    _controller = VideoPlayerController.networkUrl(Uri.parse(widget.url))
       ..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
@@ -25,7 +25,7 @@ class _EmbeddedVideoState extends State<EmbeddedVideo> {
 
   @override
   Widget build(BuildContext context) {
-    var widget;
+    Stack widget;
     if (_controller.value.isPlaying) {
       widget = Stack(
         children: [
@@ -42,20 +42,23 @@ class _EmbeddedVideoState extends State<EmbeddedVideo> {
         ],
       );
     }
-    return Container(height: 300, child: GestureDetector(
-        child: widget,
-        onTap: () {
-          setState(() {
-            if (_controller.value.isPlaying) {
-              _controller.pause();
-            } else {
-              _controller.setLooping(true);
-              _controller.play();
-            }
-          });
-        }));
+    return Container(
+        height: 300,
+        child: GestureDetector(
+            child: widget,
+            onTap: () {
+              setState(() {
+                if (_controller.value.isPlaying) {
+                  _controller.pause();
+                } else {
+                  _controller.setLooping(true);
+                  _controller.play();
+                }
+              });
+            }));
   }
 
+  @override
   void deactivate() {
     super.deactivate();
   }

@@ -23,9 +23,8 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 
 import 'album_model.dart';
 
-typedef List<AlbumModel?> FilterAlbumModels(List<AlbumModel?> values);
-
-
+typedef FilterAlbumModels = List<AlbumModel?> Function(
+    List<AlbumModel?> values);
 
 class AlbumListBloc extends Bloc<AlbumListEvent, AlbumListState> {
   final FilterAlbumModels? filter;
@@ -39,23 +38,32 @@ class AlbumListBloc extends Bloc<AlbumListEvent, AlbumListState> {
   final bool? detailed;
   final int albumLimit;
 
-  AlbumListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required AlbumRepository albumRepository, this.albumLimit = 5})
+  AlbumListBloc(
+      {this.filter,
+      this.paged,
+      this.orderBy,
+      this.descending,
+      this.detailed,
+      this.eliudQuery,
+      required AlbumRepository albumRepository,
+      this.albumLimit = 5})
       : _albumRepository = albumRepository,
         super(AlbumListLoading()) {
-    on <LoadAlbumList> ((event, emit) {
+    on<LoadAlbumList>((event, emit) {
       if ((detailed == null) || (!detailed!)) {
         _mapLoadAlbumListToState();
       } else {
         _mapLoadAlbumListWithDetailsToState();
       }
     });
-    
-    on <NewPage> ((event, emit) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+
+    on<NewPage>((event, emit) {
+      pages = pages +
+          1; // it doesn't matter so much if we increase pages beyond the end
       _mapLoadAlbumListWithDetailsToState();
     });
-    
-    on <AlbumChangeQuery> ((event, emit) {
+
+    on<AlbumChangeQuery>((event, emit) {
       eliudQuery = event.newQuery;
       if ((detailed == null) || (!detailed!)) {
         _mapLoadAlbumListToState();
@@ -63,20 +71,20 @@ class AlbumListBloc extends Bloc<AlbumListEvent, AlbumListState> {
         _mapLoadAlbumListWithDetailsToState();
       }
     });
-      
-    on <AddAlbumList> ((event, emit) async {
+
+    on<AddAlbumList>((event, emit) async {
       await _mapAddAlbumListToState(event);
     });
-    
-    on <UpdateAlbumList> ((event, emit) async {
+
+    on<UpdateAlbumList>((event, emit) async {
       await _mapUpdateAlbumListToState(event);
     });
-    
-    on <DeleteAlbumList> ((event, emit) async {
+
+    on<DeleteAlbumList>((event, emit) async {
       await _mapDeleteAlbumListToState(event);
     });
-    
-    on <AlbumListUpdated> ((event, emit) {
+
+    on<AlbumListUpdated>((event, emit) {
       emit(_mapAlbumListUpdatedToState(event));
     });
   }
@@ -90,27 +98,31 @@ class AlbumListBloc extends Bloc<AlbumListEvent, AlbumListState> {
   }
 
   Future<void> _mapLoadAlbumListToState() async {
-    int amountNow =  (state is AlbumListLoaded) ? (state as AlbumListLoaded).values!.length : 0;
+    int amountNow = (state is AlbumListLoaded)
+        ? (state as AlbumListLoaded).values!.length
+        : 0;
     _albumsListSubscription?.cancel();
     _albumsListSubscription = _albumRepository.listen(
-          (list) => add(AlbumListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
-      orderBy: orderBy,
-      descending: descending,
-      eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * albumLimit : null
-    );
-  }
-
-  Future<void> _mapLoadAlbumListWithDetailsToState() async {
-    int amountNow =  (state is AlbumListLoaded) ? (state as AlbumListLoaded).values!.length : 0;
-    _albumsListSubscription?.cancel();
-    _albumsListSubscription = _albumRepository.listenWithDetails(
-            (list) => add(AlbumListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
+        (list) => add(AlbumListUpdated(
+            value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * albumLimit : null
-    );
+        limit: ((paged != null) && paged!) ? pages * albumLimit : null);
+  }
+
+  Future<void> _mapLoadAlbumListWithDetailsToState() async {
+    int amountNow = (state is AlbumListLoaded)
+        ? (state as AlbumListLoaded).values!.length
+        : 0;
+    _albumsListSubscription?.cancel();
+    _albumsListSubscription = _albumRepository.listenWithDetails(
+        (list) => add(AlbumListUpdated(
+            value: _filter(list), mightHaveMore: amountNow != list.length)),
+        orderBy: orderBy,
+        descending: descending,
+        eliudQuery: eliudQuery,
+        limit: ((paged != null) && paged!) ? pages * albumLimit : null);
   }
 
   Future<void> _mapAddAlbumListToState(AddAlbumList event) async {
@@ -134,8 +146,8 @@ class AlbumListBloc extends Bloc<AlbumListEvent, AlbumListState> {
     }
   }
 
-  AlbumListLoaded _mapAlbumListUpdatedToState(
-      AlbumListUpdated event) => AlbumListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
+  AlbumListLoaded _mapAlbumListUpdatedToState(AlbumListUpdated event) =>
+      AlbumListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {
@@ -143,5 +155,3 @@ class AlbumListBloc extends Bloc<AlbumListEvent, AlbumListState> {
     return super.close();
   }
 }
-
-

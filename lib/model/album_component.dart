@@ -13,7 +13,6 @@
 
 */
 
-
 import 'package:eliud_pkg_medium/model/album_component_bloc.dart';
 import 'package:eliud_pkg_medium/model/album_component_event.dart';
 import 'package:eliud_pkg_medium/model/album_model.dart';
@@ -31,20 +30,21 @@ abstract class AbstractAlbumComponent extends StatelessWidget {
   final AppModel app;
   final String albumId;
 
-  AbstractAlbumComponent({Key? key, required this.app, required this.albumId}): super(key: key);
+  AbstractAlbumComponent({super.key, required this.app, required this.albumId});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AlbumComponentBloc> (
-          create: (context) => AlbumComponentBloc(
-            albumRepository: albumRepository(appId: app.documentID)!)
+    return BlocProvider<AlbumComponentBloc>(
+      create: (context) => AlbumComponentBloc(
+          albumRepository: albumRepository(appId: app.documentID)!)
         ..add(FetchAlbumComponent(id: albumId)),
       child: _albumBlockBuilder(context),
     );
   }
 
   Widget _albumBlockBuilder(BuildContext context) {
-    return BlocBuilder<AlbumComponentBloc, AlbumComponentState>(builder: (context, state) {
+    return BlocBuilder<AlbumComponentBloc, AlbumComponentState>(
+        builder: (context, state) {
       if (state is AlbumComponentLoaded) {
         return yourWidget(context, state.value);
       } else if (state is AlbumComponentPermissionDenied) {
@@ -57,7 +57,11 @@ abstract class AbstractAlbumComponent extends StatelessWidget {
         return AlertWidget(app: app, title: 'Error', content: state.message);
       } else {
         return Center(
-          child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().progressIndicatorStyle().progressIndicator(app, context),
+          child: StyleRegistry.registry()
+              .styleWithApp(app)
+              .frontEndStyle()
+              .progressIndicatorStyle()
+              .progressIndicator(app, context),
         );
       }
     });
@@ -65,4 +69,3 @@ abstract class AbstractAlbumComponent extends StatelessWidget {
 
   Widget yourWidget(BuildContext context, AlbumModel value);
 }
-

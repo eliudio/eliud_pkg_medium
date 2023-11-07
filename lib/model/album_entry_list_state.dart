@@ -33,18 +33,20 @@ class AlbumEntryListLoaded extends AlbumEntryListState {
   const AlbumEntryListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object?> get props => [ values, mightHaveMore ];
+  List<Object?> get props => [values, mightHaveMore];
 
   @override
   String toString() => 'AlbumEntryListLoaded { values: $values }';
 
   @override
-  bool operator ==(Object other) => 
-          other is AlbumEntryListLoaded &&
-              runtimeType == other.runtimeType &&
-              ListEquality().equals(values, other.values) &&
-              mightHaveMore == other.mightHaveMore;
+  bool operator ==(Object other) =>
+      other is AlbumEntryListLoaded &&
+      runtimeType == other.runtimeType &&
+      ListEquality().equals(values, other.values) &&
+      mightHaveMore == other.mightHaveMore;
+
+  @override
+  int get hashCode => values.hashCode ^ mightHaveMore.hashCode;
 }
 
 class AlbumEntryNotLoaded extends AlbumEntryListState {}
-

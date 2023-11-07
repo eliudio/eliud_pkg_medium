@@ -15,7 +15,10 @@ class AlbumComponentConstructorDefault implements ComponentConstructor {
 
   @override
   Widget createNew(
-      {Key? key, required AppModel app, required String id, Map<String, dynamic>? parameters}) {
+      {Key? key,
+      required AppModel app,
+      required String id,
+      Map<String, dynamic>? parameters}) {
     return AlbumComponent(key: key, app: app, id: id);
   }
 
@@ -25,39 +28,44 @@ class AlbumComponentConstructorDefault implements ComponentConstructor {
 }
 
 class AlbumComponent extends AbstractAlbumComponent {
-  String? parentPageId;
-
-  AlbumComponent({Key? key, required AppModel app, required String id}) : super(key: key, app: app, albumId: id);
+  AlbumComponent({super.key, required super.app, required String id})
+      : super(albumId: id);
 
   @override
-  Widget yourWidget(BuildContext context, AlbumModel? albumModel) {
-    if (albumModel == null) {
+  Widget yourWidget(BuildContext context, AlbumModel? value) {
+    if (value == null) {
       return text(app, context, "Album is not available");
     } else {
-      if (albumModel.albumEntries == null) return Container();
+      if (value.albumEntries == null) return Container();
       List<PlatformMediumModel> mmm = [];
-      for (var medium in albumModel.albumEntries!) {
-        if ((medium != null) & (medium.medium != null)) {
+      for (var medium in value.albumEntries!) {
+        if (medium.medium != null) {
           mmm.add(medium.medium!);
         }
       }
 
       List<PlatformMediumModel> media = mmm;
-      return MediaHelper.staggeredPlatformMediumModel(app, context, media, background: albumModel.backgroundImage, viewAction: (index) {
-        _action(context, albumModel.albumEntries!, index);
+      return MediaHelper.staggeredPlatformMediumModel(app, context, media,
+          background: value.backgroundImage, viewAction: (index) {
+        _action(context, value.albumEntries!, index);
       });
     }
   }
 
-  void _action(BuildContext context, List<AlbumEntryModel> memberMedia, int index) {
+  void _action(
+      BuildContext context, List<AlbumEntryModel> memberMedia, int index) {
     var medium = memberMedia[index];
-    if (medium.medium!.mediumType! == PlatformMediumType.Photo) {
-      if (memberMedia.length > 0) {
+    if (medium.medium!.mediumType! == PlatformMediumType.photo) {
+      if (memberMedia.isNotEmpty) {
         var photos = memberMedia.map((pm) => pm.medium!).toList();
-        Registry.registry()!.getMediumApi().showPhotosPlatform(context, app, photos, index);
+        Registry.registry()!
+            .getMediumApi()
+            .showPhotosPlatform(context, app, photos, index);
       }
     } else {
-      Registry.registry()!.getMediumApi().showVideoPlatform(context, app, medium.medium!);
+      Registry.registry()!
+          .getMediumApi()
+          .showVideoPlatform(context, app, medium.medium!);
     }
   }
 }

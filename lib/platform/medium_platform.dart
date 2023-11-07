@@ -7,6 +7,7 @@ import 'package:eliud_core/model/public_medium_model.dart';
 import 'package:eliud_core/package/medium_api.dart';
 import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/style/frontend/has_dialog.dart';
+import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/random.dart';
 import 'package:eliud_core/tools/router_builders.dart';
@@ -20,20 +21,22 @@ import 'package:image_picker/image_picker.dart';
 
 import '../tools/slider/album_slider.dart';
 import '../tools/slider/slide_image_provider.dart';
+import '../tools/video_widget/embedded_video.dart';
 import '../wizards/widgets/member_photo_widget.dart';
 import '../wizards/widgets/platform_photo_widget.dart';
 import '../wizards/widgets/public_photo_widget.dart';
 import 'image_crop.dart';
 
 abstract class AbstractMediumPlatform extends MediumApi {
+  @override
   void showPhotos(BuildContext context, AppModel app,
       List<MemberMediumModel> media, int initialPage) {
     var photos = media
-        .where((memberMedium) => memberMedium.mediumType == MediumType.Photo)
+        .where((memberMedium) => memberMedium.mediumType == MediumType.photo)
         .toList();
     //title: "Photos",
     //
-    openFlexibleDialog(app, context, app.documentID + '/_showphotosplatform',
+    openFlexibleDialog(app, context, '${app.documentID}/_showphotosplatform',
         includeHeading: true,
         title: "Photos",
         buttons: [
@@ -49,9 +52,10 @@ abstract class AbstractMediumPlatform extends MediumApi {
             initialPage: initialPage));
   }
 
+  @override
   void showPhotosUrls(
       BuildContext context, AppModel app, List<String> urls, int initialPage) {
-    openFlexibleDialog(app, context, app.documentID + '/_showphotosurls',
+    openFlexibleDialog(app, context, '${app.documentID}/_showphotosurls',
         includeHeading: true,
         title: "Photos",
         buttons: [
@@ -66,13 +70,14 @@ abstract class AbstractMediumPlatform extends MediumApi {
             initialPage: initialPage));
   }
 
+  @override
   void showPhotosPlatform(BuildContext context, AppModel app,
       List<PlatformMediumModel> media, int initialPage) {
     var photos = media
         .where((memberMedium) =>
-            memberMedium.mediumType == PlatformMediumType.Photo)
+            memberMedium.mediumType == PlatformMediumType.photo)
         .toList();
-    openFlexibleDialog(app, context, app.documentID + '/_showphotosplatform',
+    openFlexibleDialog(app, context, '${app.documentID}/_showphotosplatform',
         includeHeading: true,
         title: "Photos",
         buttons: [
@@ -88,14 +93,15 @@ abstract class AbstractMediumPlatform extends MediumApi {
             initialPage: initialPage));
   }
 
+  @override
   void showPhotosPublic(BuildContext context, AppModel app,
       List<PublicMediumModel> media, int initialPage) {
     var photos = media
         .where(
-            (memberMedium) => memberMedium.mediumType == PublicMediumType.Photo)
+            (memberMedium) => memberMedium.mediumType == PublicMediumType.photo)
         .toList();
 
-    openFlexibleDialog(app, context, app.documentID + '/_showphotosplatform',
+    openFlexibleDialog(app, context, '${app.documentID}/_showphotosplatform',
         includeHeading: true,
         title: "Photos",
         buttons: [
@@ -111,23 +117,35 @@ abstract class AbstractMediumPlatform extends MediumApi {
             initialPage: initialPage));
   }
 
+  @override
   Future<void> showVideo(BuildContext context, AppModel app,
       MemberMediumModel memberMediumModel) async {
     Navigator.push(
         context,
         pageRouteBuilder(app,
             page: VideoView(
-                sourceType: SourceType.Network,
+                sourceType: SourceType.network,
                 source: memberMediumModel.url!)));
   }
 
+  @override
+  Widget embeddedVideo(
+      BuildContext context, AppModel app, MemberMediumModel memberMediumModel) {
+    if (memberMediumModel.url == null) {
+      return text(app, context, "?");
+    } else {
+      return EmbeddedVideo(url: memberMediumModel.url!);
+    }
+  }
+
+  @override
   Future<void> showVideoPlatform(BuildContext context, AppModel app,
       PlatformMediumModel platformMediumModel) async {
     Navigator.push(
         context,
         pageRouteBuilder(app,
             page: VideoView(
-                sourceType: SourceType.Network,
+                sourceType: SourceType.network,
                 source: platformMediumModel.url!)));
   }
 
@@ -135,6 +153,7 @@ abstract class AbstractMediumPlatform extends MediumApi {
    * Allows the user to take a photo
    * When photo is selected feedbackFunction is triggered
    */
+  @override
   void takeVideo(
       BuildContext context,
       AppModel app,
@@ -146,6 +165,7 @@ abstract class AbstractMediumPlatform extends MediumApi {
    * Allows the user to select a photo from library
    * When photo is selected feedbackFunction is triggered
    */
+  @override
   void uploadVideo(
       BuildContext context,
       AppModel app,
@@ -156,16 +176,19 @@ abstract class AbstractMediumPlatform extends MediumApi {
   /*
    * Some implementations, e.g. android, have access to the camera. Some other implementations, e.g. web, don't
    */
+  @override
   bool hasCamera();
 
   /*
    * Some implementations, e.g. android, have access to the assets. Some other implementations, e.g. web, don't
    */
+  @override
   bool hasAccessToAssets();
 
   /*
    * Some implementations, e.g. android, have access to the local file system, whilst others don't, e.g. Web
    */
+  @override
   bool hasAccessToLocalFilesystem();
 
   Future<void> processPhoto(
@@ -187,12 +210,13 @@ abstract class AbstractMediumPlatform extends MediumApi {
               feedbackProgress: feedbackProgress);
       feedbackFunction(mediumModel);
     } catch (error) {
-      print('Error trying to processPhoto: ' + error.toString());
+      print('Error trying to processPhoto: $error');
       feedbackFunction(null);
     }
   }
 
   /* Allow to add an imnage / upload / ... */
+  @override
   Widget getPublicPhotoWidget(
           {Key? key,
           required BuildContext context,
@@ -210,6 +234,7 @@ abstract class AbstractMediumPlatform extends MediumApi {
         initialImage: initialImage,
         allowCrop: allowCrop,
       );
+  @override
   Widget getPlatformPhotoWidget(
           {Key? key,
           required BuildContext context,
@@ -230,6 +255,7 @@ abstract class AbstractMediumPlatform extends MediumApi {
   /*
    * Currently default / only access is public. Should expand the api to allow to change
    */
+  @override
   Widget getMemberPhotoWidget(
           {Key? key,
           required BuildContext context,
@@ -261,6 +287,7 @@ abstract class AbstractMediumPlatform extends MediumApi {
         allowCrop: allowCrop);
   }
 
+  @override
   Future<void> uploadPhoto(
       BuildContext context,
       AppModel app,
@@ -273,7 +300,6 @@ abstract class AbstractMediumPlatform extends MediumApi {
         allowCrop: allowCrop);
   }
 
-  @override
   Future<void> _pickImage(
       BuildContext context,
       AppModel app,
@@ -283,21 +309,22 @@ abstract class AbstractMediumPlatform extends MediumApi {
       ImageSource source,
       {bool? allowCrop}) async {
     var ownerId = AccessBloc.memberId(context);
-    if (ownerId == null)
+    if (ownerId == null) {
       throw Exception("Expecting to have a member logged in to take a photo");
+    }
     if (feedbackProgress != null) feedbackProgress(-1);
-    var _picker = ImagePicker();
-    var _image = await _picker.pickImage(
+    var picker = ImagePicker();
+    var image = await picker.pickImage(
       source: source,
     );
 
-    if (_image != null) {
+    if (image != null) {
       var memberMediumDocumentID = newRandomKey();
       var baseName =
-      BaseNameHelper.baseName(memberMediumDocumentID, _image.path);
+          BaseNameHelper.baseName(memberMediumDocumentID, image.path);
       var thumbnailBaseName =
-      BaseNameHelper.thumbnailBaseName(memberMediumDocumentID, _image.path);
-      var bytes = await _image.readAsBytes();
+          BaseNameHelper.thumbnailBaseName(memberMediumDocumentID, image.path);
+      var bytes = await image.readAsBytes();
       if ((allowCrop != null) && (allowCrop)) {
         ImageCropWidget.open(context, app, (croppedImage) {
           if (croppedImage == null) {
@@ -331,5 +358,4 @@ abstract class AbstractMediumPlatform extends MediumApi {
       feedbackFunction(null);
     }
   }
-
 }

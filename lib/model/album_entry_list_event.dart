@@ -30,10 +30,10 @@ class NewPage extends AlbumEntryListEvent {}
 class AddAlbumEntryList extends AlbumEntryListEvent {
   final AlbumEntryModel? value;
 
-  const AddAlbumEntryList({ this.value });
+  const AddAlbumEntryList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'AddAlbumEntryList{ value: $value }';
@@ -42,10 +42,10 @@ class AddAlbumEntryList extends AlbumEntryListEvent {
 class UpdateAlbumEntryList extends AlbumEntryListEvent {
   final AlbumEntryModel? value;
 
-  const UpdateAlbumEntryList({ this.value });
+  const UpdateAlbumEntryList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'UpdateAlbumEntryList{ value: $value }';
@@ -54,10 +54,10 @@ class UpdateAlbumEntryList extends AlbumEntryListEvent {
 class DeleteAlbumEntryList extends AlbumEntryListEvent {
   final AlbumEntryModel? value;
 
-  const DeleteAlbumEntryList({ this.value });
+  const DeleteAlbumEntryList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'DeleteAlbumEntryList{ value: $value }';
@@ -67,24 +67,24 @@ class AlbumEntryListUpdated extends AlbumEntryListEvent {
   final List<AlbumEntryModel?>? value;
   final bool? mightHaveMore;
 
-  const AlbumEntryListUpdated({ this.value, this.mightHaveMore });
+  const AlbumEntryListUpdated({this.value, this.mightHaveMore});
 
   @override
-  List<Object?> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [value, mightHaveMore];
 
   @override
-  String toString() => 'AlbumEntryListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+  String toString() =>
+      'AlbumEntryListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 
 class AlbumEntryChangeQuery extends AlbumEntryListEvent {
   final EliudQuery? newQuery;
 
-  const AlbumEntryChangeQuery({ required this.newQuery });
+  const AlbumEntryChangeQuery({required this.newQuery});
 
   @override
-  List<Object?> get props => [ newQuery ];
+  List<Object?> get props => [newQuery];
 
   @override
   String toString() => 'AlbumEntryChangeQuery{ value: $newQuery }';
 }
-

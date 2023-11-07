@@ -8,7 +8,8 @@ import 'package:eliud_core/tools/widgets/header_widget.dart';
 import 'package:eliud_pkg_medium/model/album_entry_model.dart';
 import 'package:flutter/material.dart';
 
-typedef void AlbumEntryModelCallback(AlbumEntryModel listedItemModel);
+typedef AlbumEntryModelCallback = void Function(
+    AlbumEntryModel listedItemModel);
 
 class AlbumEntryModelWidget extends StatefulWidget {
   final bool create;
@@ -20,7 +21,6 @@ class AlbumEntryModelWidget extends StatefulWidget {
   final int containerPrivilege;
 
   AlbumEntryModelWidget._({
-    Key? key,
     required this.app,
     required this.create,
     required this.widgetWidth,
@@ -28,7 +28,7 @@ class AlbumEntryModelWidget extends StatefulWidget {
     required this.listedItemModel,
     required this.listedItemModelCallback,
     required this.containerPrivilege,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() {

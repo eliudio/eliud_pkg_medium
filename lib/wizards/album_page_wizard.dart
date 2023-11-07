@@ -23,7 +23,8 @@ class AlbumPageWizard extends NewAppWizardInfoWithActionSpecification {
   @override
   String getPackageName() => "eliud_pkg_medium";
 
-  static bool hasAccessToLocalFileSystem = Registry.registry()!.getMediumApi().hasAccessToLocalFilesystem();
+  static bool hasAccessToLocalFileSystem =
+      Registry.registry()!.getMediumApi().hasAccessToLocalFilesystem();
 
   @override
   NewAppWizardParameters newAppWizardParameters() =>
@@ -37,8 +38,8 @@ class AlbumPageWizard extends NewAppWizardInfoWithActionSpecification {
       );
 
   @override
-  List<MenuItemModel>? getThoseMenuItems(String uniqueId, AppModel app) =>[
-      menuItem(uniqueId, app, albumPageId, 'Album', Icons.album)];
+  List<MenuItemModel>? getThoseMenuItems(String uniqueId, AppModel app) =>
+      [menuItem(uniqueId, app, albumPageId, 'Album', Icons.album)];
 
   @override
   List<NewAppTask>? getCreateTasks(
@@ -58,41 +59,52 @@ class AlbumPageWizard extends NewAppWizardInfoWithActionSpecification {
         List<NewAppTask> tasks = [];
         tasks.add(() async {
           print("Album page");
-          await AlbumPageBuilder(uniqueId,
-              albumComponentIdentifier,
-                  albumExample1PhotoAssetPath,
-                  albumExample2PhotoAssetPath,
-                  albumPageId,
-                  app,
-                  memberId,
-                  homeMenuProvider(),
-                  appBarProvider(),
-                  leftDrawerProvider(),
-                  rightDrawerProvider(),)
-              .create();
+          await AlbumPageBuilder(
+            uniqueId,
+            albumComponentIdentifier,
+            albumExample1PhotoAssetPath,
+            albumExample2PhotoAssetPath,
+            albumPageId,
+            app,
+            memberId,
+            homeMenuProvider(),
+            appBarProvider(),
+            leftDrawerProvider(),
+            rightDrawerProvider(),
+          ).create();
         });
         return tasks;
       }
     } else {
-      throw Exception(
-          'Unexpected class for parameters: ' + parameters.toString());
+      throw Exception('Unexpected class for parameters: $parameters');
     }
     return null;
   }
 
   @override
-  AppModel updateApp(String uniqueId,
+  AppModel updateApp(
+    String uniqueId,
     NewAppWizardParameters parameters,
     AppModel adjustMe,
   ) =>
       adjustMe;
 
   @override
-  String? getPageID(String uniqueId, NewAppWizardParameters parameters, String pageType) => null;
+  String? getPageID(String uniqueId, NewAppWizardParameters parameters,
+          String pageType) =>
+      null;
 
   @override
-  ActionModel? getAction(String uniqueId, NewAppWizardParameters parameters, AppModel app, String actionType, ) => null;
+  ActionModel? getAction(
+    String uniqueId,
+    NewAppWizardParameters parameters,
+    AppModel app,
+    String actionType,
+  ) =>
+      null;
 
   @override
-  PublicMediumModel? getPublicMediumModel(String uniqueId, NewAppWizardParameters parameters, String pageType) => null;
+  PublicMediumModel? getPublicMediumModel(String uniqueId,
+          NewAppWizardParameters parameters, String mediumType) =>
+      null;
 }

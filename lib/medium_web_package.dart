@@ -14,13 +14,13 @@ class MediumWebPackage extends MediumPackage {
   }
 
   @override
-  List<Object?> get props => [
-  ];
+  List<Object?> get props => [];
 
   @override
-  bool operator == (Object other) =>
+  bool operator ==(Object other) =>
       identical(this, other) ||
-          other is MediumWebPackage &&
-              runtimeType == other.runtimeType;
+      other is MediumWebPackage && runtimeType == other.runtimeType;
 
+  @override
+  int get hashCode => 0;
 }

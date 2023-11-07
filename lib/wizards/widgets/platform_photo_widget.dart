@@ -19,13 +19,12 @@ class PlatformPhotoWidget extends StatefulWidget {
   final bool? allowCrop;
 
   const PlatformPhotoWidget(
-      {Key? key,
-        required this.app,
-        this.defaultImage,
-        required this.feedbackFunction,
-        required this.initialImage,
-        this.allowCrop})
-      : super(key: key);
+      {super.key,
+      required this.app,
+      this.defaultImage,
+      required this.feedbackFunction,
+      required this.initialImage,
+      this.allowCrop});
 
   @override
   State<StatefulWidget> createState() => _PlatformPhotoWidgetState();
@@ -37,74 +36,84 @@ class _PlatformPhotoWidgetState extends State<PlatformPhotoWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView(shrinkWrap: true, physics: ScrollPhysics(), children: [
-          getListTile(context, widget.app,
-              trailing: popupMenuButton<int>(
-                  widget.app, context,
-                  child: Icon(Icons.more_vert),
-                  itemBuilder: (context) => [
+      getListTile(context, widget.app,
+          trailing: popupMenuButton<int>(widget.app, context,
+              child: Icon(Icons.more_vert),
+              itemBuilder: (context) => [
                     if (Registry.registry()!.getMediumApi().hasCamera())
                       popupMenuItem(
-                        widget.app, context,
+                        widget.app,
+                        context,
                         value: 0,
                         label: 'Take photo',
                       ),
                     popupMenuItem(
-                      widget.app, context,
+                      widget.app,
+                      context,
                       value: 1,
                       label: 'Upload photo',
                     ),
                     if (widget.defaultImage != null)
                       popupMenuItem(
-                        widget.app, context,
+                        widget.app,
+                        context,
                         value: 2,
                         label: 'Default photo',
                       ),
                     popupMenuItem(
-                      widget.app, context,
+                      widget.app,
+                      context,
                       value: 3,
                       label: 'Clear photo',
                     ),
                   ],
-                  onSelected: (value) async {
-                    if (value == 0) {
-                      Registry.registry()!.getMediumApi().takePhoto(
-                          context,
-                          widget.app,
-                              () => PlatformMediumAccessRights(PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
-                              (photo) => _photoFeedbackFunction(widget.app, photo),
-                          _photoUploading,
-                          allowCrop: widget.allowCrop);
-                    } else if (value == 1) {
-                      Registry.registry()!.getMediumApi().uploadPhoto(
-                          context,
-                          widget.app,
-                              () => PlatformMediumAccessRights(PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
-                              (photo) => _photoFeedbackFunction(widget.app, photo),
-                          _photoUploading,
-                          allowCrop: widget.allowCrop);
-                    } else if (value == 2) {
-                      var photo = await PlatformMediumAccessRights(PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple)
-                          .getMediumHelper(
+              onSelected: (value) async {
+                if (value == 0) {
+                  Registry.registry()!.getMediumApi().takePhoto(
+                      context,
+                      widget.app,
+                      () => PlatformMediumAccessRights(
+                          PrivilegeLevelRequiredSimple
+                              .noPrivilegeRequiredSimple),
+                      (photo) => _photoFeedbackFunction(widget.app, photo),
+                      _photoUploading,
+                      allowCrop: widget.allowCrop);
+                } else if (value == 1) {
+                  Registry.registry()!.getMediumApi().uploadPhoto(
+                      context,
+                      widget.app,
+                      () => PlatformMediumAccessRights(
+                          PrivilegeLevelRequiredSimple
+                              .noPrivilegeRequiredSimple),
+                      (photo) => _photoFeedbackFunction(widget.app, photo),
+                      _photoUploading,
+                      allowCrop: widget.allowCrop);
+                } else if (value == 2) {
+                  var photo = await PlatformMediumAccessRights(
+                          PrivilegeLevelRequiredSimple
+                              .noPrivilegeRequiredSimple)
+                      .getMediumHelper(
                         widget.app,
                         widget.app.ownerID,
                       )
-                          .createThumbnailUploadPhotoAsset(newRandomKey(), widget.defaultImage!,
+                      .createThumbnailUploadPhotoAsset(
+                          newRandomKey(), widget.defaultImage!,
                           feedbackProgress: _photoUploading);
-                      _photoFeedbackFunction(widget.app, photo);
-                    } else if (value == 3) {
-                      _photoFeedbackFunction(widget.app, null);
-                    }
-                  }),
-              title: _progress != null
-                  ? progressIndicatorWithValue(widget.app, context,
+                  _photoFeedbackFunction(widget.app, photo);
+                } else if (value == 3) {
+                  _photoFeedbackFunction(widget.app, null);
+                }
+              }),
+          title: _progress != null
+              ? progressIndicatorWithValue(widget.app, context,
                   value: _progress!)
-                  : widget.initialImage == null || widget.initialImage!.url == null
+              : widget.initialImage == null || widget.initialImage!.url == null
                   ? Center(child: text(widget.app, context, 'No image set'))
                   : Image.network(
-                widget.initialImage!.url!,
-                height: 100,
-              ))
-        ]);
+                      widget.initialImage!.url!,
+                      height: 100,
+                    ))
+    ]);
   }
 
   void _photoFeedbackFunction(
@@ -122,4 +131,3 @@ class _PlatformPhotoWidgetState extends State<PlatformPhotoWidget> {
     });
   }
 }
-

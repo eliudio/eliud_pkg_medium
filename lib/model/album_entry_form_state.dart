@@ -41,9 +41,9 @@ class AlbumEntryFormInitialized extends AlbumEntryFormState {
   final AlbumEntryModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
-  const AlbumEntryFormInitialized({ this.value });
+  const AlbumEntryFormInitialized({this.value});
 }
 
 // Menu has been initialised and hence a menu is available
@@ -51,9 +51,9 @@ abstract class AlbumEntryFormError extends AlbumEntryFormInitialized {
   final String? message;
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
-  const AlbumEntryFormError({this.message, AlbumEntryModel? value }) : super(value: value);
+  const AlbumEntryFormError({this.message, super.value});
 
   @override
   String toString() {
@@ -63,11 +63,12 @@ abstract class AlbumEntryFormError extends AlbumEntryFormInitialized {
     }''';
   }
 }
-class DocumentIDAlbumEntryFormError extends AlbumEntryFormError { 
-  const DocumentIDAlbumEntryFormError({ String? message, AlbumEntryModel? value }): super(message: message, value: value);
+
+class DocumentIDAlbumEntryFormError extends AlbumEntryFormError {
+  const DocumentIDAlbumEntryFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -78,12 +79,11 @@ class DocumentIDAlbumEntryFormError extends AlbumEntryFormError {
   }
 }
 
-
-class NameAlbumEntryFormError extends AlbumEntryFormError { 
-  const NameAlbumEntryFormError({ String? message, AlbumEntryModel? value }): super(message: message, value: value);
+class NameAlbumEntryFormError extends AlbumEntryFormError {
+  const NameAlbumEntryFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -94,12 +94,11 @@ class NameAlbumEntryFormError extends AlbumEntryFormError {
   }
 }
 
-
-class MediumAlbumEntryFormError extends AlbumEntryFormError { 
-  const MediumAlbumEntryFormError({ String? message, AlbumEntryModel? value }): super(message: message, value: value);
+class MediumAlbumEntryFormError extends AlbumEntryFormError {
+  const MediumAlbumEntryFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -110,12 +109,11 @@ class MediumAlbumEntryFormError extends AlbumEntryFormError {
   }
 }
 
-
-class AlbumEntryFormLoaded extends AlbumEntryFormInitialized { 
-  const AlbumEntryFormLoaded({ AlbumEntryModel? value }): super(value: value);
+class AlbumEntryFormLoaded extends AlbumEntryFormInitialized {
+  const AlbumEntryFormLoaded({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -125,12 +123,11 @@ class AlbumEntryFormLoaded extends AlbumEntryFormInitialized {
   }
 }
 
-
-class SubmittableAlbumEntryForm extends AlbumEntryFormInitialized { 
-  const SubmittableAlbumEntryForm({ AlbumEntryModel? value }): super(value: value);
+class SubmittableAlbumEntryForm extends AlbumEntryFormInitialized {
+  const SubmittableAlbumEntryForm({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -139,5 +136,3 @@ class SubmittableAlbumEntryForm extends AlbumEntryFormInitialized {
     }''';
   }
 }
-
-

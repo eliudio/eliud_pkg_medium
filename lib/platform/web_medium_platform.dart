@@ -12,18 +12,32 @@ import 'medium_platform.dart';
 
 class WebMediumPlatform extends AbstractMediumPlatform {
   @override
-  void takeVideo(BuildContext context, AppModel app, AccessRightsProvider accessRightsProvider, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress) {}
+  void takeVideo(
+      BuildContext context,
+      AppModel app,
+      AccessRightsProvider accessRightsProvider,
+      MediumAvailable feedbackFunction,
+      FeedbackProgress? feedbackProgress) {}
 
   @override
   bool hasCamera() => false;
 
-  Future<void> uploadVideo(BuildContext context, AppModel app, AccessRightsProvider accessRightsProvider, MediumAvailable feedbackFunction, FeedbackProgress? feedbackProgress) async {
+  @override
+  Future<void> uploadVideo(
+      BuildContext context,
+      AppModel app,
+      AccessRightsProvider accessRightsProvider,
+      MediumAvailable feedbackFunction,
+      FeedbackProgress? feedbackProgress) async {
     try {
       var ownerId = AccessBloc.memberId(context);
-      if (ownerId == null) throw Exception("Expecting to have a member logged in to take a photo");
+      if (ownerId == null) {
+        throw Exception("Expecting to have a member logged in to take a photo");
+      }
 
       var memberMediumDocumentID = newRandomKey();
-      var result = await FilePicker.platform.pickFiles(type: FileType.video, allowMultiple: false);
+      var result = await FilePicker.platform
+          .pickFiles(type: FileType.video, allowMultiple: false);
       if (result == null) {
         feedbackFunction(null);
         return;
@@ -35,23 +49,22 @@ class WebMediumPlatform extends AbstractMediumPlatform {
         return;
       }
       var name = aFile.name;
-      if (name == null) {
-        feedbackFunction(null);
-        return;
-      }
+      var baseName = '$memberMediumDocumentID.$name';
+      print('uploadVideo.baseName: $baseName');
+      var thumbnailBaseName =
+          BaseNameHelper.thumbnailBaseName(memberMediumDocumentID, name);
 
-      var baseName = memberMediumDocumentID + '.' + name;
-      print('uploadVideo.baseName: ' + baseName);
-      var thumbnailBaseName = BaseNameHelper.thumbnailBaseName(memberMediumDocumentID, name);
-
-      var memberMediumModel = await accessRightsProvider().getMediumHelper(app, ownerId).createThumbnailUploadVideoData(memberMediumDocumentID, bytes, baseName, thumbnailBaseName, feedbackProgress: feedbackProgress);
+      var memberMediumModel = await accessRightsProvider()
+          .getMediumHelper(app, ownerId)
+          .createThumbnailUploadVideoData(
+              memberMediumDocumentID, bytes, baseName, thumbnailBaseName,
+              feedbackProgress: feedbackProgress);
       feedbackFunction(memberMediumModel);
     } catch (error) {
-      print('Error trying to uploadVideo: ' + error.toString());
+      print('Error trying to uploadVideo: $error');
       feedbackFunction(null);
     }
   }
-
 
   // Assets need to be store in the directory assets in the web directory of your flutterweb app.
   // For example, if you have images about.png loaded by specifying path 'packages/eliud_pkg_create/assets/annoyed.png',

@@ -4,17 +4,16 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
-enum SourceType { File, Network }
+enum SourceType { file, network }
 
 class VideoView extends StatefulWidget {
   final SourceType sourceType;
   final String source;
 
-  VideoView({Key? key, required this.sourceType, required this.source})
-      : super(key: key);
+  VideoView({super.key, required this.sourceType, required this.source});
 
   @override
-  _VideoViewState createState() => new _VideoViewState();
+  State<VideoView> createState() => _VideoViewState();
 }
 
 class _VideoViewState extends State<VideoView> {
@@ -35,10 +34,12 @@ class _VideoViewState extends State<VideoView> {
   }
 
   Future<void> initializePlayer() async {
-    if (widget.sourceType == SourceType.File) {
+    if (widget.sourceType == SourceType.file) {
       videoPlayerController = VideoPlayerController.file(File(widget.source));
     } else {
-      videoPlayerController = VideoPlayerController.network(widget.source);
+      videoPlayerController =
+          VideoPlayerController.networkUrl(Uri.parse(widget.source));
+//      videoPlayerController = VideoPlayerController.network(widget.source);
     }
     await videoPlayerController.initialize();
     _createChewieController();
@@ -69,7 +70,7 @@ class _VideoViewState extends State<VideoView> {
                     child: Chewie(
                       controller: chewieController!,
                     ))
-                : new Center(
+                : Center(
                     child: CircularProgressIndicator(),
                   )
           ]),

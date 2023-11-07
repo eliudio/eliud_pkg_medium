@@ -8,7 +8,7 @@ import 'package:eliud_core/style/frontend/has_dialog_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-typedef void CroppedImage(Uint8List? imageBytes);
+typedef CroppedImage = void Function(Uint8List? imageBytes);
 
 class ImageCropWidget extends StatefulWidget {
   final AppModel app;
@@ -22,8 +22,10 @@ class ImageCropWidget extends StatefulWidget {
   final Uint8List image;
 
   const ImageCropWidget(
-      {Key? key, required this.app, required this.image, required this.croppedImage})
-      : super(key: key);
+      {super.key,
+      required this.app,
+      required this.image,
+      required this.croppedImage});
 
   @override
   State<StatefulWidget> createState() => ImageCropState();
@@ -34,12 +36,12 @@ class ImageCropWidget extends StatefulWidget {
     CroppedImage croppedImage,
     Uint8List image,
   ) {
-    openWidgetDialog(app, context, app.documentID + '/imagecrop',
-            child: ImageCropWidget(
-              app: app,
-              croppedImage: croppedImage,
-              image: image,
-            ));
+    openWidgetDialog(app, context, '${app.documentID}/imagecrop',
+        child: ImageCropWidget(
+          app: app,
+          croppedImage: croppedImage,
+          image: image,
+        ));
   }
 }
 
@@ -56,27 +58,27 @@ class ImageCropState extends State<ImageCropWidget> {
   @override
   Widget build(BuildContext context) {
     return flexibleDialog(widget.app, context,
-            title: 'Crop image',
-            buttons: [
-              Spacer(),
-              dialogButton(widget.app, context, onPressed: () {
-                widget.croppedImage(null);
-                Navigator.pop(context);
-              }, label: 'Cancel'),
-              dialogButton(widget.app, context, onPressed: () {
-                _cropController.crop();
-                Navigator.pop(context);
-              }, label: 'Crop'),
-            ],
-            child: Container(
-                height: ImageCropWidget.height(context),
-                child: Crop(
-                    controller: _cropController,
-                    image: widget.image,
-                    aspectRatio: 1.0,
-                    onCropped: (image) {
-                      cropped = true;
-                      widget.croppedImage(image);
-                    })));
+        title: 'Crop image',
+        buttons: [
+          Spacer(),
+          dialogButton(widget.app, context, onPressed: () {
+            widget.croppedImage(null);
+            Navigator.pop(context);
+          }, label: 'Cancel'),
+          dialogButton(widget.app, context, onPressed: () {
+            _cropController.crop();
+            Navigator.pop(context);
+          }, label: 'Crop'),
+        ],
+        child: Container(
+            height: ImageCropWidget.height(context),
+            child: Crop(
+                controller: _cropController,
+                image: widget.image,
+                aspectRatio: 1.0,
+                onCropped: (image) {
+                  cropped = true;
+                  widget.croppedImage(image);
+                })));
   }
 }

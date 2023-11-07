@@ -41,9 +41,9 @@ class AlbumFormInitialized extends AlbumFormState {
   final AlbumModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
-  const AlbumFormInitialized({ this.value });
+  const AlbumFormInitialized({this.value});
 }
 
 // Menu has been initialised and hence a menu is available
@@ -51,9 +51,9 @@ abstract class AlbumFormError extends AlbumFormInitialized {
   final String? message;
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
-  const AlbumFormError({this.message, AlbumModel? value }) : super(value: value);
+  const AlbumFormError({this.message, super.value});
 
   @override
   String toString() {
@@ -63,11 +63,12 @@ abstract class AlbumFormError extends AlbumFormInitialized {
     }''';
   }
 }
-class DocumentIDAlbumFormError extends AlbumFormError { 
-  const DocumentIDAlbumFormError({ String? message, AlbumModel? value }): super(message: message, value: value);
+
+class DocumentIDAlbumFormError extends AlbumFormError {
+  const DocumentIDAlbumFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -78,12 +79,11 @@ class DocumentIDAlbumFormError extends AlbumFormError {
   }
 }
 
-
-class AppIdAlbumFormError extends AlbumFormError { 
-  const AppIdAlbumFormError({ String? message, AlbumModel? value }): super(message: message, value: value);
+class AppIdAlbumFormError extends AlbumFormError {
+  const AppIdAlbumFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -94,12 +94,11 @@ class AppIdAlbumFormError extends AlbumFormError {
   }
 }
 
-
-class AlbumEntriesAlbumFormError extends AlbumFormError { 
-  const AlbumEntriesAlbumFormError({ String? message, AlbumModel? value }): super(message: message, value: value);
+class AlbumEntriesAlbumFormError extends AlbumFormError {
+  const AlbumEntriesAlbumFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -110,12 +109,11 @@ class AlbumEntriesAlbumFormError extends AlbumFormError {
   }
 }
 
-
-class DescriptionAlbumFormError extends AlbumFormError { 
-  const DescriptionAlbumFormError({ String? message, AlbumModel? value }): super(message: message, value: value);
+class DescriptionAlbumFormError extends AlbumFormError {
+  const DescriptionAlbumFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -126,12 +124,11 @@ class DescriptionAlbumFormError extends AlbumFormError {
   }
 }
 
-
-class BackgroundImageAlbumFormError extends AlbumFormError { 
-  const BackgroundImageAlbumFormError({ String? message, AlbumModel? value }): super(message: message, value: value);
+class BackgroundImageAlbumFormError extends AlbumFormError {
+  const BackgroundImageAlbumFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -142,12 +139,11 @@ class BackgroundImageAlbumFormError extends AlbumFormError {
   }
 }
 
-
-class ConditionsAlbumFormError extends AlbumFormError { 
-  const ConditionsAlbumFormError({ String? message, AlbumModel? value }): super(message: message, value: value);
+class ConditionsAlbumFormError extends AlbumFormError {
+  const ConditionsAlbumFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -158,12 +154,11 @@ class ConditionsAlbumFormError extends AlbumFormError {
   }
 }
 
-
-class AlbumFormLoaded extends AlbumFormInitialized { 
-  const AlbumFormLoaded({ AlbumModel? value }): super(value: value);
+class AlbumFormLoaded extends AlbumFormInitialized {
+  const AlbumFormLoaded({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -173,12 +168,11 @@ class AlbumFormLoaded extends AlbumFormInitialized {
   }
 }
 
-
-class SubmittableAlbumForm extends AlbumFormInitialized { 
-  const SubmittableAlbumForm({ AlbumModel? value }): super(value: value);
+class SubmittableAlbumForm extends AlbumFormInitialized {
+  const SubmittableAlbumForm({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -187,5 +181,3 @@ class SubmittableAlbumForm extends AlbumFormInitialized {
     }''';
   }
 }
-
-

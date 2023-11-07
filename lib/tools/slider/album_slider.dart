@@ -16,16 +16,16 @@ class AlbumSlider extends StatefulWidget {
   final bool withButtons;
 
   const AlbumSlider({
-    Key? key,
+    super.key,
     required this.app,
     required this.initialPage,
     required this.slideImageProvider,
     this.height,
     this.withButtons = true,
-  }) : super(key: key);
+  });
 
   @override
-  _AlbumSliderState createState() => _AlbumSliderState();
+  State<AlbumSlider> createState() => _AlbumSliderState();
 }
 
 class _AlbumSliderState extends State<AlbumSlider> {

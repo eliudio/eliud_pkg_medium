@@ -29,8 +29,9 @@ class UrlSlideImageProvider extends SlideImageProvider {
 ImageProvider getTheImage(String? url) {
   if (url == null) {
     return Image.asset(
-        "assets/images/manypixels.co/404_Page_Not_Found _Flatline.png",
-        package: "eliud_pkg_feed").image;
+            "assets/images/manypixels.co/404_Page_Not_Found _Flatline.png",
+            package: "eliud_pkg_feed")
+        .image;
   } else {
     return Image.network(url).image;
   }
@@ -70,7 +71,6 @@ class PublicMediumSlideImageProvider extends SlideImageProvider {
   final List<PublicMediumModel> media;
 
   PublicMediumSlideImageProvider(this.media);
-
 
   @override
   ImageProvider getImage(int index) {

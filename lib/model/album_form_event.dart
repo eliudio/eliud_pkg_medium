@@ -18,7 +18,6 @@ import 'package:meta/meta.dart';
 import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_pkg_medium/model/model_export.dart';
 
-
 @immutable
 abstract class AlbumFormEvent extends Equatable {
   const AlbumFormEvent();
@@ -27,15 +26,13 @@ abstract class AlbumFormEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class InitialiseNewAlbumFormEvent extends AlbumFormEvent {
-}
-
+class InitialiseNewAlbumFormEvent extends AlbumFormEvent {}
 
 class InitialiseAlbumFormEvent extends AlbumFormEvent {
   final AlbumModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialiseAlbumFormEvent({this.value});
 }
@@ -44,7 +41,7 @@ class InitialiseAlbumFormNoLoadEvent extends AlbumFormEvent {
   final AlbumModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialiseAlbumFormNoLoadEvent({this.value});
 }
@@ -55,7 +52,7 @@ class ChangedAlbumDocumentID extends AlbumFormEvent {
   ChangedAlbumDocumentID({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedAlbumDocumentID{ value: $value }';
@@ -67,7 +64,7 @@ class ChangedAlbumAppId extends AlbumFormEvent {
   ChangedAlbumAppId({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedAlbumAppId{ value: $value }';
@@ -79,7 +76,7 @@ class ChangedAlbumAlbumEntries extends AlbumFormEvent {
   ChangedAlbumAlbumEntries({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedAlbumAlbumEntries{ value: $value }';
@@ -91,7 +88,7 @@ class ChangedAlbumDescription extends AlbumFormEvent {
   ChangedAlbumDescription({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedAlbumDescription{ value: $value }';
@@ -103,7 +100,7 @@ class ChangedAlbumBackgroundImage extends AlbumFormEvent {
   ChangedAlbumBackgroundImage({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedAlbumBackgroundImage{ value: $value }';
@@ -115,9 +112,8 @@ class ChangedAlbumConditions extends AlbumFormEvent {
   ChangedAlbumConditions({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedAlbumConditions{ value: $value }';
 }
-
