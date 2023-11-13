@@ -16,6 +16,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_medium/model/album_model.dart';
 
+/* 
+ * AlbumComponentState is the base class for state for AlbumComponentBloc
+ */
 abstract class AlbumComponentState extends Equatable {
   const AlbumComponentState();
 
@@ -23,22 +26,40 @@ abstract class AlbumComponentState extends Equatable {
   List<Object?> get props => [];
 }
 
+/* 
+ * AlbumComponentUninitialized is the uninitialized state of the AlbumComponentBloc 
+ */
 class AlbumComponentUninitialized extends AlbumComponentState {}
 
+/* 
+ * AlbumComponentError is the error state of the AlbumComponentBloc 
+ */
 class AlbumComponentError extends AlbumComponentState {
   final String? message;
   AlbumComponentError({this.message});
 }
 
+/* 
+ * AlbumComponentPermissionDenied is to indicate permission denied state of the AlbumComponentBloc 
+ */
 class AlbumComponentPermissionDenied extends AlbumComponentState {
   AlbumComponentPermissionDenied();
 }
 
+/* 
+ * AlbumComponentLoaded is used to set the state of the AlbumComponentBloc to the loaded state
+ */
 class AlbumComponentLoaded extends AlbumComponentState {
   final AlbumModel value;
 
+  /* 
+   * construct AlbumComponentLoaded
+   */
   const AlbumComponentLoaded({required this.value});
 
+  /* 
+   * copy method
+   */
   AlbumComponentLoaded copyWith({AlbumModel? copyThis}) {
     return AlbumComponentLoaded(value: copyThis ?? value);
   }

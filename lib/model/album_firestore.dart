@@ -25,12 +25,21 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/tools/firestore/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
+/* 
+ * AlbumFirestore is the firestore implementation of AlbumRepository
+ */
 class AlbumFirestore implements AlbumRepository {
+  /* 
+   * transform a map into an entity
+   */
   @override
   AlbumEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     return AlbumEntity.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
+  /* 
+   * add an entity to the repository
+   */
   @override
   Future<AlbumEntity> addEntity(String documentID, AlbumEntity value) {
     return albumCollection
@@ -39,6 +48,9 @@ class AlbumFirestore implements AlbumRepository {
         .then((_) => value);
   }
 
+  /* 
+   * Update an entity
+   */
   @override
   Future<AlbumEntity> updateEntity(String documentID, AlbumEntity value) {
     return albumCollection
@@ -47,6 +59,9 @@ class AlbumFirestore implements AlbumRepository {
         .then((_) => value);
   }
 
+  /* 
+   * Add a model to the repository
+   */
   @override
   Future<AlbumModel> add(AlbumModel value) {
     return albumCollection
@@ -55,11 +70,17 @@ class AlbumFirestore implements AlbumRepository {
         .then((_) => value);
   }
 
+  /* 
+   * Delete a model
+   */
   @override
   Future<void> delete(AlbumModel value) {
     return albumCollection.doc(value.documentID).delete();
   }
 
+  /* 
+   * Update a model
+   */
   @override
   Future<AlbumModel> update(AlbumModel value) {
     return albumCollection
@@ -78,6 +99,9 @@ class AlbumFirestore implements AlbumRepository {
         appId: appId);
   }
 
+  /* 
+   * Retrieve an entity from the repository with id
+   */
   @override
   Future<AlbumEntity?> getEntity(String? id,
       {Function(Exception)? onError}) async {
@@ -96,6 +120,9 @@ class AlbumFirestore implements AlbumRepository {
     return null;
   }
 
+  /* 
+   * Retrieve an model from the repository with id
+   */
   @override
   Future<AlbumModel?> get(String? id, {Function(Exception)? onError}) async {
     try {
@@ -113,6 +140,9 @@ class AlbumFirestore implements AlbumRepository {
     return null;
   }
 
+  /* 
+   * Listen to the repository using a query. Retrieve models
+   */
   @override
   StreamSubscription<List<AlbumModel?>> listen(AlbumModelTrigger trigger,
       {String? orderBy,
@@ -143,6 +173,9 @@ class AlbumFirestore implements AlbumRepository {
     });
   }
 
+  /* 
+   * Listen to the repository using a query. Retrieve models and linked models
+   */
   @override
   StreamSubscription<List<AlbumModel?>> listenWithDetails(
       AlbumModelTrigger trigger,
@@ -174,6 +207,9 @@ class AlbumFirestore implements AlbumRepository {
     });
   }
 
+  /* 
+   * Listen to 1 document in the repository
+   */
   @override
   StreamSubscription<AlbumModel?> listenTo(
       String documentId, AlbumChanged changed,
@@ -192,6 +228,9 @@ class AlbumFirestore implements AlbumRepository {
     return theStream;
   }
 
+  /* 
+   * Retrieve values/models from the repository
+   */
   @override
   Stream<List<AlbumModel?>> values(
       {String? orderBy,
@@ -221,6 +260,9 @@ class AlbumFirestore implements AlbumRepository {
     return values;
   }
 
+  /* 
+   * Retrieve values/models, including linked models, from the repository
+   */
   @override
   Stream<List<AlbumModel?>> valuesWithDetails(
       {String? orderBy,
@@ -250,6 +292,9 @@ class AlbumFirestore implements AlbumRepository {
     return values;
   }
 
+  /* 
+   * Retrieve values/models from the repository
+   */
   @override
   Future<List<AlbumModel?>> valuesList(
       {String? orderBy,
@@ -280,6 +325,9 @@ class AlbumFirestore implements AlbumRepository {
     return values;
   }
 
+  /* 
+   * Retrieve values/models, including linked models, from the repository
+   */
   @override
   Future<List<AlbumModel?>> valuesListWithDetails(
       {String? orderBy,
@@ -310,9 +358,15 @@ class AlbumFirestore implements AlbumRepository {
     return values;
   }
 
+  /* 
+   * Flush the repository
+   */
   @override
   void flush() {}
 
+  /* 
+   * Delete all entries in the repository
+   */
   @override
   Future<void> deleteAll() {
     return albumCollection.get().then((snapshot) {
@@ -322,16 +376,25 @@ class AlbumFirestore implements AlbumRepository {
     });
   }
 
+  /* 
+   * Retrieve the subcollection of this repository
+   */
   @override
   dynamic getSubCollection(String documentId, String name) {
     return albumCollection.doc(documentId).collection(name);
   }
 
+  /* 
+   * Retrieve a timestamp
+   */
   @override
   String? timeStampToString(dynamic timeStamp) {
     return firestoreTimeStampToString(timeStamp);
   }
 
+  /* 
+   * change 1 a fieldvalue for 1 document  
+   */
   @override
   Future<AlbumModel?> changeValue(
       String documentId, String fieldName, num changeByThisValue) {

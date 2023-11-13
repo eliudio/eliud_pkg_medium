@@ -36,6 +36,9 @@ albumEntrysList(app, context, value, trigger) =>
     EmbeddedComponentFactory.albumEntrysList(app, context, value, trigger);
 
 class EmbeddedComponentFactory {
+/* 
+ * albumEntrysList function to construct a list of AlbumEntryModel
+ */
   static Widget albumEntrysList(AppModel app, BuildContext context,
       List<AlbumEntryModel> values, AlbumEntryListChanged trigger) {
     AlbumEntryInMemoryRepository inMemoryRepository =
@@ -56,11 +59,17 @@ class EmbeddedComponentFactory {
   }
 }
 
+/* 
+ * AlbumEntryInMemoryRepository is an in memory implementation of AlbumEntryRepository
+ */
 class AlbumEntryInMemoryRepository implements AlbumEntryRepository {
   final List<AlbumEntryModel> items;
   final AlbumEntryListChanged trigger;
   Stream<List<AlbumEntryModel>>? theValues;
 
+  /* 
+     * Construct the AlbumEntryInMemoryRepository
+     */
   AlbumEntryInMemoryRepository(this.trigger, this.items) {
     List<List<AlbumEntryModel>> myList = <List<AlbumEntryModel>>[];
     myList.add(items);
@@ -78,18 +87,27 @@ class AlbumEntryInMemoryRepository implements AlbumEntryRepository {
     return -1;
   }
 
+  /* 
+     * Add an entity
+     */
   @override
   Future<AlbumEntryEntity> addEntity(
       String documentID, AlbumEntryEntity value) {
     throw Exception('Not implemented');
   }
 
+  /* 
+     * Update an entity
+     */
   @override
   Future<AlbumEntryEntity> updateEntity(
       String documentID, AlbumEntryEntity value) {
     throw Exception('Not implemented');
   }
 
+  /* 
+     * Update a model
+     */
   @override
   Future<AlbumEntryModel> add(AlbumEntryModel value) {
     items.add(value.copyWith(documentID: newRandomKey()));
@@ -97,6 +115,9 @@ class AlbumEntryInMemoryRepository implements AlbumEntryRepository {
     return Future.value(value);
   }
 
+  /* 
+     * Delete a model
+     */
   @override
   Future<void> delete(AlbumEntryModel value) {
     int index = _index(value.documentID);
@@ -105,6 +126,9 @@ class AlbumEntryInMemoryRepository implements AlbumEntryRepository {
     return Future.value();
   }
 
+  /* 
+     * Update a model
+     */
   @override
   Future<AlbumEntryModel> update(AlbumEntryModel value) {
     int index = _index(value.documentID);
@@ -115,6 +139,9 @@ class AlbumEntryInMemoryRepository implements AlbumEntryRepository {
     return Future.value(value);
   }
 
+  /* 
+     * Get a model
+     */
   @override
   Future<AlbumEntryModel> get(String? id, {Function(Exception)? onError}) {
     int index = _index(id!);
@@ -123,6 +150,9 @@ class AlbumEntryInMemoryRepository implements AlbumEntryRepository {
     return completer.future;
   }
 
+  /* 
+     * Retrieve to a list of AlbumEntryModel base on a query
+     */
   @override
   Stream<List<AlbumEntryModel>> values(
       {String? orderBy,
@@ -135,6 +165,9 @@ class AlbumEntryInMemoryRepository implements AlbumEntryRepository {
     return theValues!;
   }
 
+  /* 
+     * Retrieve to a list of AlbumEntryModel, including linked models base on a query
+     */
   @override
   Stream<List<AlbumEntryModel>> valuesWithDetails(
       {String? orderBy,
@@ -147,6 +180,9 @@ class AlbumEntryInMemoryRepository implements AlbumEntryRepository {
     return theValues!;
   }
 
+  /* 
+     * Subscribe to a list of AlbumEntryModel base on a query
+     */
   @override
   StreamSubscription<List<AlbumEntryModel>> listen(trigger,
       {String? orderBy,
@@ -158,6 +194,9 @@ class AlbumEntryInMemoryRepository implements AlbumEntryRepository {
     return theValues!.listen((theList) => trigger(theList));
   }
 
+  /* 
+     * Subscribe to a list of AlbumEntryModel, including linked models, base on a query
+     */
   @override
   StreamSubscription<List<AlbumEntryModel>> listenWithDetails(trigger,
       {String? orderBy,
@@ -169,9 +208,15 @@ class AlbumEntryInMemoryRepository implements AlbumEntryRepository {
     return theValues!.listen((theList) => trigger(theList));
   }
 
+  /* 
+     * Flush the repository
+     */
   @override
   void flush() {}
 
+  /* 
+     * Retrieve the list of models
+     */
   @override
   Future<List<AlbumEntryModel>> valuesList(
       {String? orderBy,
@@ -196,16 +241,25 @@ class AlbumEntryInMemoryRepository implements AlbumEntryRepository {
     return Future.value(items);
   }
 
+  /* 
+     * Retrieve a subcollection of this collection
+     */
   @override
   getSubCollection(String documentId, String name) {
     throw UnimplementedError();
   }
 
+  /* 
+   * Retrieve a timestamp
+   */
   @override
   String timeStampToString(timeStamp) {
     throw UnimplementedError();
   }
 
+  /* 
+   * Subscribe to 1 document / 1 model
+   */
   @override
   StreamSubscription<AlbumEntryModel> listenTo(
       String documentId, AlbumEntryChanged changed,

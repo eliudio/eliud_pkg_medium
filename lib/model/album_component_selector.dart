@@ -31,7 +31,13 @@ import 'album_list_event.dart';
 import 'album_list_state.dart';
 import 'album_model.dart';
 
+/* 
+ * AlbumComponentSelector is a component selector for Album, allowing to select a Album component
+ */
 class AlbumComponentSelector extends ComponentSelector {
+  /* 
+   * createSelectWidget creates the widget
+   */
   @override
   Widget createSelectWidget(BuildContext context, AppModel app,
       int privilegeLevel, double height, SelectComponent selected, editor) {
@@ -41,7 +47,7 @@ class AlbumComponentSelector extends ComponentSelector {
         eliudQuery: getComponentSelectorQuery(0, app.documentID),
         albumRepository: albumRepository(appId: appId)!,
       )..add(LoadAlbumList()),
-      child: SelectAlbumWidget(
+      child: _SelectAlbumWidget(
           app: app,
           height: height,
           containerPrivilege: privilegeLevel,
@@ -51,28 +57,30 @@ class AlbumComponentSelector extends ComponentSelector {
   }
 }
 
-class SelectAlbumWidget extends StatefulWidget {
+/* 
+ * _SelectAlbumWidget 
+ */
+class _SelectAlbumWidget extends StatefulWidget {
   final AppModel app;
   final double height;
   final SelectComponent selected;
   final int containerPrivilege;
   final ComponentEditorConstructor editorConstructor;
 
-  const SelectAlbumWidget(
-      {super.key,
-      required this.app,
+  const _SelectAlbumWidget(
+      {required this.app,
       required this.containerPrivilege,
       required this.height,
       required this.selected,
       required this.editorConstructor});
 
   @override
-  State<SelectAlbumWidget> createState() {
+  State<_SelectAlbumWidget> createState() {
     return _SelectAlbumWidgetState();
   }
 }
 
-class _SelectAlbumWidgetState extends State<SelectAlbumWidget>
+class _SelectAlbumWidgetState extends State<_SelectAlbumWidget>
     with TickerProviderStateMixin {
   TabController? _privilegeTabController;
   final List<String> _privilegeItems = ['No', 'L1', 'L2', 'Owner'];

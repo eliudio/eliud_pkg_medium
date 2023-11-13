@@ -33,6 +33,9 @@ typedef AlbumChanged = Function(
   int? privilegeLevel,
 );
 
+/* 
+ * AlbumDropdownButtonWidget is the drop down widget to allow to select an instance of Album
+ */
 class AlbumDropdownButtonWidget extends StatefulWidget {
   final AppModel app;
   final int? privilegeLevel;
@@ -40,6 +43,9 @@ class AlbumDropdownButtonWidget extends StatefulWidget {
   final AlbumChanged? trigger;
   final bool? optional;
 
+  /* 
+   * construct a AlbumDropdownButtonWidget
+   */
   AlbumDropdownButtonWidget(
       {required this.app,
       this.privilegeLevel,
@@ -48,17 +54,20 @@ class AlbumDropdownButtonWidget extends StatefulWidget {
       this.optional,
       super.key});
 
+  /* 
+   * create state of AlbumDropdownButtonWidget
+   */
   @override
   State<StatefulWidget> createState() {
-    return AlbumDropdownButtonWidgetState(value);
+    return _AlbumDropdownButtonWidgetState(value);
   }
 }
 
-class AlbumDropdownButtonWidgetState extends State<AlbumDropdownButtonWidget> {
+class _AlbumDropdownButtonWidgetState extends State<AlbumDropdownButtonWidget> {
   AlbumListBloc? bloc;
   String? value;
 
-  AlbumDropdownButtonWidgetState(this.value);
+  _AlbumDropdownButtonWidgetState(this.value);
 
   @override
   void didChangeDependencies() {
@@ -72,7 +81,7 @@ class AlbumDropdownButtonWidgetState extends State<AlbumDropdownButtonWidget> {
     super.dispose();
   }
 
-  List<Widget> widgets(AlbumModel value) {
+  List<Widget> _widgets(AlbumModel value) {
     var app = widget.app;
     var widgets = <Widget>[];
     widgets.add(value.description != null
@@ -129,7 +138,7 @@ class AlbumDropdownButtonWidgetState extends State<AlbumDropdownButtonWidget> {
                   height: 100.0,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: widgets(element),
+                    children: _widgets(element),
                   ),
                 )));
           }

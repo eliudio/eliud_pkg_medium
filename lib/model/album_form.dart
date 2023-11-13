@@ -61,7 +61,7 @@ class AlbumForm extends StatelessWidget {
           appId,
           formAction: formAction,
         )..add(InitialiseAlbumFormEvent(value: value)),
-        child: MyAlbumForm(
+        child: _MyAlbumForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     }
@@ -71,7 +71,7 @@ class AlbumForm extends StatelessWidget {
           appId,
           formAction: formAction,
         )..add(InitialiseAlbumFormNoLoadEvent(value: value)),
-        child: MyAlbumForm(
+        child: _MyAlbumForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     } else {
@@ -90,25 +90,25 @@ class AlbumForm extends StatelessWidget {
             )..add((formAction == FormAction.updateAction
                 ? InitialiseAlbumFormEvent(value: value)
                 : InitialiseNewAlbumFormEvent())),
-            child: MyAlbumForm(
+            child: _MyAlbumForm(
                 app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
 }
 
-class MyAlbumForm extends StatefulWidget {
+class _MyAlbumForm extends StatefulWidget {
   final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MyAlbumForm({required this.app, this.formAction, this.submitAction});
+  _MyAlbumForm({required this.app, this.formAction, this.submitAction});
 
   @override
-  State<MyAlbumForm> createState() => _MyAlbumFormState(formAction);
+  State<_MyAlbumForm> createState() => _MyAlbumFormState(formAction);
 }
 
-class _MyAlbumFormState extends State<MyAlbumForm> {
+class _MyAlbumFormState extends State<_MyAlbumForm> {
   final FormAction? formAction;
   late AlbumFormBloc _myFormBloc;
 

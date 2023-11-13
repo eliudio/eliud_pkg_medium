@@ -22,7 +22,13 @@ import '../extensions/album_component.dart';
 import '../editors/album_component_editor.dart';
 import 'album_component_selector.dart';
 
+/* 
+ * Component registry contains a list of components
+ */
 class ComponentRegistry {
+  /* 
+   * Initialise the component registry
+   */
   void init() {
     Registry.registry()!.addInternalComponents('eliud_pkg_medium', [
       "albums",

@@ -34,6 +34,9 @@ class AlbumComponentBloc
     });
   }
 
+  /*
+   * Construct AlbumComponentBloc
+   */
   AlbumComponentBloc({this.albumRepository})
       : super(AlbumComponentUninitialized()) {
     on<FetchAlbumComponent>((event, emit) {
@@ -44,6 +47,9 @@ class AlbumComponentBloc
     });
   }
 
+  /*
+   * Close the AlbumComponentBloc
+   */
   @override
   Future<void> close() {
     _albumSubscription?.cancel();

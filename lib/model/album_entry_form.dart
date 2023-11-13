@@ -59,7 +59,7 @@ class AlbumEntryForm extends StatelessWidget {
         create: (context) => AlbumEntryFormBloc(
           appId,
         )..add(InitialiseAlbumEntryFormEvent(value: value)),
-        child: MyAlbumEntryForm(
+        child: _MyAlbumEntryForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     }
@@ -68,7 +68,7 @@ class AlbumEntryForm extends StatelessWidget {
         create: (context) => AlbumEntryFormBloc(
           appId,
         )..add(InitialiseAlbumEntryFormNoLoadEvent(value: value)),
-        child: MyAlbumEntryForm(
+        child: _MyAlbumEntryForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     } else {
@@ -86,25 +86,25 @@ class AlbumEntryForm extends StatelessWidget {
             )..add((formAction == FormAction.updateAction
                 ? InitialiseAlbumEntryFormEvent(value: value)
                 : InitialiseNewAlbumEntryFormEvent())),
-            child: MyAlbumEntryForm(
+            child: _MyAlbumEntryForm(
                 app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
 }
 
-class MyAlbumEntryForm extends StatefulWidget {
+class _MyAlbumEntryForm extends StatefulWidget {
   final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MyAlbumEntryForm({required this.app, this.formAction, this.submitAction});
+  _MyAlbumEntryForm({required this.app, this.formAction, this.submitAction});
 
   @override
-  State<MyAlbumEntryForm> createState() => _MyAlbumEntryFormState(formAction);
+  State<_MyAlbumEntryForm> createState() => _MyAlbumEntryFormState(formAction);
 }
 
-class _MyAlbumEntryFormState extends State<MyAlbumEntryForm> {
+class _MyAlbumEntryFormState extends State<_MyAlbumEntryForm> {
   final FormAction? formAction;
   late AlbumEntryFormBloc _myFormBloc;
 
