@@ -1,15 +1,15 @@
-import 'package:eliud_core/core/blocs/access/access_bloc.dart';
-import 'package:eliud_core/model/app_model.dart';
-import 'package:eliud_core/model/background_model.dart';
-import 'package:eliud_core/model/member_medium_model.dart';
-import 'package:eliud_core/model/member_model.dart';
-import 'package:eliud_core/model/platform_medium_model.dart';
-import 'package:eliud_core/style/frontend/has_button.dart';
-import 'package:eliud_core/style/frontend/has_text.dart';
-import 'package:eliud_core/tools/etc.dart';
-import 'package:eliud_core/tools/storage/medium_base.dart';
-import 'package:eliud_core/tools/storage/member_image_model_widget.dart';
-import 'package:eliud_core/tools/storage/platform_image_model_widget.dart';
+import 'package:eliud_core_model/access/access_bloc.dart';
+import 'package:eliud_core_model/model/app_model.dart';
+import 'package:eliud_core_model/model/background_model.dart';
+import 'package:eliud_core_model/model/member_medium_model.dart';
+import 'package:eliud_core_model/model/member_model.dart';
+import 'package:eliud_core_model/model/platform_medium_model.dart';
+import 'package:eliud_core_model/style/frontend/has_button.dart';
+import 'package:eliud_core_model/style/frontend/has_text.dart';
+import 'package:eliud_core_model/tools/etc/etc.dart';
+import 'package:eliud_core_model/tools/storage/medium_base.dart';
+import 'package:eliud_core_model/tools/storage/member_image_model_widget.dart';
+import 'package:eliud_core_model/tools/storage/platform_image_model_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 

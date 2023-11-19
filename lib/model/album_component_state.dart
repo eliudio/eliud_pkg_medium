@@ -36,7 +36,7 @@ class AlbumComponentUninitialized extends AlbumComponentState {}
  */
 class AlbumComponentError extends AlbumComponentState {
   final String? message;
-  AlbumComponentError({this.message});
+  AlbumComponentError({ this.message });
 }
 
 /* 
@@ -55,13 +55,13 @@ class AlbumComponentLoaded extends AlbumComponentState {
   /* 
    * construct AlbumComponentLoaded
    */
-  const AlbumComponentLoaded({required this.value});
+  const AlbumComponentLoaded({ required this.value });
 
   /* 
    * copy method
    */
-  AlbumComponentLoaded copyWith({AlbumModel? copyThis}) {
-    return AlbumComponentLoaded(value: copyThis ?? value);
+  AlbumComponentLoaded copyWith({ AlbumModel? copyThis }) {
+    return AlbumComponentLoaded(value: copyThis ?? this.value);
   }
 
   @override
@@ -70,3 +70,4 @@ class AlbumComponentLoaded extends AlbumComponentState {
   @override
   String toString() => 'AlbumComponentLoaded { value: $value }';
 }
+

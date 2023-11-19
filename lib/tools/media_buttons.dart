@@ -1,10 +1,11 @@
-import 'package:eliud_core/core/registry.dart';
-import 'package:eliud_core/model/model_export.dart';
-import 'package:eliud_core/package/access_rights.dart';
-import 'package:eliud_core/package/medium_api.dart';
-import 'package:eliud_core/style/frontend/has_button.dart';
-import 'package:eliud_core/style/frontend/has_text.dart';
-import 'package:eliud_core/tools/storage/upload_info.dart';
+import 'package:eliud_core_model/apis/apis.dart';
+import 'package:eliud_core_model/apis/medium/access_rights.dart';
+import 'package:eliud_core_model/apis/medium/medium_api.dart';
+import 'package:eliud_core_model/model/app_model.dart';
+import 'package:eliud_core_model/model/member_medium_model.dart';
+import 'package:eliud_core_model/model/storage_conditions_model.dart';
+import 'package:eliud_core_model/style/frontend/has_button.dart';
+import 'package:eliud_core_model/style/frontend/has_text.dart';
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 
@@ -30,7 +31,7 @@ class MediaButtons {
   }) {
     var items = <PopupMenuItem<int>>[];
     if (photoFeedbackFunction != null) {
-      if (Registry.registry()!.getMediumApi().hasCamera()) {
+      if (Apis.apis().getMediumApi().hasCamera()) {
         items.add(
           popupMenuItem<int>(app, context, label: 'Take photo', value: 0),
         );
@@ -39,7 +40,7 @@ class MediaButtons {
           popupMenuItem<int>(app, context, label: 'Upload photo', value: 1));
     }
     if (videoFeedbackFunction != null) {
-      if (Registry.registry()!.getMediumApi().hasCamera()) {
+      if (Apis.apis().getMediumApi().hasCamera()) {
         items.add(
           popupMenuItem<int>(app, context, label: 'Take video', value: 2),
         );
@@ -55,7 +56,7 @@ class MediaButtons {
         onSelected: (choice) {
           if (photoFeedbackFunction != null) {
             if (choice == 0) {
-              Registry.registry()!.getMediumApi().takePhoto(
+              Apis.apis().getMediumApi().takePhoto(
                   context,
                   app,
                   () => MemberMediumAccessRights(accessibleByFunction().item1,
@@ -65,7 +66,7 @@ class MediaButtons {
                   allowCrop: allowCrop);
             }
             if (choice == 1) {
-              Registry.registry()!.getMediumApi().uploadPhoto(
+              Apis.apis().getMediumApi().uploadPhoto(
                   context,
                   app,
                   () => MemberMediumAccessRights(accessibleByFunction().item1,
@@ -77,7 +78,7 @@ class MediaButtons {
           }
           if (videoFeedbackFunction != null) {
             if (choice == 2) {
-              Registry.registry()!.getMediumApi().takeVideo(
+              Apis.apis().getMediumApi().takeVideo(
                   context,
                   app,
                   () => MemberMediumAccessRights(accessibleByFunction().item1,
@@ -86,7 +87,7 @@ class MediaButtons {
                   videoFeedbackProgress);
             }
             if (choice == 3) {
-              Registry.registry()!.getMediumApi().uploadVideo(
+              Apis.apis().getMediumApi().uploadVideo(
                   context,
                   app,
                   () => MemberMediumAccessRights(accessibleByFunction().item1,
@@ -113,7 +114,7 @@ class MediaButtons {
   }) {
     var items = <PopupMenuItem<int>>[];
     if (photoFeedbackFunction != null) {
-      if (Registry.registry()!.getMediumApi().hasCamera()) {
+      if (Apis.apis().getMediumApi().hasCamera()) {
         items.add(
           popupMenuItem<int>(app, context, label: 'Take photo', value: 0),
         );
@@ -122,7 +123,7 @@ class MediaButtons {
           popupMenuItem<int>(app, context, label: 'Upload photo', value: 1));
     }
     if (videoFeedbackFunction != null) {
-      if (Registry.registry()!.getMediumApi().hasCamera()) {
+      if (Apis.apis().getMediumApi().hasCamera()) {
         items.add(
           popupMenuItem<int>(app, context, label: 'Take video', value: 2),
         );
@@ -137,7 +138,7 @@ class MediaButtons {
         onSelected: (choice) {
           if (photoFeedbackFunction != null) {
             if (choice == 0) {
-              Registry.registry()!.getMediumApi().takePhoto(
+              Apis.apis().getMediumApi().takePhoto(
                   context,
                   app,
                   () => PlatformMediumAccessRights(accessibleByFunction()),
@@ -146,7 +147,7 @@ class MediaButtons {
                   allowCrop: allowCrop);
             }
             if (choice == 1) {
-              Registry.registry()!.getMediumApi().uploadPhoto(
+              Apis.apis().getMediumApi().uploadPhoto(
                   context,
                   app,
                   () => PlatformMediumAccessRights(accessibleByFunction()),
@@ -157,7 +158,7 @@ class MediaButtons {
           }
           if (videoFeedbackFunction != null) {
             if (choice == 2) {
-              Registry.registry()!.getMediumApi().takeVideo(
+              Apis.apis().getMediumApi().takeVideo(
                   context,
                   app,
                   () => PlatformMediumAccessRights(accessibleByFunction()),
@@ -165,7 +166,7 @@ class MediaButtons {
                   videoFeedbackProgress);
             }
             if (choice == 3) {
-              Registry.registry()!.getMediumApi().uploadVideo(
+              Apis.apis().getMediumApi().uploadVideo(
                   context,
                   app,
                   () => PlatformMediumAccessRights(accessibleByFunction()),

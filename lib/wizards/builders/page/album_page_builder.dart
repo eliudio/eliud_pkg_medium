@@ -1,10 +1,16 @@
-import 'package:eliud_core/core/wizards/builders/page_builder.dart';
-import 'package:eliud_core/core/wizards/tools/document_identifier.dart';
-import 'package:eliud_core/model/abstract_repository_singleton.dart'
-    as corerepo;
-import 'package:eliud_core/model/model_export.dart';
-import 'package:eliud_core/tools/random.dart';
-import 'package:eliud_core/tools/storage/platform_medium_helper.dart';
+import 'package:eliud_core_model/model/abstract_repository_singleton.dart'
+  as corerepo;
+import 'package:eliud_core_model/model/app_bar_model.dart';
+import 'package:eliud_core_model/model/app_model.dart';
+import 'package:eliud_core_model/model/body_component_model.dart';
+import 'package:eliud_core_model/model/drawer_model.dart';
+import 'package:eliud_core_model/model/home_menu_model.dart';
+import 'package:eliud_core_model/model/page_model.dart';
+import 'package:eliud_core_model/model/storage_conditions_model.dart';
+import 'package:eliud_core_model/tools/etc/random.dart';
+import 'package:eliud_core_model/tools/storage/platform_medium_helper.dart';
+import 'package:eliud_core_model/wizards/builders/page_builder.dart';
+import 'package:eliud_core_model/wizards/tools/document_identifier.dart';
 import 'package:eliud_pkg_medium/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_medium/model/album_component.dart';
 import 'package:eliud_pkg_medium/model/album_entry_model.dart';

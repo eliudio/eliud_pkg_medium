@@ -377,22 +377,20 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.1"
-  eliud_core:
+  eliud_core_model:
     dependency: "direct main"
     description:
-      name: eliud_core
-      sha256: c7fcbecda8a8a09978e96e053f651abd6694bc1dcdd121fee2ba5b8a31a1552d
-      url: "https://pub.dev"
-    source: hosted
+      path: "../eliud_core_model"
+      relative: true
+    source: path
     version: "1.1.5+7"
   eliud_generator:
     dependency: "direct dev"
     description:
-      name: eliud_generator
-      sha256: "3e10b5b5ebd835753dd752069bd004c34cc94eab1dc005c7dfb6f748a3940790"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.5+3"
+      path: "../eliud_generator"
+      relative: true
+    source: path
+    version: "1.1.6"
   equatable:
     dependency: "direct main"
     description:

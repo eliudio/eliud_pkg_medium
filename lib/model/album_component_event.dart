@@ -16,6 +16,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_medium/model/album_model.dart';
 
+
 /*
  * AlbumComponentEvent is the base class for events to be used with constructing a AlbumComponentBloc 
  */
@@ -33,7 +34,7 @@ class FetchAlbumComponent extends AlbumComponentEvent {
   /*
    * Construct the FetchAlbumComponent
    */
-  FetchAlbumComponent({this.id});
+  FetchAlbumComponent({ this.id });
 }
 
 /*
@@ -45,5 +46,7 @@ class AlbumComponentUpdated extends AlbumComponentEvent {
   /*
    * Construct the AlbumComponentUpdated
    */
-  AlbumComponentUpdated({required this.value});
+  AlbumComponentUpdated({ required this.value });
 }
+
+

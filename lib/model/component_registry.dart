@@ -13,44 +13,39 @@
 
 */
 
-import '../model/internal_component.dart';
-import 'package:eliud_core/core/registry.dart';
-import 'package:eliud_core/tools/component/component_spec.dart';
-import 'abstract_repository_singleton.dart';
 
-import '../extensions/album_component.dart';
-import '../editors/album_component_editor.dart';
+import '../model/internal_component.dart';
+import 'package:eliud_core_model/tools/component/component_spec.dart';
+import 'abstract_repository_singleton.dart';
+import 'package:eliud_core_model/tools/component/component_constructor.dart';
+import 'package:eliud_core_model/apis/apis.dart';
+
 import 'album_component_selector.dart';
+import 'package:eliud_pkg_medium/model/internal_component.dart';
+
+
+
 
 /* 
  * Component registry contains a list of components
  */
 class ComponentRegistry {
+
   /* 
    * Initialise the component registry
    */
-  void init() {
-    Registry.registry()!.addInternalComponents('eliud_pkg_medium', [
-      "albums",
-    ]);
+  init(ComponentConstructor albumComponentConstructorDefault, ComponentEditorConstructor albumComponentEditorConstructor, ) {
+    Apis.apis().getRegistryApi().addInternalComponents('eliud_pkg_medium', ["albums", ]);
 
-    Registry.registry()!.register(
-        componentName: "eliud_pkg_medium_internalWidgets",
-        componentConstructor: ListComponentFactory());
-    Registry.registry()!
-        .addDropDownSupporter("albums", DropdownButtonComponentFactory());
-    Registry.registry()!.register(
-        componentName: "albums",
-        componentConstructor: AlbumComponentConstructorDefault());
-    Registry.registry()!.addComponentSpec('eliud_pkg_medium', 'medium', [
-      ComponentSpec(
-          'albums',
-          AlbumComponentConstructorDefault(),
-          AlbumComponentSelector(),
-          AlbumComponentEditorConstructor(),
-          ({String? appId}) => albumRepository(appId: appId)!),
+    Apis.apis().getRegistryApi().register(componentName: "eliud_pkg_medium_internalWidgets", componentConstructor: ListComponentFactory());
+    Apis.apis().getRegistryApi().addDropDownSupporter("albums", DropdownButtonComponentFactory());
+    Apis.apis().getRegistryApi().register(componentName: "albums", componentConstructor: albumComponentConstructorDefault);
+    Apis.apis().getRegistryApi().addComponentSpec('eliud_pkg_medium', 'medium', [
+      ComponentSpec('albums', albumComponentConstructorDefault, AlbumComponentSelector(), albumComponentEditorConstructor, ({String? appId}) => albumRepository(appId: appId)! ), 
     ]);
-    Registry.registry()!.registerRetrieveRepository('eliud_pkg_medium',
-        'albums', ({String? appId}) => albumRepository(appId: appId)!);
+      Apis.apis().getRegistryApi().registerRetrieveRepository('eliud_pkg_medium', 'albums', ({String? appId}) => albumRepository(appId: appId)!);
   }
+
 }
+
+

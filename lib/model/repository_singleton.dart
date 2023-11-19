@@ -14,21 +14,22 @@
 */
 
 import 'abstract_repository_singleton.dart';
-import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
+import 'package:eliud_core_model/tools/main_abstract_repository_singleton.dart';
 import 'dart:collection';
 import '../model/album_firestore.dart';
 import '../model/album_repository.dart';
 import '../model/album_cache.dart';
+import '../model/album_entry_repository.dart';
+import '../model/album_entry_cache.dart';
+
+import '../model/album_entry_model.dart';
 
 class RepositorySingleton extends AbstractRepositorySingleton {
-  final _albumRepository = HashMap<String, AlbumRepository>();
+    var _albumRepository = HashMap<String, AlbumRepository>();
 
-  @override
-  AlbumRepository? albumRepository(String? appId) {
-    if ((appId != null) && (_albumRepository[appId] == null)) {
-      _albumRepository[appId] = AlbumCache(AlbumFirestore(
-          () => appRepository()!.getSubCollection(appId, 'album'), appId));
+    AlbumRepository? albumRepository(String? appId) {
+      if ((appId != null) && (_albumRepository[appId] == null)) { _albumRepository[appId] = AlbumCache(AlbumFirestore(() => appRepository()!.getSubCollection(appId, 'album'), appId)); }
+      return _albumRepository[appId];
     }
-    return _albumRepository[appId];
-  }
+
 }

@@ -1,12 +1,14 @@
-import 'package:eliud_core/core/blocs/access/access_bloc.dart';
-import 'package:eliud_core/core/wizards/registry/registry.dart';
-import 'package:eliud_core/core_package.dart';
-import 'package:eliud_core/eliud.dart';
-import 'package:eliud_core/model/app_model.dart';
-import 'package:eliud_core/model/member_model.dart';
-import 'package:eliud_core/package/package.dart';
-import 'package:eliud_core/model/access_model.dart';
+import 'package:eliud_core_model/access/access_bloc.dart';
+import 'package:eliud_core_model/apis/apis.dart';
+import 'package:eliud_core_model/eliud.dart';
+import 'package:eliud_core_model/model/access_model.dart';
+import 'package:eliud_core_model/model/app_model.dart';
+import 'package:eliud_core_model/model/member_model.dart';
+import 'package:eliud_core_model/package/package.dart';
+import 'package:eliud_core_model/tools/member_collection_info.dart';
 import 'package:eliud_pkg_medium/wizards/album_page_wizard.dart';
+import 'editors/album_component_editor.dart';
+import 'extensions/album_component.dart';
 import 'model/abstract_repository_singleton.dart';
 import 'model/component_registry.dart';
 import 'model/repository_singleton.dart';
@@ -33,10 +35,10 @@ abstract class MediumPackage extends Package {
 
   @override
   void init() {
-    ComponentRegistry().init();
+    ComponentRegistry().init(AlbumComponentConstructorDefault(), AlbumComponentEditorConstructor());
 
     // Wizard
-    NewAppWizardRegistry.registry().register(AlbumPageWizard());
+    Apis.apis().getWizardApi().register(AlbumPageWizard());
 
     AbstractRepositorySingleton.singleton = RepositorySingleton();
   }

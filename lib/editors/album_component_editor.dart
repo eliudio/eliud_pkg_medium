@@ -1,34 +1,33 @@
-import 'package:eliud_core/core/blocs/access/state/access_determined.dart';
-import 'package:eliud_core/core/blocs/access/state/access_state.dart';
-import 'package:eliud_core/core/registry.dart';
-import 'package:eliud_core/model/platform_medium_model.dart';
-import 'package:eliud_core/model/storage_conditions_model.dart';
-import 'package:eliud_core/package/access_rights.dart';
-import 'package:eliud_core/tools/screen_size.dart';
-import 'package:eliud_core/tools/widgets/background_widget.dart';
+import 'package:eliud_core_model/access/access_bloc.dart';
+import 'package:eliud_core_model/access/state/access_determined.dart';
+import 'package:eliud_core_model/access/state/access_state.dart';
+import 'package:eliud_core_model/apis/apis.dart';
+import 'package:eliud_core_model/apis/medium/access_rights.dart';
+import 'package:eliud_core_model/editor/ext_editor_base_bloc/ext_editor_base_event.dart';
+import 'package:eliud_core_model/editor/ext_editor_base_bloc/ext_editor_base_state.dart';
+import 'package:eliud_core_model/model/platform_medium_model.dart';
+import 'package:eliud_core_model/model/storage_conditions_model.dart';
+import 'package:eliud_core_model/tools/etc/screen_size.dart';
+import 'package:eliud_core_model/widgets/background_widget.dart';
+import 'package:eliud_core_model/widgets/helper_widgets/condition_simple_widget.dart';
+import 'package:eliud_core_model/widgets/helper_widgets/header_widget.dart';
 import 'package:eliud_pkg_medium/editors/widgets/album_entry_widget.dart';
 import 'package:eliud_pkg_medium/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_medium/model/album_entry_model.dart';
 import 'package:eliud_pkg_medium/model/album_model.dart';
 import 'package:flutter/material.dart';
-import 'package:eliud_core/model/app_model.dart';
-import 'package:eliud_core/style/frontend/has_button.dart';
-import 'package:eliud_core/style/frontend/has_container.dart';
-import 'package:eliud_core/style/frontend/has_dialog.dart';
-import 'package:eliud_core/style/frontend/has_dialog_field.dart';
-import 'package:eliud_core/style/frontend/has_divider.dart';
-import 'package:eliud_core/style/frontend/has_list_tile.dart';
-import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
-import 'package:eliud_core/style/frontend/has_text.dart';
-import 'package:eliud_core/tools/component/component_spec.dart';
-import 'package:eliud_core/tools/random.dart';
-import 'package:eliud_core/tools/widgets/condition_simple_widget.dart';
-import 'package:eliud_core/tools/widgets/header_widget.dart';
-import 'package:eliud_core/core/blocs/access/access_bloc.dart';
+import 'package:eliud_core_model/model/app_model.dart';
+import 'package:eliud_core_model/style/frontend/has_button.dart';
+import 'package:eliud_core_model/style/frontend/has_container.dart';
+import 'package:eliud_core_model/style/frontend/has_dialog.dart';
+import 'package:eliud_core_model/style/frontend/has_dialog_field.dart';
+import 'package:eliud_core_model/style/frontend/has_divider.dart';
+import 'package:eliud_core_model/style/frontend/has_list_tile.dart';
+import 'package:eliud_core_model/style/frontend/has_progress_indicator.dart';
+import 'package:eliud_core_model/style/frontend/has_text.dart';
+import 'package:eliud_core_model/tools/component/component_spec.dart';
+import 'package:eliud_core_model/tools/etc/random.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:eliud_core/core/editor/ext_editor_base_bloc/ext_editor_base_event.dart';
-import 'package:eliud_core/core/editor/ext_editor_base_bloc/ext_editor_base_state.dart';
-
 import 'bloc/album_bloc.dart';
 
 class AlbumComponentEditorConstructor extends ComponentEditorConstructor {
@@ -329,7 +328,7 @@ class _AlbumComponentEditorState extends State<AlbumComponentEditor> {
       return popupMenuButton<int>(widget.app, context,
           child: Icon(Icons.add),
           itemBuilder: (context) => [
-                if (Registry.registry()!.getMediumApi().hasCamera())
+                if (Apis.apis().getMediumApi().hasCamera())
                   popupMenuItem(
                     widget.app,
                     context,
@@ -345,7 +344,7 @@ class _AlbumComponentEditorState extends State<AlbumComponentEditor> {
               ],
           onSelected: (value) async {
             if (value == 0) {
-              Registry.registry()!.getMediumApi().takePhoto(
+              Apis.apis().getMediumApi().takePhoto(
                   context,
                   widget.app,
                   () => PlatformMediumAccessRights(
@@ -354,7 +353,7 @@ class _AlbumComponentEditorState extends State<AlbumComponentEditor> {
                   _photoUploading,
                   allowCrop: false);
             } else if (value == 1) {
-              Registry.registry()!.getMediumApi().uploadPhoto(
+              Apis.apis().getMediumApi().uploadPhoto(
                   context,
                   widget.app,
                   () => PlatformMediumAccessRights(

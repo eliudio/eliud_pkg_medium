@@ -15,7 +15,19 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:eliud_core_model/tools/common_tools.dart';
+import 'package:eliud_core_model/model/repository_export.dart';
+import 'package:eliud_core_model/model/abstract_repository_singleton.dart';
+import 'package:eliud_core_model/tools/main_abstract_repository_singleton.dart';
+import 'package:eliud_pkg_medium/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_medium/model/repository_export.dart';
+import 'package:eliud_core_model/model/model_export.dart';
+import '../tools/bespoke_models.dart';
 import 'package:eliud_pkg_medium/model/model_export.dart';
+import 'package:eliud_core_model/model/entity_export.dart';
+import '../tools/bespoke_entities.dart';
+import 'package:eliud_pkg_medium/model/entity_export.dart';
+
 
 @immutable
 abstract class AlbumEntryFormEvent extends Equatable {
@@ -25,13 +37,15 @@ abstract class AlbumEntryFormEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class InitialiseNewAlbumEntryFormEvent extends AlbumEntryFormEvent {}
+class InitialiseNewAlbumEntryFormEvent extends AlbumEntryFormEvent {
+}
+
 
 class InitialiseAlbumEntryFormEvent extends AlbumEntryFormEvent {
   final AlbumEntryModel? value;
 
   @override
-  List<Object?> get props => [value];
+  List<Object?> get props => [ value ];
 
   InitialiseAlbumEntryFormEvent({this.value});
 }
@@ -40,7 +54,7 @@ class InitialiseAlbumEntryFormNoLoadEvent extends AlbumEntryFormEvent {
   final AlbumEntryModel? value;
 
   @override
-  List<Object?> get props => [value];
+  List<Object?> get props => [ value ];
 
   InitialiseAlbumEntryFormNoLoadEvent({this.value});
 }
@@ -51,7 +65,7 @@ class ChangedAlbumEntryDocumentID extends AlbumEntryFormEvent {
   ChangedAlbumEntryDocumentID({this.value});
 
   @override
-  List<Object?> get props => [value];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedAlbumEntryDocumentID{ value: $value }';
@@ -63,7 +77,7 @@ class ChangedAlbumEntryName extends AlbumEntryFormEvent {
   ChangedAlbumEntryName({this.value});
 
   @override
-  List<Object?> get props => [value];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedAlbumEntryName{ value: $value }';
@@ -75,8 +89,9 @@ class ChangedAlbumEntryMedium extends AlbumEntryFormEvent {
   ChangedAlbumEntryMedium({this.value});
 
   @override
-  List<Object?> get props => [value];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedAlbumEntryMedium{ value: $value }';
 }
+

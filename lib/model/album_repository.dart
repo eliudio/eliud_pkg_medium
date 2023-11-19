@@ -13,102 +13,55 @@
 
 */
 
+import 'package:eliud_pkg_medium/model/album_repository.dart';
+
+
+import 'package:eliud_core_model/model/repository_export.dart';
+import 'package:eliud_core_model/model/abstract_repository_singleton.dart';
+import 'package:eliud_core_model/tools/main_abstract_repository_singleton.dart';
+import 'package:eliud_pkg_medium/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_medium/model/repository_export.dart';
+import 'package:eliud_core_model/model/model_export.dart';
+import '../tools/bespoke_models.dart';
 import 'package:eliud_pkg_medium/model/model_export.dart';
+import 'package:eliud_core_model/model/entity_export.dart';
+import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_medium/model/entity_export.dart';
 
-import 'dart:async';
-import 'package:eliud_core/tools/query/query_tools.dart';
-import 'package:eliud_core/tools/common_tools.dart';
-import 'package:eliud_core/core/base/repository_base.dart';
 
-typedef AlbumModelTrigger = Function(List<AlbumModel?> list);
-typedef AlbumChanged = Function(AlbumModel? value);
+import 'dart:async';
+import 'package:eliud_core_model/tools/query/query_tools.dart';
+import 'package:eliud_core_model/tools/common_tools.dart';
+import 'package:eliud_core_model/tools/base/repository_base.dart';
+
+typedef AlbumModelTrigger(List<AlbumModel?> list);
+typedef AlbumChanged(AlbumModel? value);
 typedef AlbumErrorHandler = Function(dynamic o, dynamic e);
 
 abstract class AlbumRepository extends RepositoryBase<AlbumModel, AlbumEntity> {
-  @override
   Future<AlbumEntity> addEntity(String documentID, AlbumEntity value);
-  @override
   Future<AlbumEntity> updateEntity(String documentID, AlbumEntity value);
-  @override
   Future<AlbumModel> add(AlbumModel value);
-  @override
   Future<void> delete(AlbumModel value);
-  @override
-  Future<AlbumModel?> get(String? id, {Function(Exception)? onError});
-  @override
+  Future<AlbumModel?> get(String? id, { Function(Exception)? onError });
   Future<AlbumModel> update(AlbumModel value);
 
-  @override
-  Stream<List<AlbumModel?>> values(
-      {String? orderBy,
-      bool? descending,
-      Object? startAfter,
-      int? limit,
-      SetLastDoc? setLastDoc,
-      int? privilegeLevel,
-      EliudQuery? eliudQuery});
-  @override
-  Stream<List<AlbumModel?>> valuesWithDetails(
-      {String? orderBy,
-      bool? descending,
-      Object? startAfter,
-      int? limit,
-      SetLastDoc? setLastDoc,
-      int? privilegeLevel,
-      EliudQuery? eliudQuery});
-  @override
-  Future<List<AlbumModel?>> valuesList(
-      {String? orderBy,
-      bool? descending,
-      Object? startAfter,
-      int? limit,
-      SetLastDoc? setLastDoc,
-      int? privilegeLevel,
-      EliudQuery? eliudQuery});
-  @override
-  Future<List<AlbumModel?>> valuesListWithDetails(
-      {String? orderBy,
-      bool? descending,
-      Object? startAfter,
-      int? limit,
-      SetLastDoc? setLastDoc,
-      int? privilegeLevel,
-      EliudQuery? eliudQuery});
+  Stream<List<AlbumModel?>> values({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery });
+  Stream<List<AlbumModel?>> valuesWithDetails({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery });
+  Future<List<AlbumModel?>> valuesList({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery });
+  Future<List<AlbumModel?>> valuesListWithDetails({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery });
 
-  @override
-  StreamSubscription<List<AlbumModel?>> listen(AlbumModelTrigger trigger,
-      {String? orderBy,
-      bool? descending,
-      Object? startAfter,
-      int? limit,
-      int? privilegeLevel,
-      EliudQuery? eliudQuery});
-  @override
-  StreamSubscription<List<AlbumModel?>> listenWithDetails(
-      AlbumModelTrigger trigger,
-      {String? orderBy,
-      bool? descending,
-      Object? startAfter,
-      int? limit,
-      int? privilegeLevel,
-      EliudQuery? eliudQuery});
-  @override
-  StreamSubscription<AlbumModel?> listenTo(
-      String documentId, AlbumChanged changed,
-      {AlbumErrorHandler? errorHandler});
-  @override
+  StreamSubscription<List<AlbumModel?>> listen(AlbumModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
+  StreamSubscription<List<AlbumModel?>> listenWithDetails(AlbumModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
+  StreamSubscription<AlbumModel?> listenTo(String documentId, AlbumChanged changed, {AlbumErrorHandler? errorHandler});
   void flush();
-
-  @override
+  
   String? timeStampToString(dynamic timeStamp);
 
-  @override
   dynamic getSubCollection(String documentId, String name);
-  @override
-  Future<AlbumModel?> changeValue(
-      String documentId, String fieldName, num changeByThisValue);
+  Future<AlbumModel?> changeValue(String documentId, String fieldName, num changeByThisValue);
 
-  @override
   Future<void> deleteAll();
 }
+
+

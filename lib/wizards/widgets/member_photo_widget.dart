@@ -1,13 +1,13 @@
-import 'package:eliud_core/core/registry.dart';
-import 'package:eliud_core/model/app_model.dart';
-import 'package:eliud_core/model/member_medium_model.dart';
-import 'package:eliud_core/package/access_rights.dart';
-import 'package:eliud_core/package/medium_api.dart';
-import 'package:eliud_core/style/frontend/has_button.dart';
-import 'package:eliud_core/style/frontend/has_list_tile.dart';
-import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
-import 'package:eliud_core/style/frontend/has_text.dart';
-import 'package:eliud_core/tools/random.dart';
+import 'package:eliud_core_model/apis/apis.dart';
+import 'package:eliud_core_model/apis/medium/access_rights.dart';
+import 'package:eliud_core_model/apis/medium/medium_api.dart';
+import 'package:eliud_core_model/model/app_model.dart';
+import 'package:eliud_core_model/model/member_medium_model.dart';
+import 'package:eliud_core_model/style/frontend/has_button.dart';
+import 'package:eliud_core_model/style/frontend/has_list_tile.dart';
+import 'package:eliud_core_model/style/frontend/has_progress_indicator.dart';
+import 'package:eliud_core_model/style/frontend/has_text.dart';
+import 'package:eliud_core_model/tools/etc/random.dart';
 import 'package:flutter/material.dart';
 
 class MemberPhotoWidget extends StatefulWidget {
@@ -39,7 +39,7 @@ class _MemberPhotoWidgetState extends State<MemberPhotoWidget> {
           trailing: popupMenuButton<int>(widget.app, context,
               child: Icon(Icons.more_vert),
               itemBuilder: (context) => [
-                    if (Registry.registry()!.getMediumApi().hasCamera())
+                    if (Apis.apis().getMediumApi().hasCamera())
                       popupMenuItem(
                         widget.app,
                         context,
@@ -56,7 +56,7 @@ class _MemberPhotoWidgetState extends State<MemberPhotoWidget> {
                   ],
               onSelected: (value) async {
                 if (value == 0) {
-                  Registry.registry()!.getMediumApi().takePhoto(
+                  Apis.apis().getMediumApi().takePhoto(
                       context,
                       widget.app,
                       () => MemberMediumAccessRights(
@@ -65,7 +65,7 @@ class _MemberPhotoWidgetState extends State<MemberPhotoWidget> {
                       _photoUploading,
                       allowCrop: widget.allowCrop);
                 } else if (value == 1) {
-                  Registry.registry()!.getMediumApi().uploadPhoto(
+                  Apis.apis().getMediumApi().uploadPhoto(
                       context,
                       widget.app,
                       () => MemberMediumAccessRights(

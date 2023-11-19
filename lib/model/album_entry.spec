@@ -60,5 +60,5 @@
   "listFields": {
     "title": "value.name != null ? Center(child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().textStyle().text(app, context, value.name!)) : Container()"
   },
-  "depends": ["eliud_core"]
+  "depends": ["eliud_core_model"]
 }

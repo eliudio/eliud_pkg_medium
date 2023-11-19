@@ -13,40 +13,46 @@
 
 */
 
-import 'package:eliud_core/core/base/model_base.dart';
+import 'package:eliud_core_model/tools/common_tools.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eliud_core_model/tools/base/model_base.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:eliud_core_model/model/app_model.dart';
 
-import 'package:eliud_core/model/abstract_repository_singleton.dart';
-import 'package:eliud_core/model/model_export.dart';
+import 'package:eliud_core_model/model/repository_export.dart';
+import 'package:eliud_core_model/model/abstract_repository_singleton.dart';
+import 'package:eliud_core_model/tools/main_abstract_repository_singleton.dart';
+import 'package:eliud_pkg_medium/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_medium/model/repository_export.dart';
+import 'package:eliud_core_model/model/model_export.dart';
+import '../tools/bespoke_models.dart';
+import 'package:eliud_pkg_medium/model/model_export.dart';
+import 'package:eliud_core_model/model/entity_export.dart';
+import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_medium/model/entity_export.dart';
 
+
 import 'package:eliud_pkg_medium/model/album_entry_entity.dart';
+
+import 'package:eliud_core_model/tools/etc/random.dart';
+
+
 
 class AlbumEntryModel implements ModelBase {
   static const String packageName = 'eliud_pkg_medium';
   static const String id = 'albumEntrys';
 
-  @override
   String documentID;
   String? name;
   PlatformMediumModel? medium;
 
-  AlbumEntryModel({
-    required this.documentID,
-    this.name,
-    this.medium,
-  });
+  AlbumEntryModel({required this.documentID, this.name, this.medium, })  {
+    assert(documentID != null);
+  }
 
-  @override
-  AlbumEntryModel copyWith({
-    String? documentID,
-    String? name,
-    PlatformMediumModel? medium,
-  }) {
-    return AlbumEntryModel(
-      documentID: documentID ?? this.documentID,
-      name: name ?? this.name,
-      medium: medium ?? this.medium,
-    );
+  AlbumEntryModel copyWith({String? documentID, String? name, PlatformMediumModel? medium, }) {
+    return AlbumEntryModel(documentID: documentID ?? this.documentID, name: name ?? this.name, medium: medium ?? this.medium, );
   }
 
   @override
@@ -54,9 +60,9 @@ class AlbumEntryModel implements ModelBase {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is AlbumEntryModel &&
-          runtimeType == other.runtimeType &&
+          identical(this, other) ||
+          other is AlbumEntryModel &&
+          runtimeType == other.runtimeType && 
           documentID == other.documentID &&
           name == other.name &&
           medium == other.medium;
@@ -66,58 +72,50 @@ class AlbumEntryModel implements ModelBase {
     return 'AlbumEntryModel{documentID: $documentID, name: $name, medium: $medium}';
   }
 
-  @override
   Future<List<ModelReference>> collectReferences({String? appId}) async {
     List<ModelReference> referencesCollector = [];
     if (medium != null) {
-      referencesCollector.add(ModelReference(
-          PlatformMediumModel.packageName, PlatformMediumModel.id, medium!));
+      referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, medium!));
     }
-    if (medium != null) {
-      referencesCollector.addAll(await medium!.collectReferences(appId: appId));
-    }
+    if (medium != null) { referencesCollector.addAll(await medium!.collectReferences(appId: appId)); }
     return referencesCollector;
   }
 
-  @override
   AlbumEntryEntity toEntity({String? appId}) {
     return AlbumEntryEntity(
-      name: (name != null) ? name : null,
-      mediumId: (medium != null) ? medium!.documentID : null,
+          name: (name != null) ? name : null, 
+          mediumId: (medium != null) ? medium!.documentID : null, 
     );
   }
 
-  static Future<AlbumEntryModel?> fromEntity(
-      String documentID, AlbumEntryEntity? entity) async {
+  static Future<AlbumEntryModel?> fromEntity(String documentID, AlbumEntryEntity? entity) async {
     if (entity == null) return null;
     return AlbumEntryModel(
-      documentID: documentID,
-      name: entity.name,
+          documentID: documentID, 
+          name: entity.name, 
     );
   }
 
-  static Future<AlbumEntryModel?> fromEntityPlus(
-      String documentID, AlbumEntryEntity? entity,
-      {String? appId}) async {
+  static Future<AlbumEntryModel?> fromEntityPlus(String documentID, AlbumEntryEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
     PlatformMediumModel? mediumHolder;
     if (entity.mediumId != null) {
       try {
-        mediumHolder =
-            await platformMediumRepository(appId: appId)!.get(entity.mediumId);
-      } on Exception catch (e) {
+          mediumHolder = await platformMediumRepository(appId: appId)!.get(entity.mediumId);
+      } on Exception catch(e) {
         print('Error whilst trying to initialise medium');
-        print(
-            'Error whilst retrieving platformMedium with id ${entity.mediumId}');
+        print('Error whilst retrieving platformMedium with id ${entity.mediumId}');
         print('Exception: $e');
       }
     }
 
     return AlbumEntryModel(
-      documentID: documentID,
-      name: entity.name,
-      medium: mediumHolder,
+          documentID: documentID, 
+          name: entity.name, 
+          medium: mediumHolder, 
     );
   }
+
 }
+

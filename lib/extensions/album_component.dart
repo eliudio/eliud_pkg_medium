@@ -1,8 +1,8 @@
-import 'package:eliud_core/core/registry.dart';
-import 'package:eliud_core/model/app_model.dart';
-import 'package:eliud_core/model/platform_medium_model.dart';
-import 'package:eliud_core/style/frontend/has_text.dart';
-import 'package:eliud_core/tools/component/component_constructor.dart';
+import 'package:eliud_core_model/apis/apis.dart';
+import 'package:eliud_core_model/model/app_model.dart';
+import 'package:eliud_core_model/model/platform_medium_model.dart';
+import 'package:eliud_core_model/style/frontend/has_text.dart';
+import 'package:eliud_core_model/tools/component/component_constructor.dart';
 import 'package:eliud_pkg_medium/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_medium/model/album_component.dart';
 import 'package:eliud_pkg_medium/model/album_entry_model.dart';
@@ -58,12 +58,12 @@ class AlbumComponent extends AbstractAlbumComponent {
     if (medium.medium!.mediumType! == PlatformMediumType.photo) {
       if (memberMedia.isNotEmpty) {
         var photos = memberMedia.map((pm) => pm.medium!).toList();
-        Registry.registry()!
+        Apis.apis()
             .getMediumApi()
             .showPhotosPlatform(context, app, photos, index);
       }
     } else {
-      Registry.registry()!
+      Apis.apis()
           .getMediumApi()
           .showVideoPlatform(context, app, medium.medium!);
     }
