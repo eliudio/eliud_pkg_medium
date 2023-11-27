@@ -1,4 +1,4 @@
-import 'package:eliud_core_model/apis/apis.dart';
+import 'package:eliud_core_main/apis/apis.dart';
 import 'package:eliud_pkg_medium/platform/web_medium_platform.dart';
 
 import 'medium_package.dart';

@@ -1,13 +1,13 @@
-import 'package:eliud_core_model/editor/ext_editor_base_bloc/ext_editor_base_bloc.dart';
-import 'package:eliud_core_model/model/background_model.dart';
-import 'package:eliud_core_model/model/storage_conditions_model.dart';
-import 'package:eliud_core_model/tools/component/component_spec.dart';
-import 'package:eliud_core_model/tools/etc/random.dart';
-import 'package:eliud_pkg_medium/model/abstract_repository_singleton.dart';
-import 'package:eliud_pkg_medium/model/album_entry_model.dart';
-import 'package:eliud_pkg_medium/model/album_model.dart';
+import 'package:eliud_core_helpers/etc/random.dart';
+import 'package:eliud_core_main/editor/ext_editor_base_bloc/ext_editor_base_bloc.dart';
+import 'package:eliud_core_main/model/background_model.dart';
+import 'package:eliud_core_main/model/storage_conditions_model.dart';
+import 'package:eliud_core_main/apis/registryapi/component/component_spec.dart';
 
-import '../../model/album_entity.dart';
+import 'package:eliud_pkg_medium_model/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_medium_model/model/album_entity.dart';
+import 'package:eliud_pkg_medium_model/model/album_entry_model.dart';
+import 'package:eliud_pkg_medium_model/model/album_model.dart';
 
 class AlbumBloc
     extends ExtEditorBaseBloc<AlbumModel, AlbumEntryModel, AlbumEntity> {

@@ -1,14 +1,13 @@
-import 'package:eliud_core_model/apis/action_api/action_model.dart';
-import 'package:eliud_core_model/apis/apis.dart';
-import 'package:eliud_core_model/apis/wizard_api/action_specification_parameters_base.dart';
-import 'package:eliud_core_model/apis/wizard_api/new_app_wizard_info.dart';
-import 'package:eliud_core_model/apis/wizard_api/new_app_wizard_info_with_action_specification.dart';
-import 'package:eliud_core_model/model/app_model.dart';
-import 'package:eliud_core_model/model/member_model.dart';
-import 'package:eliud_core_model/model/menu_item_model.dart';
-import 'package:eliud_core_model/model/public_medium_model.dart';
-import 'package:eliud_core_model/wizards/helpers/menu_helpers.dart';
-import 'package:eliud_pkg_medium/tools/bespoke_models.dart';
+import 'package:eliud_core_main/apis/action_api/action_model.dart';
+import 'package:eliud_core_main/apis/apis.dart';
+import 'package:eliud_core_main/apis/wizard_api/action_specification_parameters_base.dart';
+import 'package:eliud_core_main/apis/wizard_api/new_app_wizard_info.dart';
+import 'package:eliud_core_main/apis/wizard_api/new_app_wizard_info_with_action_specification.dart';
+import 'package:eliud_core_main/model/app_model.dart';
+import 'package:eliud_core_main/model/member_model.dart';
+import 'package:eliud_core_main/model/menu_item_model.dart';
+import 'package:eliud_core_main/model/public_medium_model.dart';
+import 'package:eliud_core_main/wizards/helpers/menu_helpers.dart';
 import 'package:flutter/material.dart';
 import 'builders/page/album_page_builder.dart';
 

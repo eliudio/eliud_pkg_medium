@@ -1,7 +1,7 @@
 import 'package:easy_image_viewer/easy_image_viewer.dart';
-import 'package:eliud_core_model/model/app_model.dart';
-import 'package:eliud_core_model/style/frontend/has_button.dart';
-import 'package:eliud_core_model/tools/etc/screen_size.dart';
+import 'package:eliud_core_main/model/app_model.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_button.dart';
+import 'package:eliud_core_helpers/etc/screen_size.dart';
 import 'package:eliud_pkg_medium/tools/slider/slide_image_provider.dart';
 import 'package:flutter/material.dart';
 

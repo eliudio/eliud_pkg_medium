@@ -1,12 +1,12 @@
-import 'package:eliud_core_model/apis/apis.dart';
-import 'package:eliud_core_model/model/app_model.dart';
-import 'package:eliud_core_model/model/platform_medium_model.dart';
-import 'package:eliud_core_model/style/frontend/has_text.dart';
-import 'package:eliud_core_model/tools/component/component_constructor.dart';
-import 'package:eliud_pkg_medium/model/abstract_repository_singleton.dart';
-import 'package:eliud_pkg_medium/model/album_component.dart';
-import 'package:eliud_pkg_medium/model/album_entry_model.dart';
-import 'package:eliud_pkg_medium/model/album_model.dart';
+import 'package:eliud_core_main/apis/apis.dart';
+import 'package:eliud_core_main/apis/registryapi/component/component_constructor.dart';
+import 'package:eliud_core_main/model/app_model.dart';
+import 'package:eliud_core_main/model/platform_medium_model.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_text.dart';
+import 'package:eliud_pkg_medium_model/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_medium_model/model/album_component.dart';
+import 'package:eliud_pkg_medium_model/model/album_entry_model.dart';
+import 'package:eliud_pkg_medium_model/model/album_model.dart';
 import 'package:eliud_pkg_medium/tools/media_helper.dart';
 import 'package:flutter/material.dart';
 

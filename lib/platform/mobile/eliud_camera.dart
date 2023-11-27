@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:camera/camera.dart';
-import 'package:eliud_core_model/model/app_model.dart';
-import 'package:eliud_core_model/style/frontend/has_text.dart';
-import 'package:eliud_core_model/tools/route_builders/route_builders.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_text.dart';
+import 'package:eliud_core_main/model/app_model.dart';
+import 'package:eliud_core_main/tools/route_builders/route_builders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';

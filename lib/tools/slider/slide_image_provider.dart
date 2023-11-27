@@ -1,7 +1,7 @@
 import 'dart:typed_data';
-import 'package:eliud_core_model/model/member_medium_model.dart';
-import 'package:eliud_core_model/model/platform_medium_model.dart';
-import 'package:eliud_core_model/model/public_medium_model.dart';
+import 'package:eliud_core_main/model/member_medium_model.dart';
+import 'package:eliud_core_main/model/platform_medium_model.dart';
+import 'package:eliud_core_main/model/public_medium_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

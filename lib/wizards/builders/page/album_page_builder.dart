@@ -1,20 +1,20 @@
-import 'package:eliud_core_model/model/abstract_repository_singleton.dart'
-  as corerepo;
-import 'package:eliud_core_model/model/app_bar_model.dart';
-import 'package:eliud_core_model/model/app_model.dart';
-import 'package:eliud_core_model/model/body_component_model.dart';
-import 'package:eliud_core_model/model/drawer_model.dart';
-import 'package:eliud_core_model/model/home_menu_model.dart';
-import 'package:eliud_core_model/model/page_model.dart';
-import 'package:eliud_core_model/model/storage_conditions_model.dart';
-import 'package:eliud_core_model/tools/etc/random.dart';
-import 'package:eliud_core_model/tools/storage/platform_medium_helper.dart';
-import 'package:eliud_core_model/wizards/builders/page_builder.dart';
-import 'package:eliud_core_model/wizards/tools/document_identifier.dart';
-import 'package:eliud_pkg_medium/model/abstract_repository_singleton.dart';
-import 'package:eliud_pkg_medium/model/album_component.dart';
-import 'package:eliud_pkg_medium/model/album_entry_model.dart';
-import 'package:eliud_pkg_medium/model/album_model.dart';
+import 'package:eliud_core_main/model/app_bar_model.dart';
+import 'package:eliud_core_main/model/body_component_model.dart';
+import 'package:eliud_core_main/model/drawer_model.dart';
+import 'package:eliud_core_main/model/home_menu_model.dart';
+import 'package:eliud_core_main/wizards/tools/document_identifier.dart';
+import 'package:eliud_core_main/model/abstract_repository_singleton.dart'
+    as mainrepo;
+import 'package:eliud_core_main/model/app_model.dart';
+import 'package:eliud_core_main/model/page_model.dart';
+import 'package:eliud_core_main/model/storage_conditions_model.dart';
+import 'package:eliud_core_helpers/etc/random.dart';
+import 'package:eliud_core_main/storage/platform_medium_helper.dart';
+import 'package:eliud_core_main/wizards/builders/page_builder.dart';
+import 'package:eliud_pkg_medium_model/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_medium_model/model/album_component.dart';
+import 'package:eliud_pkg_medium_model/model/album_entry_model.dart';
+import 'package:eliud_pkg_medium_model/model/album_model.dart';
 
 class AlbumPageBuilder extends PageBuilder {
   final String examplePhoto1AssetPath;
@@ -45,7 +45,7 @@ class AlbumPageBuilder extends PageBuilder {
         );
 
   Future<PageModel> _setupPage() async {
-    return await corerepo.AbstractRepositorySingleton.singleton
+    return await mainrepo.AbstractRepositorySingleton.singleton
         .pageRepository(app.documentID)!
         .add(_page());
   }

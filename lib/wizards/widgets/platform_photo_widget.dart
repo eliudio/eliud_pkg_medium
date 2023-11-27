@@ -1,14 +1,14 @@
-import 'package:eliud_core_model/apis/apis.dart';
-import 'package:eliud_core_model/apis/medium/access_rights.dart';
-import 'package:eliud_core_model/apis/medium/medium_api.dart';
-import 'package:eliud_core_model/model/app_model.dart';
-import 'package:eliud_core_model/model/platform_medium_model.dart';
-import 'package:eliud_core_model/model/storage_conditions_model.dart';
-import 'package:eliud_core_model/style/frontend/has_button.dart';
-import 'package:eliud_core_model/style/frontend/has_list_tile.dart';
-import 'package:eliud_core_model/style/frontend/has_progress_indicator.dart';
-import 'package:eliud_core_model/style/frontend/has_text.dart';
-import 'package:eliud_core_model/tools/etc/random.dart';
+import 'package:eliud_core_main/apis/apis.dart';
+import 'package:eliud_core_main/apis/medium/access_rights.dart';
+import 'package:eliud_core_main/apis/medium/medium_api.dart';
+import 'package:eliud_core_main/model/app_model.dart';
+import 'package:eliud_core_main/model/platform_medium_model.dart';
+import 'package:eliud_core_main/model/storage_conditions_model.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_button.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_list_tile.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_progress_indicator.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_text.dart';
+import 'package:eliud_core_helpers/etc/random.dart';
 import 'package:flutter/material.dart';
 
 class PlatformPhotoWidget extends StatefulWidget {
